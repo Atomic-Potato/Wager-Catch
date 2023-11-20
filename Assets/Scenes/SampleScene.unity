@@ -440,7 +440,7 @@ MonoBehaviour:
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 256
-  isDisplayGrid: 0
+  isDisplayGrid: 1
   gridColor: {r: 1, g: 1, b: 1, a: 0.5}
   walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
   unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
@@ -3401,7 +3401,7 @@ MonoBehaviour:
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 256
-  isDisplayGrid: 1
+  isDisplayGrid: 0
   gridColor: {r: 1, g: 1, b: 1, a: 0.19607843}
   walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.19607843}
   unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.19607843}

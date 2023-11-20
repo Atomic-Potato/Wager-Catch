@@ -138,11 +138,11 @@ namespace Pathfinding
         public void UpdateGridSection(Vector2 bottomLeftCornerPosition, Vector2 topRightCornerPosition, bool? isSafe = null, bool? isEditable = null)
         {
             Node nodeBottomLeft = GetNodeFromWorldPosition(bottomLeftCornerPosition);
-            Node noderopRight = GetNodeFromWorldPosition(topRightCornerPosition);
+            Node nodeTopRight = GetNodeFromWorldPosition(topRightCornerPosition);
             
-            for (int i = nodeBottomLeft.GridPositionX; i <= noderopRight.GridPositionX; i++)
+            for (int i = nodeBottomLeft.GridPositionX; i <= nodeTopRight.GridPositionX; i++)
             {
-                for (int j = noderopRight.GridPositionY; j <= noderopRight.GridPositionY; j++)
+                for (int j = nodeBottomLeft.GridPositionY; j <= nodeTopRight.GridPositionY; j++)
                 {
                     _nodesGrid[i,j].IsWalkable = !Physics2D.OverlapBox(_nodesGrid[i,j].WorldPosition, new Vector2(_nodeDiameter, _nodeDiameter), 0f, unwalkableMask);
                     if (isSafe != null)
