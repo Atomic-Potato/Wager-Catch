@@ -29,12 +29,16 @@ namespace Pathfinding
 
         public bool IsWalkable;
         public bool IsSafe;
+        public bool IsEditable;
+
         public Vector2 WorldPosition;
         public List<Node> Neighboors;
 
-        public Node(bool isWalkable, Vector2 worldPosition, int gridPositionX, int gridPositionY)
+        public Node(bool isWalkable, Vector2 worldPosition, int gridPositionX, int gridPositionY, bool isSafe = false, bool isEditable = true)
         {
             IsWalkable = isWalkable;
+            IsSafe = isSafe;
+            IsEditable = isEditable;
             WorldPosition = worldPosition;
             GridPositionX = gridPositionX;
             GridPositionY = gridPositionY;

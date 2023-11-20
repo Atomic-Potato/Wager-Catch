@@ -43,8 +43,6 @@ public class AnimationManager : MonoBehaviour
 
     void Update()
     {
-            Debug.Log(CurrentClip.name);
-
         #region Animation States Handling
         if (testUnit.IsMoving)
         {

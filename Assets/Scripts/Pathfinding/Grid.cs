@@ -135,7 +135,7 @@ namespace Pathfinding
             return _nodesGrid[x,y];
         }
 
-        public void UpdateGridSection(Vector2 bottomLeftCornerPosition, Vector2 topRightCornerPosition)
+        public void UpdateGridSection(Vector2 bottomLeftCornerPosition, Vector2 topRightCornerPosition, bool? isSafe = null, bool? isEditable = null)
         {
             Node nodeBottomLeft = GetNodeFromWorldPosition(bottomLeftCornerPosition);
             Node noderopRight = GetNodeFromWorldPosition(topRightCornerPosition);
@@ -145,6 +145,10 @@ namespace Pathfinding
                 for (int j = noderopRight.GridPositionY; j <= noderopRight.GridPositionY; j++)
                 {
                     _nodesGrid[i,j].IsWalkable = !Physics2D.OverlapBox(_nodesGrid[i,j].WorldPosition, new Vector2(_nodeDiameter, _nodeDiameter), 0f, unwalkableMask);
+                    if (isSafe != null)
+                        _nodesGrid[i,j].IsSafe = (bool)isSafe;
+                    if (isEditable != null)
+                        _nodesGrid[i,j].IsEditable = (bool)isEditable;
                 }
             }
         }

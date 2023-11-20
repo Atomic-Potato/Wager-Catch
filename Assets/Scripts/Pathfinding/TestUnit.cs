@@ -87,7 +87,6 @@ namespace Pathfinding
             _isPathRequestSent = false;   
             _endNodeCache = endNode;
 
-            Debug.Log(gameObject.name + " " + isFoundPath);
             if (!isFoundPath)
                 return;
             _pathToTarget = newPath;

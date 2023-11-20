@@ -78,7 +78,7 @@ MonoBehaviour:
   speed: 1
   destinationReachedWaitTime: 3.5
   target: {fileID: 0}
-  isDrawPath: 1
+  isDrawPath: 0
   pathColor: {r: 0, g: 0.075142145, b: 1, a: 1}
   isRandomPathColor: 0
   PathRequestManager: {fileID: 0}
