@@ -28,6 +28,7 @@ namespace Pathfinding
         }
 
         public bool IsWalkable;
+        public bool IsSafe;
         public Vector2 WorldPosition;
         public List<Node> Neighboors;
 

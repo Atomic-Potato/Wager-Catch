@@ -27,6 +27,9 @@ namespace Pathfinding
         
         Node[,] _nodesGrid;
         public Node[,] Nodes => _nodesGrid;
+        Node[] _safeNodes;
+        public Node[] SafeNodes => _safeNodes;
+        
         float _nodeDiameter;
         int _nodesCountX;
         int _nodesCountY; 
@@ -82,6 +85,7 @@ namespace Pathfinding
                 }
             }
 
+        }
             void FindNodesNeighbors()
             {
                 foreach (Node n in _nodesGrid)
@@ -106,7 +110,6 @@ namespace Pathfinding
                     }
                 }
             }
-        }
 
         public Node GetNodeFromWorldPosition(Vector2 worldPosition)
         {
@@ -130,6 +133,20 @@ namespace Pathfinding
             int y = Mathf.Abs(Mathf.FloorToInt(Mathf.Clamp(_nodesCountY * positionPerecentY, 0, _nodesCountY-1)));
 
             return _nodesGrid[x,y];
+        }
+
+        public void UpdateGridSection(Vector2 bottomLeftCornerPosition, Vector2 topRightCornerPosition)
+        {
+            Node nodeBottomLeft = GetNodeFromWorldPosition(bottomLeftCornerPosition);
+            Node noderopRight = GetNodeFromWorldPosition(topRightCornerPosition);
+            
+            for (int i = nodeBottomLeft.GridPositionX; i <= noderopRight.GridPositionX; i++)
+            {
+                for (int j = noderopRight.GridPositionY; j <= noderopRight.GridPositionY; j++)
+                {
+                    _nodesGrid[i,j].IsWalkable = !Physics2D.OverlapBox(_nodesGrid[i,j].WorldPosition, new Vector2(_nodeDiameter, _nodeDiameter), 0f, unwalkableMask);
+                }
+            }
         }
     }
 }
