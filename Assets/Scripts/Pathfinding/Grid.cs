@@ -12,12 +12,14 @@ namespace Pathfinding
         [Tooltip("The area each node covers")]
         [SerializeField, Min(0f)] float nodeRadius = 1f;  
         [SerializeField] LayerMask unwalkableMask;
+        [SerializeField] LayerMask safeAreaMask;
 
         [Space, Header("Gizmos")]
         [SerializeField] bool isDisplayGrid;
         [SerializeField] Color gridColor = new Color(1f,1f,1f,.5f);
         [SerializeField] Color walkableNodesColor = new Color(0f, 1f, 0f, .5f);
         [SerializeField] Color unwalkableNodesColor = new Color(1f, 0f, 0f, .5f);
+        [SerializeField] Color safeNodesColor = new Color(0f, 0f, 1f, .5f);
         #endregion
 
         #region Global Variables
@@ -48,7 +50,10 @@ namespace Pathfinding
             {
                 foreach (Node n in _nodesGrid)
                 {
-                    Gizmos.color = n.IsWalkable ? walkableNodesColor : unwalkableNodesColor;
+                    if (n.IsSafe && n.IsWalkable)
+                        Gizmos.color = safeNodesColor;
+                    else
+                        Gizmos.color = n.IsWalkable ? walkableNodesColor : unwalkableNodesColor;
                     Gizmos.DrawCube(n.WorldPosition, new Vector3(_nodeDiameter - .1f, _nodeDiameter - .1f));
                 }
             }
@@ -80,7 +85,8 @@ namespace Pathfinding
                     {
                         Vector2 worldPosition = worldBottomLeftPosition + new Vector2(x * _nodeDiameter + nodeRadius, y * _nodeDiameter + nodeRadius); 
                         bool isWalkable = !Physics2D.OverlapBox(worldPosition, new Vector2(_nodeDiameter, _nodeDiameter), 0f, unwalkableMask);
-                        _nodesGrid[x,y] = new Node(isWalkable, worldPosition, x, y);
+                        bool isSafe = Physics2D.OverlapBox(worldPosition, new Vector2(_nodeDiameter, _nodeDiameter), 0f, safeAreaMask);
+                        _nodesGrid[x,y] = new Node(isWalkable, worldPosition, x, y, isSafe);
                     }
                 }
             }
