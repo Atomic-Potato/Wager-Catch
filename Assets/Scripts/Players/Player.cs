@@ -100,17 +100,9 @@ namespace Pathfinding
 
         IEnumerator FollowPath()
         {
-            int startIndex;
+            int startIndex = GetClosestPathPointIndex();
             _isMoving = true;
             _isReachedDestination = false;
-
-            if (_pathToTarget.Length > 1 && _pathToTarget[0] == _previousPathStartPoint)
-                startIndex = 1;
-            else
-            {
-                startIndex = 0;
-                _previousPathStartPoint = _pathToTarget[0];
-            }
 
             _currentWaypoint = _pathToTarget[startIndex];
             _pathIndex = 0;
@@ -143,12 +135,32 @@ namespace Pathfinding
                 _isMoving = false;
                 _currentWaypoint = null;
             }
+
+            int GetClosestPathPointIndex()
+            {
+                float minDistance = Vector2.Distance(transform.position, _pathToTarget[0]);
+                int minIndex = 0;
+                for (int i=1; i < _pathToTarget.Length; i++)
+                {
+                    float distance = Vector2.Distance(transform.position, _pathToTarget[i]); 
+                    if (distance <= minDistance)
+                    {
+                        minDistance = distance;
+                        minIndex = i; 
+                    }
+                    else
+                    {
+                        if (minIndex == 0)
+                            minIndex = 1;
+                        break;
+                    }
+                }
+                return minIndex;
+            }
         }
 
         void UpdateFacingDirection()
         {
-            Debug.Log("is dis thing working ?");
-
             if (_previousPosition == null)
             {
                 _previousPosition = transform.position;

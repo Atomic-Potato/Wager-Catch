@@ -154,7 +154,6 @@ namespace Pathfinding
             // path.Add(currentNode);  
             // Vector2[] waypoints = SimplifyPath();
             // Array.Reverse(waypoints);
-            // maBoints = new List<Vector2>(waypoints);
             // return waypoints;
 
             path.Add(currentNode);  
