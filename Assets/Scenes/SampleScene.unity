@@ -3045,9 +3045,7 @@ MonoBehaviour:
   runnersParent: {fileID: 2028001949}
   catchersSpawnPoints:
   - {fileID: 2074931494}
-  - {fileID: 393290509}
-  - {fileID: 30491003}
-  runnersCount: 5
+  runnersCount: 1
   RunnersNotInSafeArea: []
 --- !u!1 &610561676
 GameObject:
@@ -3592,7 +3590,7 @@ GameObject:
   - component: {fileID: 1491191401}
   m_Layer: 10
   m_Name: Safe Area (2)
-  m_TagString: Untagged
+  m_TagString: Safe Area
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3649,7 +3647,7 @@ GameObject:
   - component: {fileID: 1523463321}
   m_Layer: 10
   m_Name: Safe Area
-  m_TagString: Untagged
+  m_TagString: Safe Area
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4157,7 +4155,7 @@ GameObject:
   - component: {fileID: 2112940782}
   m_Layer: 10
   m_Name: Safe Area (1)
-  m_TagString: Untagged
+  m_TagString: Safe Area
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

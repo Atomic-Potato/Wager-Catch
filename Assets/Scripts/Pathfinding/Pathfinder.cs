@@ -151,43 +151,12 @@ namespace Pathfinding
                 path.Add(currentNode);
                 currentNode = currentNode.Parent;    
             }
-            // path.Add(currentNode);  
-            // Vector2[] waypoints = SimplifyPath();
-            // Array.Reverse(waypoints);
-            // return waypoints;
 
             path.Add(currentNode);  
             path.Reverse();
             List<Vector2> waypoints = NodesToPositions(path);
             return waypoints.ToArray();
 
-            // Removes uneeded nodes from the path by only keeping nodes where the direction changes 
-            Vector2[] SimplifyPath()
-            {
-                Vector2 previousDirection = Vector2.zero;
-                List<Vector2> simplifiedPath = new List<Vector2>();
-
-                for (int i=1; i < path.Count; i++)
-                {
-                    Vector2 newDirection = new Vector2(path[i].GridPositionX - path[i-1].GridPositionX, path[i].GridPositionY - path[i-1].GridPositionY);
-                    if (previousDirection != newDirection)
-                        simplifiedPath.Add(path[i].WorldPosition);
-                    previousDirection = newDirection;
-
-                    // The path will sometimes skip a waypoint needed to get around corners
-                    // so we check on the last node if the direction with the startNode doesnt match the previous
-                    // if so, we add the last node
-                    // https://i.imgur.com/KkA3Y3Q.png
-                    if (i == path.Count-1)
-                    {
-                        Vector2 directionToStartNode = new Vector2(path[i].GridPositionX - startNode.GridPositionX, path[i].GridPositionY - startNode.GridPositionY);
-                        if (directionToStartNode != previousDirection)
-                            simplifiedPath.Add(path[i].WorldPosition);
-                    }
-                }
-                            
-                return simplifiedPath.ToArray();
-            }
 
             List<Vector2> NodesToPositions(List<Node> nodes)
             {
@@ -198,5 +167,32 @@ namespace Pathfinding
             }
         }
 
+        // Removes uneeded nodes from the path by only keeping nodes where the direction changes 
+        public static Vector2[] SimplifyPath(Vector2[] path)
+        {
+            Vector2 previousDirection = Vector2.zero;
+            List<Vector2> simplifiedPath = new List<Vector2>();
+
+            for (int i=1; i < path.Length; i++)
+            {
+                Vector2 newDirection = new Vector2(path[i].x - path[i-1].x, path[i].y - path[i-1].y);
+                if (previousDirection != newDirection)
+                    simplifiedPath.Add(path[i]);
+                previousDirection = newDirection;
+
+                // // The path will sometimes skip a waypoint needed to get around corners
+                // // so we check on the last node if the direction with the startNode doesnt match the previous
+                // // if so, we add the last node
+                // // https://i.imgur.com/KkA3Y3Q.png
+                // if (i == path.Length-1)
+                // {
+                //     Vector2 directionToStartNode = new Vector2(path[i].GridPositionX - startNode.GridPositionX, path[i].GridPositionY - startNode.GridPositionY);
+                //     if (directionToStartNode != previousDirection)
+                //         simplifiedPath.Add(path[i].WorldPosition);
+                // }
+            }
+                        
+            return simplifiedPath.ToArray();
+        }
     }
 }

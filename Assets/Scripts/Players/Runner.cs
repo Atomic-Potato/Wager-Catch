@@ -23,15 +23,30 @@ public class Runner : Player
     new void Update()
     {
         base.Update();
-        
+
         if (_isReachedDestination && !_isPathRequestSent && _delayNextRequestCoroutine == null)
             _delayNextRequestCoroutine = StartCoroutine(DelayNextPathRequest());
+    }
 
-        _isInSafeArea = Physics2D.OverlapBox(transform.position + (Vector3)boxCollider.offset, boxCollider.size, 0f, safeAreaMask);
-        if (_isInSafeArea && TeamsManager.RunnersNotInSafeArea.Contains(this))
-            TeamsManager.RunnersNotInSafeArea.Remove(this);
-        else if (!TeamsManager.RunnersNotInSafeArea.Contains(this))
-            TeamsManager.RunnersNotInSafeArea.Add(this);
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        Debug.Log(collider.gameObject.tag);
+        if (collider.gameObject.tag == "Safe Area")
+        {
+            _isInSafeArea = true;
+            if (TeamsManager.RunnersNotInSafeArea.Contains(this))
+                TeamsManager.RunnersNotInSafeArea.Remove(this);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag == "Safe Area")
+        {
+            _isInSafeArea = true;
+            if (!TeamsManager.RunnersNotInSafeArea.Contains(this))
+                TeamsManager.RunnersNotInSafeArea.Add(this);
+        }
     }
 
     IEnumerator DelayNextPathRequest()
