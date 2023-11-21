@@ -6,7 +6,6 @@ namespace Pathfinding
     public class Player : MonoBehaviour
     {
         [SerializeField] float speed = 10f;
-        [SerializeField] float destinationReachedWaitTime = 2f;
         [SerializeField] Transform target;
         [SerializeField] LayerMask collisionMask;
 
@@ -17,9 +16,6 @@ namespace Pathfinding
 
         [HideInInspector] public PathRequestManager PathRequestManager;
         [HideInInspector] public TestUnitsManager TestUnitsManager;
-        [HideInInspector] public bool IsCatcher;
-        [HideInInspector] public bool IsRunner;
-        [HideInInspector] public Transform CatcherSpawnPoint;
 
         Vector2 _facingDirection  = Vector2.down; 
         public Vector2 FacingDirection => _facingDirection;
@@ -34,11 +30,9 @@ namespace Pathfinding
         Vector2? _currentWaypoint = null;
         Node _endNodeCache = null;
         Node _startNodeCache = null;
-        Vector2 _randomEndNodePositionCache;
         bool _isPathRequestSent;
         bool _isReachedDestination;
         bool _isStopFollowingPath;
-        float _waitTimer;
 
         void OnDrawGizmos()
         {
@@ -63,21 +57,8 @@ namespace Pathfinding
                 pathColor = new Color(Random.Range(.8f,1f), Random.Range(.4f,8f), Random.Range(0f,4f), 1f);
         }
 
-        void Start()
-        {
-            SendPathRequest();
-        }
-
         void Update()
         {
-            if (_isReachedDestination && !_isPathRequestSent)
-            {
-                if (_waitTimer < destinationReachedWaitTime)
-                    _waitTimer += Time.deltaTime;
-                else
-                    SendPathRequest();
-            }
-
             UpdateFacingDirection();
 
             if (_currentWaypoint != null)
@@ -92,11 +73,9 @@ namespace Pathfinding
             }
         }
 
-        void SendPathRequest()
+        protected void SendPathRequest()
         {
-            Vector2? targetPosition = target == null ? 
-                (_isStopFollowingPath ? _randomEndNodePositionCache : TestUnitsManager?.GetRandomWalkableNode()?.WorldPosition) 
-                : target.position;
+            Vector2? targetPosition = target?.position;
             if (targetPosition == null)
                 return;
             PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, _endNodeCache, _startNodeCache, UpdatePath);
@@ -140,7 +119,6 @@ namespace Pathfinding
                 {
                     StopFollowingPath();
                     _startNodeCache = null;
-                    _randomEndNodePositionCache = (Vector2)_currentWaypoint;
                     yield break;
                 }
 
@@ -150,7 +128,6 @@ namespace Pathfinding
                     if (_pathIndex >= _pathToTarget.Length)
                     {
                         StopFollowingPath();
-                        _waitTimer = 0f;
                         yield break;
                     }
                     _currentWaypoint = _pathToTarget[_pathIndex];

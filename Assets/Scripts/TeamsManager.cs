@@ -17,8 +17,8 @@ public class TeamsManager : MonoBehaviour
     [SerializeField] List<Transform> catchersSpawnPoints;
     [SerializeField, Min(0)] int runnersCount;
     
-    List<Player> _catchers = new List<Player>();
-    List<Player> _runners = new List<Player>();
+    List<Catcher> _catchers = new List<Catcher>();
+    List<Runner> _runners = new List<Runner>();
 
     void Awake()
     {
@@ -31,9 +31,8 @@ public class TeamsManager : MonoBehaviour
         for (int i=0; i < runnersCount; i++)
         {
             GameObject spawnedRunnerObject = Instantiate(runnerPrefab, GetRandomSafeNode().WorldPosition, Quaternion.identity, runnersParent);
-            Player runner = spawnedRunnerObject.GetComponent<Player>();
+            Runner runner = spawnedRunnerObject.GetComponent<Runner>();
             runner.PathRequestManager = pathRequestManager;
-            runner.IsRunner = true;
             _runners.Add(runner);
         }
 
@@ -49,9 +48,9 @@ public class TeamsManager : MonoBehaviour
         foreach (Transform spawnPoint in catchersSpawnPoints)
         {
             GameObject spawnedCactherObject = Instantiate(catcherPrefab, spawnPoint.position, Quaternion.identity, catchersParent);
-            Player catcher = spawnedCactherObject.GetComponent<Player>();
-            catcher.IsCatcher = true;
-            catcher.CatcherSpawnPoint = spawnPoint;
+            Catcher catcher = spawnedCactherObject.GetComponent<Catcher>();
+            catcher.PathRequestManager = pathRequestManager;
+            catcher.spawnPoint = spawnPoint;
             _catchers.Add(catcher);
         }
     }

@@ -40,10 +40,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4640423005932321774}
-  - component: {fileID: 6076163641624195383}
+  - component: {fileID: 1795681554512091178}
   - component: {fileID: 3146306151673408437}
   m_Layer: 9
-  m_Name: Test Unit (BLUE)
+  m_Name: Runner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6076163641624195383
+--- !u!114 &1795681554512091178
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,23 +73,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4207024369822522638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
+  m_Script: {fileID: 11500000, guid: fa258684ab173fe42a050ea2dce327cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  destinationReachedWaitTime: 2
   target: {fileID: 0}
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
   isDrawPath: 0
   pathColor: {r: 0, g: 0, b: 1, a: 0.5}
-  isRandomPathColor: 0
+  isRandomPathColor: 1
   PathRequestManager: {fileID: 0}
   TestUnitsManager: {fileID: 0}
-  IsCatcher: 0
-  IsRunner: 0
-  CatcherSpawnPoint: {fileID: 0}
 --- !u!61 &3146306151673408437
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -243,5 +239,5 @@ MonoBehaviour:
   clipWalk_S: {fileID: 7400000, guid: 749e9f2e30336d6428bdbc7569926589, type: 2}
   clipWalk_SE: {fileID: 7400000, guid: c20ffa17953f4c84892807c6047c6693, type: 2}
   clipWalk_E: {fileID: 7400000, guid: 92687b4622de38247b30928d263defc1, type: 2}
-  testUnit: {fileID: 6076163641624195383}
+  testUnit: {fileID: 1795681554512091178}
   spriteParent: {fileID: 5374470096601600781}
