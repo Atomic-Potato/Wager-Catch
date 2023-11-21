@@ -3043,8 +3043,7 @@ MonoBehaviour:
   pathRequestManager: {fileID: 376140509}
   catchersParent: {fileID: 1947969868}
   runnersParent: {fileID: 2028001949}
-  catchersSpawnPoints:
-  - {fileID: 2074931494}
+  catchersSpawnPoints: []
   runnersCount: 1
   RunnersNotInSafeArea: []
 --- !u!1 &610561676

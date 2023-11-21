@@ -91,7 +91,6 @@ namespace Pathfinding
         {
             _isPathRequestSent = false;
             _isStopFollowingPath = false;
-            _isReachedDestination = false;
             _endNodeCache = endNode;
 
             if (!isFoundPath)
@@ -107,6 +106,7 @@ namespace Pathfinding
         {
             int startIndex;
             _isMoving = true;
+            _isReachedDestination = false;
 
             if (_pathToTarget.Length > 1 && _pathToTarget[0] == _previousPathStartPoint)
                 startIndex = 1;
