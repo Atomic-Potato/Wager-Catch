@@ -32,14 +32,9 @@ public class TeamsManager : MonoBehaviour
         {
             GameObject spawnedRunnerObject = Instantiate(runnerPrefab, GetRandomSafeNode().WorldPosition, Quaternion.identity, runnersParent);
             Runner runner = spawnedRunnerObject.GetComponent<Runner>();
+            runner.TeamsManager = this;
             runner.PathRequestManager = pathRequestManager;
             _runners.Add(runner);
-        }
-
-        Node GetRandomSafeNode()
-        {
-            int n = Random.Range(0, playersGrid.SafeNodes.Count);
-            return playersGrid.SafeNodes[n];
         }
     }
 
@@ -49,9 +44,16 @@ public class TeamsManager : MonoBehaviour
         {
             GameObject spawnedCactherObject = Instantiate(catcherPrefab, spawnPoint.position, Quaternion.identity, catchersParent);
             Catcher catcher = spawnedCactherObject.GetComponent<Catcher>();
+            catcher.TeamsManager = this;
             catcher.PathRequestManager = pathRequestManager;
             catcher.spawnPoint = spawnPoint;
             _catchers.Add(catcher);
         }
+    }
+
+    public Node GetRandomSafeNode()
+    {
+        int n = Random.Range(0, playersGrid.SafeNodes.Count);
+        return playersGrid.SafeNodes[n];
     }
 }

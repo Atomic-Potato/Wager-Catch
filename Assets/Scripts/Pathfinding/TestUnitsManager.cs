@@ -32,7 +32,6 @@ namespace Pathfinding
                     GameObject spawnedUnit = Instantiate(unitObject, grid.Nodes[i,j].WorldPosition, Quaternion.identity, testUnitParent);
                     Player unit = spawnedUnit.GetComponent<Player>();
                     unit.PathRequestManager = pathRequestManager;
-                    unit.TestUnitsManager = this;
                     _units.Add(unit);
 
                     unitsCount--;

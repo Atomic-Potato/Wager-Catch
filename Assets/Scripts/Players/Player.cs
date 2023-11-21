@@ -6,7 +6,6 @@ namespace Pathfinding
     public class Player : MonoBehaviour
     {
         [SerializeField] float speed = 10f;
-        [SerializeField] Transform target;
         [SerializeField] LayerMask collisionMask;
 
         [Space, Header("Gizmos")]
@@ -15,8 +14,9 @@ namespace Pathfinding
         [SerializeField] bool isRandomPathColor = true;
 
         [HideInInspector] public PathRequestManager PathRequestManager;
-        [HideInInspector] public TestUnitsManager TestUnitsManager;
+        [HideInInspector] public TeamsManager TeamsManager;
 
+        protected Vector2? _target;
         Vector2 _facingDirection  = Vector2.down; 
         public Vector2 FacingDirection => _facingDirection;
         Vector2? _previousPosition;
@@ -30,8 +30,8 @@ namespace Pathfinding
         Vector2? _currentWaypoint = null;
         Node _endNodeCache = null;
         Node _startNodeCache = null;
-        bool _isPathRequestSent;
-        bool _isReachedDestination;
+        protected bool _isPathRequestSent;
+        protected bool _isReachedDestination;
         bool _isStopFollowingPath;
 
         void OnDrawGizmos()
@@ -75,7 +75,7 @@ namespace Pathfinding
 
         protected void SendPathRequest()
         {
-            Vector2? targetPosition = target?.position;
+            Vector2? targetPosition = (Vector2)_target;
             if (targetPosition == null)
                 return;
             PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, _endNodeCache, _startNodeCache, UpdatePath);
