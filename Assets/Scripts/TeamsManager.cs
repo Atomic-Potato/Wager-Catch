@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
-using System.Runtime.InteropServices;
 
 public class TeamsManager : MonoBehaviour
 {
@@ -19,6 +18,7 @@ public class TeamsManager : MonoBehaviour
     
     List<Catcher> _catchers = new List<Catcher>();
     List<Runner> _runners = new List<Runner>();
+    public List<Runner> RunnersNotInSafeArea = new List<Runner>();
 
     void Awake()
     {
@@ -33,6 +33,7 @@ public class TeamsManager : MonoBehaviour
             GameObject spawnedRunnerObject = Instantiate(runnerPrefab, GetRandomSafeNode().WorldPosition, Quaternion.identity, runnersParent);
             Runner runner = spawnedRunnerObject.GetComponent<Runner>();
             runner.TeamsManager = this;
+            runner.grid = playersGrid;
             runner.PathRequestManager = pathRequestManager;
             _runners.Add(runner);
         }
@@ -45,6 +46,7 @@ public class TeamsManager : MonoBehaviour
             GameObject spawnedCactherObject = Instantiate(catcherPrefab, spawnPoint.position, Quaternion.identity, catchersParent);
             Catcher catcher = spawnedCactherObject.GetComponent<Catcher>();
             catcher.TeamsManager = this;
+            catcher.grid = playersGrid;
             catcher.PathRequestManager = pathRequestManager;
             catcher.spawnPoint = spawnPoint;
             _catchers.Add(catcher);

@@ -77,15 +77,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  target: {fileID: 0}
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
-  isDrawPath: 0
+  isDrawPath: 1
   pathColor: {r: 1, g: 0, b: 0.0264287, a: 0.5}
   isRandomPathColor: 1
+  grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
-  TestUnitsManager: {fileID: 0}
+  TeamsManager: {fileID: 0}
   spawnPoint: {fileID: 0}
 --- !u!61 &3044994074815680745
 BoxCollider2D:

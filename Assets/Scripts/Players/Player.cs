@@ -13,6 +13,7 @@ namespace Pathfinding
         [SerializeField] Color pathColor = new Color(0f, 0f, 1f, .5f);
         [SerializeField] bool isRandomPathColor = true;
 
+        [HideInInspector] public Pathfinding.Grid grid;
         [HideInInspector] public PathRequestManager PathRequestManager;
         [HideInInspector] public TeamsManager TeamsManager;
 
@@ -78,6 +79,10 @@ namespace Pathfinding
             Vector2? targetPosition = (Vector2)_target;
             if (targetPosition == null)
                 return;
+            
+            // _endNodeCache = grid.GetNodeFromWorldPosition((Vector2)targetPosition);
+            // _startNodeCache = grid.GetNodeFromWorldPosition(transform.position);
+            
             PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, _endNodeCache, _startNodeCache, UpdatePath);
             _isPathRequestSent = true;
         }
@@ -103,7 +108,7 @@ namespace Pathfinding
             int startIndex;
             _isMoving = true;
 
-            if (_pathToTarget[0] == _previousPathStartPoint)
+            if (_pathToTarget.Length > 1 && _pathToTarget[0] == _previousPathStartPoint)
                 startIndex = 1;
             else
             {

@@ -76,16 +76,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa258684ab173fe42a050ea2dce327cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  target: {fileID: 0}
+  speed: 2
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
   isDrawPath: 0
   pathColor: {r: 0, g: 0, b: 1, a: 0.5}
   isRandomPathColor: 1
+  grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
-  TestUnitsManager: {fileID: 0}
+  TeamsManager: {fileID: 0}
+  randomTimeRangeToStartRunning: {x: 0.25, y: 1}
+  boxCollider: {fileID: 3146306151673408437}
+  safeAreaMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  Catchers: []
 --- !u!61 &3146306151673408437
 BoxCollider2D:
   m_ObjectHideFlags: 0

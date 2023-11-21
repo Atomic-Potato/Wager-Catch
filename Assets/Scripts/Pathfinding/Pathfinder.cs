@@ -107,7 +107,8 @@ namespace Pathfinding
             }
             bool IsNodesAreCached()
             {
-                return endNode == endNodeCache && startNode == startNodeCache;
+                // return endNode == endNodeCache && startNode == startNodeCache;
+                return endNode == endNodeCache;
             }
         }
 
