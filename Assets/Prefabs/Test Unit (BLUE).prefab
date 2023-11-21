@@ -76,17 +76,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  destinationReachedWaitTime: 1
+  speed: 10
+  destinationReachedWaitTime: 2
   target: {fileID: 0}
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
-  isDrawPath: 1
-  pathColor: {r: 0, g: 0.075142145, b: 1, a: 1}
+  isDrawPath: 0
+  pathColor: {r: 0, g: 0, b: 1, a: 0.5}
   isRandomPathColor: 0
   PathRequestManager: {fileID: 0}
   TestUnitsManager: {fileID: 0}
+  IsCatcher: 0
+  IsRunner: 0
+  CatcherSpawnPoint: {fileID: 0}
 --- !u!61 &3146306151673408437
 BoxCollider2D:
   m_ObjectHideFlags: 0

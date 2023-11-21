@@ -12,7 +12,7 @@ namespace Pathfinding
         [SerializeField] Grid grid;
         [SerializeField] PathRequestManager pathRequestManager;
 
-        List<TestUnit> _units = new List<TestUnit>();
+        List<Player> _units = new List<Player>();
         int _currentUnitObjectIndex = 0;        
 
         void Start()
@@ -30,7 +30,7 @@ namespace Pathfinding
                         continue;
                     GameObject unitObject = GetUnitObject();
                     GameObject spawnedUnit = Instantiate(unitObject, grid.Nodes[i,j].WorldPosition, Quaternion.identity, testUnitParent);
-                    TestUnit unit = spawnedUnit.GetComponent<TestUnit>();
+                    Player unit = spawnedUnit.GetComponent<Player>();
                     unit.PathRequestManager = pathRequestManager;
                     unit.TestUnitsManager = this;
                     _units.Add(unit);

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Pathfinding
 {
-    public class TestUnit : MonoBehaviour
+    public class Player : MonoBehaviour
     {
         [SerializeField] float speed = 10f;
         [SerializeField] float destinationReachedWaitTime = 2f;
@@ -17,6 +17,9 @@ namespace Pathfinding
 
         [HideInInspector] public PathRequestManager PathRequestManager;
         [HideInInspector] public TestUnitsManager TestUnitsManager;
+        [HideInInspector] public bool IsCatcher;
+        [HideInInspector] public bool IsRunner;
+        [HideInInspector] public Transform CatcherSpawnPoint;
 
         Vector2 _facingDirection  = Vector2.down; 
         public Vector2 FacingDirection => _facingDirection;
@@ -92,7 +95,7 @@ namespace Pathfinding
         void SendPathRequest()
         {
             Vector2? targetPosition = target == null ? 
-                (_isStopFollowingPath ? _randomEndNodePositionCache : TestUnitsManager.GetRandomWalkableNode()?.WorldPosition) 
+                (_isStopFollowingPath ? _randomEndNodePositionCache : TestUnitsManager?.GetRandomWalkableNode()?.WorldPosition) 
                 : target.position;
             if (targetPosition == null)
                 return;

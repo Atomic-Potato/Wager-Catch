@@ -29,8 +29,8 @@ namespace Pathfinding
         
         Node[,] _nodesGrid;
         public Node[,] Nodes => _nodesGrid;
-        Node[] _safeNodes;
-        public Node[] SafeNodes => _safeNodes;
+        List<Node> _safeNodes = new List<Node>();
+        public List<Node> SafeNodes => _safeNodes;
         
         float _nodeDiameter;
         int _nodesCountX;
@@ -86,7 +86,10 @@ namespace Pathfinding
                         Vector2 worldPosition = worldBottomLeftPosition + new Vector2(x * _nodeDiameter + nodeRadius, y * _nodeDiameter + nodeRadius); 
                         bool isWalkable = !Physics2D.OverlapBox(worldPosition, new Vector2(_nodeDiameter, _nodeDiameter), 0f, unwalkableMask);
                         bool isSafe = Physics2D.OverlapBox(worldPosition, new Vector2(_nodeDiameter, _nodeDiameter), 0f, safeAreaMask);
-                        _nodesGrid[x,y] = new Node(isWalkable, worldPosition, x, y, isSafe);
+                        Node newNode = new Node(isWalkable, worldPosition, x, y, isSafe);
+                        _nodesGrid[x,y] = newNode;
+                        if (isSafe)
+                            _safeNodes.Add(newNode);
                     }
                 }
             }
