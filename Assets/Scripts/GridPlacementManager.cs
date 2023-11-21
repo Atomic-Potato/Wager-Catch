@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using Pathfinding;
-using Unity.Mathematics;
 
 public class GridPlacementManager : MonoBehaviour
 {
     [SerializeField] Pathfinding.Grid placementGrid;
     [SerializeField] Pathfinding.Grid unitsGrid;
     [SerializeField] GameObject objectToSpawn;
+    [SerializeField] LayerMask unitsLayer;
 
     void Update()
     {
@@ -33,7 +33,9 @@ public class GridPlacementManager : MonoBehaviour
         
         bool IsCanPlaceOnNode()
         {
-            return !placementNode.IsSafe && placementNode.IsWalkable && placementNode.IsEditable;
+            BoxCollider2D toSpawnCollider = objectToSpawn.GetComponent<BoxCollider2D>();
+            bool isAgentOnNode = Physics2D.OverlapBox(placementNode.WorldPosition, toSpawnCollider.size, 0f, unitsLayer) != null;
+            return !placementNode.IsSafe && placementNode.IsWalkable && placementNode.IsEditable && !isAgentOnNode;
         }
     }
 
