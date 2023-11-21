@@ -518,7 +518,7 @@ MonoBehaviour:
   safeAreaMask:
     serializedVersion: 2
     m_Bits: 1024
-  isDisplayGrid: 1
+  isDisplayGrid: 0
   gridColor: {r: 1, g: 1, b: 1, a: 0.5}
   walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
   unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
@@ -3043,8 +3043,11 @@ MonoBehaviour:
   pathRequestManager: {fileID: 376140509}
   catchersParent: {fileID: 1947969868}
   runnersParent: {fileID: 2028001949}
-  catchersSpawnPoints: []
-  runnersCount: 1
+  catchersSpawnPoints:
+  - {fileID: 2074931494}
+  - {fileID: 393290509}
+  - {fileID: 30491003}
+  runnersCount: 5
   RunnersNotInSafeArea: []
 --- !u!1 &610561676
 GameObject:
@@ -3602,7 +3605,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1491191399}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.13, y: -0.34, z: -2.7560792}
+  m_LocalPosition: {x: 6.76, y: -3.36, z: -2.7560792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 245099426}
@@ -3685,7 +3688,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523463320}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.1102548, y: 1.562521, z: -2.7560792}
+  m_LocalPosition: {x: -6.92, y: 4.2, z: -2.7560792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 245099426}
@@ -4167,7 +4170,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2112940780}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.37, y: -0.34, z: -2.7560792}
+  m_LocalPosition: {x: -7.61, y: -0.79, z: -2.7560792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 245099426}

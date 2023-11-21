@@ -20,8 +20,10 @@ public class Runner : Player
         RequestPathToTarget();
     }
 
-    void Update()
+    new void Update()
     {
+        base.Update();
+        
         if (_isReachedDestination && !_isPathRequestSent && _delayNextRequestCoroutine == null)
             _delayNextRequestCoroutine = StartCoroutine(DelayNextPathRequest());
 

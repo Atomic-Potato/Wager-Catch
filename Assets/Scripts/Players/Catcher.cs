@@ -8,8 +8,9 @@ public class Catcher : Player
     bool _isCatchingTarget;
 
 
-    void Update()
+    new void Update()
     {
+        base.Update();
         if (!_isCatchingTarget)
             FindRunnerTarget();
         _target = _targetRunner.transform.position;

@@ -26,7 +26,7 @@ public class AnimationManager : MonoBehaviour
     [SerializeField] AnimationClip clipWalk_E;
 
     [Space, Header("Other")]
-    [SerializeField] Player testUnit;
+    [SerializeField] Player player;
     [SerializeField] Transform spriteParent;
     #endregion
 
@@ -44,7 +44,7 @@ public class AnimationManager : MonoBehaviour
     void Update()
     {
         #region Animation States Handling
-        if (testUnit.IsMoving)
+        if (player.IsMoving)
         {
             SetAnimationState(GetWalkingAnimationClip(), true);
         }
@@ -54,7 +54,7 @@ public class AnimationManager : MonoBehaviour
         #endregion
 
         #region Sprite Flipping
-        if (testUnit.FacingDirection.x < 0f)
+        if (player.FacingDirection.x < 0f)
         {
             if (spriteParent.localScale.x > 0f)
                 spriteParent.localScale = new Vector3(spriteParent.localScale.x * -1f, spriteParent.localScale.y, spriteParent.localScale.z);
@@ -149,14 +149,14 @@ public class AnimationManager : MonoBehaviour
         return clipIdle_S;
     }
 
-    bool IsFacingNorth => testUnit.FacingDirection.y > 0f && Mathf.Approximately(testUnit.FacingDirection.x, 0f);
-    bool IsFacingNorthEast => testUnit.FacingDirection.y > 0f && testUnit.FacingDirection.x > 0f; 
-    bool IsFacingNorthWest => testUnit.FacingDirection.y > 0f && testUnit.FacingDirection.x < 0f; 
-    bool IsFacingSouth => testUnit.FacingDirection.y < 0f && Mathf.Approximately(testUnit.FacingDirection.x, 0f); 
-    bool IsFacingSouthEast => testUnit.FacingDirection.y < 0f && testUnit.FacingDirection.x > 0f; 
-    bool IsFacingSouthWest => testUnit.FacingDirection.y < 0f && testUnit.FacingDirection.x < 0f; 
-    bool IsFacingEast => Mathf.Approximately(testUnit.FacingDirection.y, 0f) && testUnit.FacingDirection.x > 0f; 
-    bool IsFacingWest => Mathf.Approximately(testUnit.FacingDirection.y, 0f) && testUnit.FacingDirection.x < 0f; 
+    bool IsFacingNorth => player.FacingDirection.y > 0f && Mathf.Approximately(player.FacingDirection.x, 0f);
+    bool IsFacingNorthEast => player.FacingDirection.y > 0f && player.FacingDirection.x > 0f; 
+    bool IsFacingNorthWest => player.FacingDirection.y > 0f && player.FacingDirection.x < 0f; 
+    bool IsFacingSouth => player.FacingDirection.y < 0f && Mathf.Approximately(player.FacingDirection.x, 0f); 
+    bool IsFacingSouthEast => player.FacingDirection.y < 0f && player.FacingDirection.x > 0f; 
+    bool IsFacingSouthWest => player.FacingDirection.y < 0f && player.FacingDirection.x < 0f; 
+    bool IsFacingEast => Mathf.Approximately(player.FacingDirection.y, 0f) && player.FacingDirection.x > 0f; 
+    bool IsFacingWest => Mathf.Approximately(player.FacingDirection.y, 0f) && player.FacingDirection.x < 0f; 
     #endregion
 
     

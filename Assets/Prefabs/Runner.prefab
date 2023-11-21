@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa258684ab173fe42a050ea2dce327cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  speed: 1.25
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
@@ -245,5 +245,5 @@ MonoBehaviour:
   clipWalk_S: {fileID: 7400000, guid: 749e9f2e30336d6428bdbc7569926589, type: 2}
   clipWalk_SE: {fileID: 7400000, guid: c20ffa17953f4c84892807c6047c6693, type: 2}
   clipWalk_E: {fileID: 7400000, guid: 92687b4622de38247b30928d263defc1, type: 2}
-  testUnit: {fileID: 1795681554512091178}
+  player: {fileID: 1795681554512091178}
   spriteParent: {fileID: 5374470096601600781}

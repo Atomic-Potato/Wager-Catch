@@ -58,10 +58,9 @@ namespace Pathfinding
                 pathColor = new Color(Random.Range(.8f,1f), Random.Range(.4f,8f), Random.Range(0f,4f), 1f);
         }
 
-        void Update()
+        protected void Update()
         {
             UpdateFacingDirection();
-
             if (_currentWaypoint != null)
             {
                 Vector2 difference = (Vector2)_currentWaypoint - (Vector2)transform.position;
@@ -79,9 +78,6 @@ namespace Pathfinding
             Vector2? targetPosition = (Vector2)_target;
             if (targetPosition == null)
                 return;
-            
-            // _endNodeCache = grid.GetNodeFromWorldPosition((Vector2)targetPosition);
-            // _startNodeCache = grid.GetNodeFromWorldPosition(transform.position);
             
             PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, _endNodeCache, _startNodeCache, UpdatePath);
             _isPathRequestSent = true;
@@ -151,6 +147,8 @@ namespace Pathfinding
 
         void UpdateFacingDirection()
         {
+            Debug.Log("is dis thing working ?");
+
             if (_previousPosition == null)
             {
                 _previousPosition = transform.position;
