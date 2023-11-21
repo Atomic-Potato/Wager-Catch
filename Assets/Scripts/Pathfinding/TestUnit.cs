@@ -8,6 +8,7 @@ namespace Pathfinding
         [SerializeField] float speed = 10f;
         [SerializeField] float destinationReachedWaitTime = 2f;
         [SerializeField] Transform target;
+        [SerializeField] LayerMask collisionMask;
 
         [Space, Header("Gizmos")]
         [SerializeField] bool isDrawPath;
@@ -27,9 +28,13 @@ namespace Pathfinding
         Coroutine _followPathCoroutine;
         int _pathIndex;
         Vector2 _previousPathStartPoint = Vector2.zero;
+        Vector2? _currentWaypoint = null;
         Node _endNodeCache = null;
+        Node _startNodeCache = null;
+        Vector2 _randomEndNodePositionCache;
         bool _isPathRequestSent;
         bool _isReachedDestination;
+        bool _isStopFollowingPath;
         float _waitTimer;
 
         void OnDrawGizmos()
@@ -71,20 +76,35 @@ namespace Pathfinding
             }
 
             UpdateFacingDirection();
+
+            if (_currentWaypoint != null)
+            {
+                Vector2 difference = (Vector2)_currentWaypoint - (Vector2)transform.position;
+                Vector2 direction = difference.normalized;
+                float distance = difference.magnitude;
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, collisionMask);
+                Debug.DrawRay(transform.position, (Vector2)_currentWaypoint - (Vector2)transform.position, Color.red);
+                if (hit.collider != null)
+                    _isStopFollowingPath = true;
+            }
         }
 
         void SendPathRequest()
         {
-            Vector2? targetPosition = target == null ? TestUnitsManager.GetRandomWalkableNode()?.WorldPosition : target.position;
+            Vector2? targetPosition = target == null ? 
+                (_isStopFollowingPath ? _randomEndNodePositionCache : TestUnitsManager.GetRandomWalkableNode()?.WorldPosition) 
+                : target.position;
             if (targetPosition == null)
                 return;
-            PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, _endNodeCache, UpdatePath);
+            PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, _endNodeCache, _startNodeCache, UpdatePath);
             _isPathRequestSent = true;
         }
 
         void UpdatePath(Vector2[] newPath, bool isFoundPath, Node endNode)
         {
-            _isPathRequestSent = false;   
+            _isPathRequestSent = false;
+            _isStopFollowingPath = false;
+            _isReachedDestination = false;
             _endNodeCache = endNode;
 
             if (!isFoundPath)
@@ -99,8 +119,8 @@ namespace Pathfinding
         IEnumerator FollowPath()
         {
             int startIndex;
-            _isReachedDestination = false;
             _isMoving = true;
+
             if (_pathToTarget[0] == _previousPathStartPoint)
                 startIndex = 1;
             else
@@ -109,24 +129,38 @@ namespace Pathfinding
                 _previousPathStartPoint = _pathToTarget[0];
             }
 
-            Vector2 currentWaypoint = _pathToTarget[startIndex];
+            _currentWaypoint = _pathToTarget[startIndex];
             _pathIndex = 0;
             while(true)
             {
-                if ((Vector2)transform.position == currentWaypoint)
+                if(_isStopFollowingPath)
+                {
+                    StopFollowingPath();
+                    _startNodeCache = null;
+                    _randomEndNodePositionCache = (Vector2)_currentWaypoint;
+                    yield break;
+                }
+
+                if ((Vector2)transform.position == (Vector2)_currentWaypoint)
                 {
                     _pathIndex++;
                     if (_pathIndex >= _pathToTarget.Length)
                     {
-                        _isReachedDestination = true;
-                        _isMoving = false;
+                        StopFollowingPath();
                         _waitTimer = 0f;
                         yield break;
                     }
-                    currentWaypoint = _pathToTarget[_pathIndex];
+                    _currentWaypoint = _pathToTarget[_pathIndex];
                 }
-                transform.position = Vector2.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, (Vector2)_currentWaypoint, speed * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
+            }
+
+            void StopFollowingPath()
+            {
+                _isReachedDestination = true;
+                _isMoving = false;
+                _currentWaypoint = null;
             }
         }
 

@@ -78,6 +78,9 @@ MonoBehaviour:
   speed: 1
   destinationReachedWaitTime: 3.5
   target: {fileID: 0}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 256
   isDrawPath: 0
   pathColor: {r: 1, g: 0.26447573, b: 0, a: 1}
   isRandomPathColor: 0

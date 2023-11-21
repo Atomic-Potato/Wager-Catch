@@ -13,9 +13,9 @@ namespace Pathfinding
         PathRequest _currentPathRequest;
         bool _isProcessingPath;
 
-        public void RequestPath(Vector2 startPosition, Vector2 endPosition, Node endNodeCache, Action<Vector2[], bool, Node> callback)
+        public void RequestPath(Vector2 startPosition, Vector2 endPosition, Node endNodeCache, Node startNodeCache, Action<Vector2[], bool, Node> callback)
         {
-            PathRequest pathRequest = new PathRequest(startPosition, endPosition, endNodeCache, callback);
+            PathRequest pathRequest = new PathRequest(startPosition, endPosition, endNodeCache, startNodeCache, callback);
             _pathRequestsQueue.Enqueue(pathRequest);
             TryToProcessNextPathRequest();
         }
@@ -44,13 +44,15 @@ namespace Pathfinding
         public Vector2 StartPosition;
         public Vector3 EndPosition;
         public Node EndNodeCache;
+        public Node StartNodeCache;
         public Action<Vector2[], bool, Node> Callback; // this will be called once the path is returned
 
-        public PathRequest(Vector2 startPosition, Vector2 endPosition, Node endNodeCache, Action<Vector2[], bool, Node> callback)
+        public PathRequest(Vector2 startPosition, Vector2 endPosition, Node endNodeCache, Node startNodeCache, Action<Vector2[], bool, Node> callback)
         {
             StartPosition = startPosition;
             EndPosition = endPosition;
             EndNodeCache = endNodeCache;
+            StartNodeCache = startNodeCache;
             Callback = callback;
         }
     }

@@ -41,7 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4640423005932321774}
   - component: {fileID: 6076163641624195383}
-  m_Layer: 0
+  - component: {fileID: 3146306151673408437}
+  m_Layer: 9
   m_Name: Test Unit (BLUE)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,13 +77,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  destinationReachedWaitTime: 3.5
+  destinationReachedWaitTime: 1
   target: {fileID: 0}
-  isDrawPath: 0
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 256
+  isDrawPath: 1
   pathColor: {r: 0, g: 0.075142145, b: 1, a: 1}
   isRandomPathColor: 0
   PathRequestManager: {fileID: 0}
   TestUnitsManager: {fileID: 0}
+--- !u!61 &3146306151673408437
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207024369822522638}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.45}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.045}
+  m_EdgeRadius: 0
 --- !u!1 &6797506817921077087
 GameObject:
   m_ObjectHideFlags: 0

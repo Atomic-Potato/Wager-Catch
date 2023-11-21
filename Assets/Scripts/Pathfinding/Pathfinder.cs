@@ -29,10 +29,10 @@ namespace Pathfinding
 
         public void StartFindingPath(PathRequest pathRequest)
         {
-            StartCoroutine(FindPathOnGrid(pathRequest.StartPosition, pathRequest.EndPosition, pathRequest.EndNodeCache));
+            StartCoroutine(FindPathOnGrid(pathRequest.StartPosition, pathRequest.EndPosition, pathRequest.EndNodeCache, pathRequest.StartNodeCache));
         }
 
-        IEnumerator FindPathOnGrid(Vector2 startPosition, Vector2 endPosition, Node endNodeCache = null)
+        IEnumerator FindPathOnGrid(Vector2 startPosition, Vector2 endPosition, Node endNodeCache = null, Node startNodeCache = null)
         {
             // Debugging
             Stopwatch sw = null;
@@ -48,7 +48,7 @@ namespace Pathfinding
             Vector2[] pathWaypoints = null;
             bool isFoundPath = false;
 
-            if (!IsSameAsPreviousEndNode())
+            if (!IsNodesAreCached())
             {
                 // This is the equivalent of creating a new list, but without generating garbage
                 _openSet.Clear();
@@ -105,9 +105,9 @@ namespace Pathfinding
                     }
                 }
             }
-            bool IsSameAsPreviousEndNode()
+            bool IsNodesAreCached()
             {
-                return endNode == endNodeCache;
+                return endNode == endNodeCache && startNode == startNodeCache;
             }
         }
 

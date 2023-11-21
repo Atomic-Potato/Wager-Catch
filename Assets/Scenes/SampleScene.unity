@@ -387,11 +387,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbdeab6c4c473d4a80ecc5d8032fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitsCount: 25
+  unitsCount: 1
   testUnits:
   - {fileID: 4207024369822522638, guid: 1916b85894298234eb8abb6811a7ea52, type: 3}
-  - {fileID: 4207024369822522638, guid: 6218f8f29a431314792a89e60232a93a, type: 3}
-  - {fileID: 4207024369822522638, guid: 3b11a36722f65fd4483e54181376fb54, type: 3}
   testUnitParent: {fileID: 1879569855}
   grid: {fileID: 376140511}
   pathRequestManager: {fileID: 376140509}
@@ -440,7 +438,7 @@ MonoBehaviour:
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 256
-  isDisplayGrid: 1
+  isDisplayGrid: 0
   gridColor: {r: 1, g: 1, b: 1, a: 0.5}
   walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
   unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
