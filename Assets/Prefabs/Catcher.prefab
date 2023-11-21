@@ -240,5 +240,5 @@ MonoBehaviour:
   clipWalk_S: {fileID: 7400000, guid: e7069cfbccc143f4fa8d5815c196fe82, type: 2}
   clipWalk_SE: {fileID: 7400000, guid: 7eb39d5c3dfd22d4899e7457f46f5168, type: 2}
   clipWalk_E: {fileID: 7400000, guid: 80c90d09782ecaf4792f8b969fce69d8, type: 2}
-  testUnit: {fileID: 0}
+  testUnit: {fileID: 2041393261797506488}
   spriteParent: {fileID: 5374470096601600781}
