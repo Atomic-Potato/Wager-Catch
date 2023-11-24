@@ -79,21 +79,18 @@ public class Catcher : Player
         {
             if (_catchEffect != null)
                 Instantiate(_catchEffect, _catchToolEndPoint.position, Quaternion.identity);
-            KillTarget();
+            _targetRunner.Die();
         }
         _catchToolSprite.enabled = false;
 
         yield return new WaitForSeconds(_timeToRecoverCatch);
         _catchCoroutine = null;
+    }
 
-        void KillTarget()
-        {
-            TeamsManager.RunnersNotInSafeArea.Remove(_targetRunner);
-            _targetRunner.Catchers.Clear();
-            _targetRunner.Die();
-            _targetRunner = null;
-            FindRunnerTarget();
-        }
+    public void RemoveTarget()
+    {
+        _targetRunner = null;
+        FindRunnerTarget();
     }
     #endregion
 
@@ -106,7 +103,10 @@ public class Catcher : Player
             FindRunnerTarget();
      
         if (_targetRunner != null)
+        {
             _target = _targetRunner.transform.position;
+            Debug.Log(gameObject.name + " => " + _targetRunner.gameObject.name);
+        }
         else
             _target = SpawnPoint.position;
 

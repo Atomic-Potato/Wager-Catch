@@ -18,7 +18,7 @@ public class TeamsManager : MonoBehaviour
     
     List<Catcher> _catchers = new List<Catcher>();
     List<Runner> _runners = new List<Runner>();
-    public List<Runner> RunnersNotInSafeArea = new List<Runner>();
+    [HideInInspector] public List<Runner> RunnersNotInSafeArea = new List<Runner>();
 
     void Awake()
     {

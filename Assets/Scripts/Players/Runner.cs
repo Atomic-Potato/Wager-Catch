@@ -62,4 +62,13 @@ public class Runner : Player
         _target = TeamsManager.GetRandomSafeNode()?.WorldPosition;
         SendPathRequest();
     }
+
+    public new void Die()
+    {
+        TeamsManager.RunnersNotInSafeArea.Remove(this);
+        foreach(Catcher catcher in Catchers)
+            catcher.RemoveTarget();
+        Catchers.Clear();
+        base.Die();
+    }
 }
