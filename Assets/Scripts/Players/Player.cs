@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Pathfinding
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IPlayer
     {
         [SerializeField] float speed = 10f;
         [SerializeField] LayerMask collisionMask;
@@ -27,7 +27,6 @@ namespace Pathfinding
         Vector2[] _pathToTarget;
         Coroutine _followPathCoroutine;
         int _pathIndex;
-        Vector2 _previousPathStartPoint = Vector2.zero;
         Vector2? _currentWaypoint = null;
         Node _endNodeCache = null;
         Node _startNodeCache = null;
@@ -35,7 +34,7 @@ namespace Pathfinding
         protected bool _isReachedDestination;
         bool _isStopFollowingPath;
 
-        void OnDrawGizmos()
+        protected void OnDrawGizmos()
         {
             if(!isDrawPath)
                 return;
@@ -52,7 +51,7 @@ namespace Pathfinding
             }
         }
 
-        void Awake()
+        protected void Awake()
         {
             if (isRandomPathColor)
                 pathColor = new Color(Random.Range(.8f,1f), Random.Range(.4f,8f), Random.Range(0f,4f), 1f);
@@ -173,6 +172,11 @@ namespace Pathfinding
             Vector2 newDirection = ((Vector2)transform.position - (Vector2)_previousPosition).normalized;
             _previousPosition = transform.position;
             _facingDirection = newDirection;
+        }
+
+        public void Die()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

@@ -48,7 +48,7 @@ public class TeamsManager : MonoBehaviour
             catcher.TeamsManager = this;
             catcher.grid = playersGrid;
             catcher.PathRequestManager = pathRequestManager;
-            catcher.spawnPoint = spawnPoint;
+            catcher.SpawnPoint = spawnPoint;
             _catchers.Add(catcher);
         }
     }

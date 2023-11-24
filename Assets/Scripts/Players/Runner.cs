@@ -11,7 +11,7 @@ public class Runner : Player
     [SerializeField] LayerMask safeAreaMask;
 
     bool _isInSafeArea;
-    public bool IsInSafeZone => _isInSafeArea;
+    public bool IsInSafeArea => _isInSafeArea;
     public List<Catcher> Catchers = new List<Catcher>(); 
     Coroutine _delayNextRequestCoroutine;
 
@@ -30,12 +30,12 @@ public class Runner : Player
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log(collider.gameObject.tag);
         if (collider.gameObject.tag == "Safe Area")
         {
             _isInSafeArea = true;
             if (TeamsManager.RunnersNotInSafeArea.Contains(this))
                 TeamsManager.RunnersNotInSafeArea.Remove(this);
+            Catchers.Clear();
         }
     }
 
@@ -43,7 +43,7 @@ public class Runner : Player
     {
         if (collider.gameObject.tag == "Safe Area")
         {
-            _isInSafeArea = true;
+            _isInSafeArea = false;
             if (!TeamsManager.RunnersNotInSafeArea.Contains(this))
                 TeamsManager.RunnersNotInSafeArea.Add(this);
         }
