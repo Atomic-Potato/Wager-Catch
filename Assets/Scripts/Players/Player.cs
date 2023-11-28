@@ -1,19 +1,29 @@
 ﻿using System.Collections;
+using Abilities;
 using UnityEngine;
 
 namespace Pathfinding
 {
     public class Player : MonoBehaviour, IPlayer
     {
-        [SerializeField] float speed = 10f;
-        [SerializeField] LayerMask collisionMask;
+        [SerializeField] float _speed = 2f;
+        
+        [Space]
+        [SerializeField] Vector2 _collisionCheckSize = Vector2.one;
+        [SerializeField] Vector2 _collisionCheckOffset;
+        
+        [Space]
+        [SerializeField] LayerMask _collisionLayer;
+        [SerializeField] LayerMask _slowdownAreaLayer;
 
         [Space, Header("Gizmos")]
+        [SerializeField] bool _isDrawCollisionCheckSize;
+        [SerializeField] Color _collisionCheckCollor = Color.red;
         [SerializeField] bool isDrawPath;
         [SerializeField] Color pathColor = new Color(0f, 0f, 1f, .5f);
         [SerializeField] bool isRandomPathColor = true;
 
-        [HideInInspector] public Pathfinding.Grid grid;
+        [HideInInspector] public Grid grid;
         [HideInInspector] public PathRequestManager PathRequestManager;
         [HideInInspector] public TeamsManager TeamsManager;
 
@@ -34,21 +44,30 @@ namespace Pathfinding
         protected bool _isReachedDestination;
         protected bool _isStopFollowingPath;
         protected bool _isCollided;
+        bool _isSlowedDown;
+
+        float _appliedSpeed;
 
         protected void OnDrawGizmos()
         {
-            if(!isDrawPath)
-                return;
-            
-            if (_pathToTarget != null)
+            if(isDrawPath)
             {
-                for(int i = _pathIndex; i < _pathToTarget.Length; i++)
+                if (_pathToTarget != null)
                 {
-                    Gizmos.color = pathColor;
-                    if(i != _pathIndex)
-                        Gizmos.DrawLine(_pathToTarget[i-1], _pathToTarget[i]);
-                    Gizmos.DrawCube(_pathToTarget[i], new Vector3(.25f, .25f, 0f));
+                    for(int i = _pathIndex; i < _pathToTarget.Length; i++)
+                    {
+                        Gizmos.color = pathColor;
+                        if(i != _pathIndex)
+                            Gizmos.DrawLine(_pathToTarget[i-1], _pathToTarget[i]);
+                        Gizmos.DrawCube(_pathToTarget[i], new Vector3(.25f, .25f, 0f));
+                    }
                 }
+            }
+
+            if (_isDrawCollisionCheckSize)
+            {
+                Gizmos.color = _collisionCheckCollor;
+                Gizmos.DrawWireCube(transform.position + (Vector3)_collisionCheckOffset, _collisionCheckSize);
             }
         }
 
@@ -56,12 +75,15 @@ namespace Pathfinding
         {
             if (isRandomPathColor)
                 pathColor = new Color(Random.Range(.8f,1f), Random.Range(.4f,8f), Random.Range(0f,4f), 1f);
+
+            _appliedSpeed = _speed;
         }
 
         protected void Update()
         {
             UpdateFacingDirection();
-            CheckForNewCollisionInPath();
+            CheckForCollisions();
+            CheckForSlowdownAreas();
         }
 
         
@@ -117,7 +139,7 @@ namespace Pathfinding
                     }
                     _currentWaypoint = _pathToTarget[_pathIndex];
                 }
-                transform.position = Vector2.MoveTowards(transform.position, (Vector2)_currentWaypoint, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, (Vector2)_currentWaypoint, _appliedSpeed * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
 
@@ -167,18 +189,49 @@ namespace Pathfinding
             _facingDirection = newDirection;
         }
 
-        void CheckForNewCollisionInPath()
+        void CheckForCollisions()
         {
             if (_currentWaypoint != null)
             {
                 Vector2 difference = (Vector2)_currentWaypoint - (Vector2)transform.position;
                 Vector2 direction = difference.normalized;
                 float distance = difference.magnitude;
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, collisionMask);
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, _collisionLayer);
                 
                 if (hit.collider != null)
+                {
                     _isStopFollowingPath = true;
-                _isCollided = hit;
+                    _isCollided = true;
+                }
+                else
+                {
+                    _isCollided = false;
+                }
+            }
+        }
+
+        void CheckForSlowdownAreas()
+        {
+            Debug.Log("Speed: " + _appliedSpeed);
+            SlowdownArea  slowdownArea = null;
+            Collider2D[] colliders = Physics2D.OverlapBoxAll((Vector2)transform.position + _collisionCheckOffset, _collisionCheckSize, 0f);
+            foreach (Collider2D collider in colliders)
+            {
+                if (1 << collider.gameObject.layer == _slowdownAreaLayer.value)
+                    slowdownArea = collider.gameObject.GetComponent<SlowdownArea>();
+            }
+
+            if (slowdownArea == null)
+            {
+                _appliedSpeed = _speed;
+                _isSlowedDown = false;
+                return;
+            }
+            
+            if (!_isSlowedDown)
+            {
+                _appliedSpeed *= slowdownArea.SlowdownFactor;
+                _isSlowedDown = true;
             }
         }
 

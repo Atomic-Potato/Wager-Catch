@@ -29,7 +29,7 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
         BoxCollider2D collider = spawnedObject.GetComponent<BoxCollider2D>();
         _placedObjects.Add(spawnedObject);
 
-        if (collider != null)
+        if (collider != null && !collider.isTrigger)
         {
             _unitsGrid.UpdateGridSection(collider.bounds.min, collider.bounds.max, placementNode.IsSafe, false);
             _placementGrid.UpdateGridSection(collider.bounds.min, collider.bounds.max, placementNode.IsSafe, false);
