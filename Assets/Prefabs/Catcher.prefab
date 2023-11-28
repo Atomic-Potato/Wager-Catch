@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131306374609749397}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.03, y: 0.45, z: 0}
+  m_LocalPosition: {x: 0, y: 0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4640423005932321774}
@@ -118,9 +118,9 @@ MonoBehaviour:
   grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
-  _timeToCatch: 1.75
-  _timeToRecoverCatch: 0
-  _catchAreaRadius: 2.14
+  _timeToCatch: 1.15
+  _timeToRecoverCatch: 2.5
+  _catchAreaRadius: 0.75
   _catchAreaOrigin: {fileID: 8101666772180373965}
   _catchToolSprite: {fileID: 8977168415014358857}
   _catchToolEndPoint: {fileID: 0}

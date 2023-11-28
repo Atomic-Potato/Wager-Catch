@@ -174,7 +174,7 @@ namespace Pathfinding
             _facingDirection = newDirection;
         }
 
-        public void Die()
+        public virtual void Die()
         {
             gameObject.SetActive(false);
         }

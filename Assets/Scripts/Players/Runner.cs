@@ -63,9 +63,10 @@ public class Runner : Player
         SendPathRequest();
     }
 
-    public new void Die()
+    public override void Die()
     {
         TeamsManager.RunnersNotInSafeArea.Remove(this);
+        TeamsManager.RemoveRunner(this);
         foreach(Catcher catcher in Catchers)
             catcher.RemoveTarget();
         Catchers.Clear();

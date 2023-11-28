@@ -103,10 +103,7 @@ public class Catcher : Player
             FindRunnerTarget();
      
         if (_targetRunner != null)
-        {
             _target = _targetRunner.transform.position;
-            Debug.Log(gameObject.name + " => " + _targetRunner.gameObject.name);
-        }
         else
             _target = SpawnPoint.position;
 
@@ -168,6 +165,12 @@ public class Catcher : Player
                 }
             }
         }
-        #endregion
+    }
+    #endregion
+
+    public override void Die()
+    {
+        TeamsManager.RemoveCatcher(this);
+        base.Die();
     }
 }
