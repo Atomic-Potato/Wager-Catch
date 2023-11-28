@@ -7,7 +7,6 @@ public class Runner : Player
 {
     [Space, Header("Runner Properites")]
     [SerializeField, Min(0f)] Vector2 randomTimeRangeToStartRunning = new Vector2(.25f, 1f);
-    [SerializeField] BoxCollider2D boxCollider;
     [SerializeField] LayerMask safeAreaMask;
 
     bool _isInSafeArea;
@@ -17,7 +16,7 @@ public class Runner : Player
 
     void Start()
     {
-        RequestPathToTarget();
+        RequestPathToNewSafeArea();
     }
 
     new void Update()
@@ -30,7 +29,7 @@ public class Runner : Player
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.tag == "Safe Area")
+        if (collider.gameObject.layer == safeAreaMask)
         {
             _isInSafeArea = true;
             if (TeamsManager.RunnersNotInSafeArea.Contains(this))
@@ -41,7 +40,7 @@ public class Runner : Player
 
     void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.gameObject.tag == "Safe Area")
+        if (collider.gameObject.layer == safeAreaMask)
         {
             _isInSafeArea = false;
             if (!TeamsManager.RunnersNotInSafeArea.Contains(this))
@@ -51,13 +50,13 @@ public class Runner : Player
 
     IEnumerator DelayNextPathRequest()
     {
-        float delayTime = Random.Range(randomTimeRangeToStartRunning.x, randomTimeRangeToStartRunning.y);
+        float delayTime = _isCollided ? 0f : Random.Range(randomTimeRangeToStartRunning.x, randomTimeRangeToStartRunning.y);
         yield return new WaitForSeconds(delayTime);
-        RequestPathToTarget();
+        RequestPathToNewSafeArea();
         _delayNextRequestCoroutine = null;
     }
 
-    void RequestPathToTarget()
+    void RequestPathToNewSafeArea()
     {
         _target = TeamsManager.GetRandomSafeNode()?.WorldPosition;
         SendPathRequest();

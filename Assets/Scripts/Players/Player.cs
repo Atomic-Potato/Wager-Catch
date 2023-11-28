@@ -32,7 +32,8 @@ namespace Pathfinding
         Node _startNodeCache = null;
         protected bool _isPathRequestSent;
         protected bool _isReachedDestination;
-        bool _isStopFollowingPath;
+        protected bool _isStopFollowingPath;
+        protected bool _isCollided;
 
         protected void OnDrawGizmos()
         {
@@ -60,18 +61,10 @@ namespace Pathfinding
         protected void Update()
         {
             UpdateFacingDirection();
-            if (_currentWaypoint != null)
-            {
-                Vector2 difference = (Vector2)_currentWaypoint - (Vector2)transform.position;
-                Vector2 direction = difference.normalized;
-                float distance = difference.magnitude;
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, collisionMask);
-                Debug.DrawRay(transform.position, (Vector2)_currentWaypoint - (Vector2)transform.position, Color.red);
-                if (hit.collider != null)
-                    _isStopFollowingPath = true;
-            }
+            CheckForNewCollisionInPath();
         }
 
+        
         protected void SendPathRequest()
         {
             Vector2? targetPosition = (Vector2)_target;
@@ -173,6 +166,22 @@ namespace Pathfinding
             _previousPosition = transform.position;
             _facingDirection = newDirection;
         }
+
+        void CheckForNewCollisionInPath()
+        {
+            if (_currentWaypoint != null)
+            {
+                Vector2 difference = (Vector2)_currentWaypoint - (Vector2)transform.position;
+                Vector2 direction = difference.normalized;
+                float distance = difference.magnitude;
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, distance, collisionMask);
+                
+                if (hit.collider != null)
+                    _isStopFollowingPath = true;
+                _isCollided = hit;
+            }
+        }
+
 
         public virtual void Die()
         {
