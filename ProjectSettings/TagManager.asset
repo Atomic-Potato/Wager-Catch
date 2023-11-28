@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Safe Area
+  - Banana
+  - SafeArea
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - 
   - 
   - Collider
-  - Unit
+  - Team Player
   - Safe Area
   - Slowdown Area
   - 

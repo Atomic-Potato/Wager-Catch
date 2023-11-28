@@ -7,6 +7,8 @@ namespace Abilities
     public abstract class AbilityBase : MonoBehaviour, IAbility
     {
         [SerializeField, Min(0f)] float _duration = 1f;
+        [SerializeField] bool _isEndlessDuration;
+        
         Coroutine _selfDestructCoroutine;
 
         public virtual void Destroy()
@@ -17,7 +19,7 @@ namespace Abilities
 
         public virtual void Spawn()
         {
-            if (_selfDestructCoroutine == null)
+            if (!_isEndlessDuration && _selfDestructCoroutine == null)
                 _selfDestructCoroutine = StartCoroutine(SelfDestruct());
         }
 

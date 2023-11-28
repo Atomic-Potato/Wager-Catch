@@ -15,6 +15,7 @@ namespace Pathfinding
         [Space]
         [SerializeField] LayerMask _collisionLayer;
         [SerializeField] LayerMask _slowdownAreaLayer;
+        [SerializeField] TagsManager.Tag _bananaTag;
 
         [Space, Header("Gizmos")]
         [SerializeField] bool _isDrawCollisionCheckSize;
@@ -44,7 +45,8 @@ namespace Pathfinding
         protected bool _isReachedDestination;
         protected bool _isStopFollowingPath;
         protected bool _isCollided;
-        bool _isSlowedDown;
+        protected bool _isSlowedDown;
+        protected bool _isSleeping;
 
         float _appliedSpeed;
 
@@ -90,7 +92,7 @@ namespace Pathfinding
         protected void SendPathRequest()
         {
             Vector2? targetPosition = (Vector2)_target;
-            if (targetPosition == null)
+            if (targetPosition == null || _isSleeping)
                 return;
             
             PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, _endNodeCache, _startNodeCache, UpdatePath);
@@ -107,21 +109,31 @@ namespace Pathfinding
                 return;
             _pathToTarget = newPath;
 
-            if (_followPathCoroutine != null)
-                StopCoroutine(_followPathCoroutine);
-            _followPathCoroutine = StartCoroutine(FollowPath());
+            _followPathCoroutine = ResetartCoroutine(_followPathCoroutine);
+
+            Coroutine ResetartCoroutine(Coroutine coroutine)
+            {
+                if (coroutine != null)
+                    StopCoroutine(coroutine);
+                return StartCoroutine(FollowPath());
+            }
         }
 
         IEnumerator FollowPath()
         {
             int startIndex = GetClosestPathPointIndex();
-            _isMoving = true;
             _isReachedDestination = false;
 
             _currentWaypoint = _pathToTarget[startIndex];
             _pathIndex = 0;
             while(true)
             {
+                if (_isSleeping)
+                {
+                    yield return new WaitForEndOfFrame();
+                    continue;
+                }
+
                 if(_isStopFollowingPath)
                 {
                     StopFollowingPath();
@@ -139,6 +151,8 @@ namespace Pathfinding
                     }
                     _currentWaypoint = _pathToTarget[_pathIndex];
                 }
+
+                _isMoving = true;
                 transform.position = Vector2.MoveTowards(transform.position, (Vector2)_currentWaypoint, _appliedSpeed * Time.deltaTime);
                 yield return new WaitForEndOfFrame();
             }
@@ -212,9 +226,8 @@ namespace Pathfinding
 
         void CheckForSlowdownAreas()
         {
-            Debug.Log("Speed: " + _appliedSpeed);
             SlowdownArea  slowdownArea = null;
-            Collider2D[] colliders = Physics2D.OverlapBoxAll((Vector2)transform.position + _collisionCheckOffset, _collisionCheckSize, 0f);
+            Collider2D[] colliders = GetCollisionColliders();
             foreach (Collider2D collider in colliders)
             {
                 if (1 << collider.gameObject.layer == _slowdownAreaLayer.value)
@@ -235,6 +248,21 @@ namespace Pathfinding
             }
         }
 
+        Collider2D[] GetCollisionColliders()
+        {
+            return Physics2D.OverlapBoxAll((Vector2)transform.position + _collisionCheckOffset, _collisionCheckSize, 0f);
+        }
+
+        public void Sleep()
+        {
+            _isSleeping = true;
+            _isMoving = false;
+        }
+
+        public void Wake()
+        {
+            _isSleeping = false;
+        }
 
         public virtual void Die()
         {
