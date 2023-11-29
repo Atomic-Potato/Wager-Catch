@@ -33,31 +33,37 @@ public class TeamsManager : Singleton<TeamsManager>
         TeamsCountBroadcaster = new UnityEvent();
     }
 
+    public void AddRunner(Vector2 position)
+    {
+        GameObject spawnedRunnerObject = Instantiate(runnerPrefab, position, Quaternion.identity, runnersParent);
+        Runner runner = spawnedRunnerObject.GetComponent<Runner>();
+        runner.TeamsManager = this;
+        runner.grid = playersGrid;
+        runner.PathRequestManager = pathRequestManager;
+        _runners.Add(runner);
+    }
+
     void LoadRunners()
     {
         for (int i=0; i < runnersCount; i++)
-        {
-            GameObject spawnedRunnerObject = Instantiate(runnerPrefab, GetRandomSafeNode().WorldPosition, Quaternion.identity, runnersParent);
-            Runner runner = spawnedRunnerObject.GetComponent<Runner>();
-            runner.TeamsManager = this;
-            runner.grid = playersGrid;
-            runner.PathRequestManager = pathRequestManager;
-            _runners.Add(runner);
-        }
+            AddRunner(GetRandomSafeNode().WorldPosition);
+    }
+
+    public void AddCatcher(Vector2 position, Transform spawnPoint = null)
+    {
+        GameObject spawnedCactherObject = Instantiate(catcherPrefab, position, Quaternion.identity, catchersParent);
+        Catcher catcher = spawnedCactherObject.GetComponent<Catcher>();
+        catcher.TeamsManager = this;
+        catcher.grid = playersGrid;
+        catcher.PathRequestManager = pathRequestManager;
+        catcher.SpawnPoint = spawnPoint;
+        _catchers.Add(catcher);
     }
 
     void LoadCatchers()
     {
         foreach (Transform spawnPoint in catchersSpawnPoints)
-        {
-            GameObject spawnedCactherObject = Instantiate(catcherPrefab, spawnPoint.position, Quaternion.identity, catchersParent);
-            Catcher catcher = spawnedCactherObject.GetComponent<Catcher>();
-            catcher.TeamsManager = this;
-            catcher.grid = playersGrid;
-            catcher.PathRequestManager = pathRequestManager;
-            catcher.SpawnPoint = spawnPoint;
-            _catchers.Add(catcher);
-        }
+            AddCatcher(spawnPoint.position, spawnPoint);
     }
 
     public Node GetRandomSafeNode()
