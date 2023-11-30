@@ -17,9 +17,9 @@ public class TeamsManager : Singleton<TeamsManager>
     [SerializeField] List<Transform> catchersSpawnPoints;
     [SerializeField, Min(0)] int runnersCount;
     
-    List<Catcher> _catchers = new List<Catcher>();
+    public List<Catcher> _catchers = new List<Catcher>();
     public int CatchersCount => _catchers.Count;
-    List<Runner> _runners = new List<Runner>();
+    public List<Runner> _runners = new List<Runner>();
     public int RunnersCount => _runners.Count;
     [HideInInspector] public List<Runner> RunnersNotInSafeArea = new List<Runner>();
 

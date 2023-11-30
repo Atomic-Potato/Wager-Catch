@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Banana
   - SafeArea
+  - Runner
+  - Catcher
+  - NuteralPlayer
   layers:
   - Default
   - TransparentFX

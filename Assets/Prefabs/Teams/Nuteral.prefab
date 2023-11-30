@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 4640423005932321774}
   - component: {fileID: 6076163641624195383}
   - component: {fileID: 1966106172449178397}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Nuteral
-  m_TagString: Player
+  m_TagString: NuteralPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,10 +81,10 @@ MonoBehaviour:
   _collisionCheckOffset: {x: 0, y: 0}
   _collisionLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   _slowdownAreaLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   _isDrawCollisionCheckSize: 0
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
   isDrawPath: 0

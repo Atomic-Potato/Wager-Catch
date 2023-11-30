@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &551383120854239036
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 551383120854239037}
+  - component: {fileID: 551383120854239038}
+  m_Layer: 0
+  m_Name: Teams Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &551383120854239037
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551383120854239036}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &551383120854239038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551383120854239036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca1a17787bf364418af69126bdd6a89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _catcherPrefab: {fileID: 4207024369822522638, guid: 3b11a36722f65fd4483e54181376fb54,
+    type: 3}
+  _runnerPrefab: {fileID: 4207024369822522638, guid: 1916b85894298234eb8abb6811a7ea52,
+    type: 3}
+  playersGrid: {fileID: 0}
+  pathRequestManager: {fileID: 0}
+  catchersParent: {fileID: 0}
+  runnersParent: {fileID: 0}
+  catchersSpawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  runnersCount: 1
+  _catchers: []
+  _runners: []
+  RunnersNotInSafeArea: []
+  TeamsCountBroadcaster:
+    m_PersistentCalls:
+      m_Calls: []

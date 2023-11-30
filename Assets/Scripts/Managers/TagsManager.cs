@@ -11,6 +11,9 @@ public class TagsManager
         Player = 1,
         SafeArea = 2,
         Banana = 4,
+        Runner = 8,
+        Catcher = 16,
+        NuteralPlayer = 32,
     }
 
     public static Tag GetTagFromString(string tagName)

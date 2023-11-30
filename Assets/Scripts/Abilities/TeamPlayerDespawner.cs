@@ -12,15 +12,25 @@ namespace Abilities
             base.Spawn();
 
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D collider = Physics2D.OverlapCircle(mousePosition, 0.1f);
-            TagsManager.Tag colliderTag = TagsManager.GetTagFromString(collider.gameObject.tag);
-            Debug.Log("Used Despawner");
-            if (TagsManager.IsTagOneOfMultipleTags(colliderTag, _teamPlayerTags))
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(mousePosition, 0.1f);
+            Collider2D collider = GetColliderWithPlayerTag();
+
+            if (collider != null)
             {
-                Debug.Log("Has found player");
                 Player player = collider.gameObject.GetComponent<Player>();
                 TeamsManager.Instance.RemovePlayer(player);
                 player.Die();
+            }
+
+            Collider2D GetColliderWithPlayerTag()
+            {
+                foreach (Collider2D col in colliders)
+                {
+                    TagsManager.Tag colliderTag = TagsManager.GetTagFromString(col.gameObject.tag);
+                    if (TagsManager.IsTagOneOfMultipleTags(colliderTag, _teamPlayerTags))
+                        return col;
+                }
+                return null;
             }
         }
     }
