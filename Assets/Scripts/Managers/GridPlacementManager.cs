@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Pathfinding;
 using System.Collections.Generic;
-
+using System;
 public class GridPlacementManager : Singleton<GridPlacementManager>
 {
     [SerializeField] Pathfinding.Grid _placementGrid;
@@ -9,7 +9,12 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
     [SerializeField] GameObject _objectToSpawn;
     [SerializeField] LayerMask _invalidPlacementLayers;
 
-    List<GameObject> _placedObjects = new List<GameObject>(); 
+    [SerializeField] TagsManager.Tag _noCollisionTags;
+    public List<GameObject> _placedObjects = new List<GameObject>(); 
+
+    void Start()
+    {
+    }
 
     void Update()
     {
@@ -29,7 +34,7 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
         BoxCollider2D collider = spawnedObject.GetComponent<BoxCollider2D>();
         _placedObjects.Add(spawnedObject);
 
-        if (collider != null && !collider.isTrigger)
+        if (collider != null && !collider.isTrigger && IsCollisionTag())
         {
             _unitsGrid.UpdateGridSection(collider.bounds.min, collider.bounds.max, placementNode.IsSafe, false);
             _placementGrid.UpdateGridSection(collider.bounds.min, collider.bounds.max, placementNode.IsSafe, false);
@@ -40,6 +45,12 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
             BoxCollider2D toSpawnCollider = placedObjectPrefab.GetComponent<BoxCollider2D>();
             bool isAgentOnNode = Physics2D.OverlapBox(placementNode.WorldPosition, toSpawnCollider.size, 0f, _invalidPlacementLayers) != null;
             return !placementNode.IsSafe && placementNode.IsWalkable && placementNode.IsEditable && !isAgentOnNode;
+        }
+
+        bool IsCollisionTag()
+        {
+            TagsManager.Tag colliderTag = TagsManager.GetTagFromString(collider.gameObject.tag);
+            return (colliderTag & _noCollisionTags) == 0;
         }
     }
 
@@ -58,9 +69,11 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
 
             _unitsGrid.UpdateGridSection(bounds.min, bounds.max, placementNode.IsSafe, true);
             _placementGrid.UpdateGridSection(bounds.min, bounds.max, placementNode.IsSafe, true);
+            Debug.Log("Updated grid");
         }
-
+        
         _placedObjects.Remove(removedObject);
+        
     }
 
 }

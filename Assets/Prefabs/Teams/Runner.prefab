@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: -1746359006166939853}
   m_Layer: 9
   m_Name: Runner
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,9 +95,6 @@ MonoBehaviour:
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
   randomTimeRangeToStartRunning: {x: 2, y: 2}
-  safeAreaMask:
-    serializedVersion: 2
-    m_Bits: 1024
   Catchers: []
 --- !u!61 &3146306151673408437
 BoxCollider2D:

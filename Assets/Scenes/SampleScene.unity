@@ -652,11 +652,12 @@ MonoBehaviour:
   safeAreaMask:
     serializedVersion: 2
     m_Bits: 1024
-  isDisplayGrid: 1
+  isDisplayGrid: 0
   gridColor: {r: 1, g: 1, b: 1, a: 0.5}
   walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
   unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
   safeNodesColor: {r: 0, g: 0, b: 1, a: 0.5}
+  uneditableNodesColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!4 &376140512
 Transform:
   m_ObjectHideFlags: 0
@@ -3169,16 +3170,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca1a17787bf364418af69126bdd6a89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catcherPrefab: {fileID: 4207024369822522638, guid: 3b11a36722f65fd4483e54181376fb54,
+  _catcherPrefab: {fileID: 4207024369822522638, guid: 3b11a36722f65fd4483e54181376fb54,
     type: 3}
-  runnerPrefab: {fileID: 4207024369822522638, guid: 1916b85894298234eb8abb6811a7ea52,
+  _runnerPrefab: {fileID: 4207024369822522638, guid: 1916b85894298234eb8abb6811a7ea52,
     type: 3}
   playersGrid: {fileID: 376140511}
   pathRequestManager: {fileID: 376140509}
   catchersParent: {fileID: 1947969868}
   runnersParent: {fileID: 2028001949}
-  catchersSpawnPoints: []
-  runnersCount: 1
+  catchersSpawnPoints:
+  - {fileID: 2074931494}
+  - {fileID: 393290509}
+  - {fileID: 30491003}
+  runnersCount: 0
   RunnersNotInSafeArea: []
   TeamsCountBroadcaster:
     m_PersistentCalls:
@@ -4096,11 +4100,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _placementGrid: {fileID: 1709674774}
   _unitsGrid: {fileID: 376140511}
-  _objectToSpawn: {fileID: 6973330181782093120, guid: 79f8fb85162b5f34ab6443ddbf700869,
+  _objectToSpawn: {fileID: 9006420800842426866, guid: 862635fcededc7d489b04e6c78faa433,
     type: 3}
   _invalidPlacementLayers:
     serializedVersion: 2
     m_Bits: 1536
+  _noCollisionTags: 3
+  _placedObjects: []
 --- !u!114 &1709674774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4121,11 +4127,12 @@ MonoBehaviour:
   safeAreaMask:
     serializedVersion: 2
     m_Bits: 0
-  isDisplayGrid: 0
+  isDisplayGrid: 1
   gridColor: {r: 1, g: 1, b: 1, a: 0.19607843}
   walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.19607843}
   unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.19607843}
   safeNodesColor: {r: 0, g: 0, b: 1, a: 0.5}
+  uneditableNodesColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 0.4745098}
 --- !u!4 &1709674775
 Transform:
   m_ObjectHideFlags: 0

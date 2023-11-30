@@ -7,7 +7,6 @@ public class Runner : Player
 {
     [Space, Header("Runner Properites")]
     [SerializeField, Min(0f)] Vector2 randomTimeRangeToStartRunning = new Vector2(.25f, 1f);
-    [SerializeField] LayerMask safeAreaMask;
 
     bool _isInSafeArea;
     public bool IsInSafeArea => _isInSafeArea;
@@ -16,6 +15,7 @@ public class Runner : Player
 
     void Start()
     {
+        TeamsManager.RunnersNotInSafeArea.Add(this);
         RequestPathToNewSafeArea();
     }
 
@@ -29,7 +29,7 @@ public class Runner : Player
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.layer == safeAreaMask)
+        if (collider.gameObject.tag == TagsManager.Tag.SafeArea.ToString())
         {
             _isInSafeArea = true;
             if (TeamsManager.RunnersNotInSafeArea.Contains(this))
@@ -40,7 +40,7 @@ public class Runner : Player
 
     void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.gameObject.layer == safeAreaMask)
+        if (collider.gameObject.tag == TagsManager.Tag.SafeArea.ToString())
         {
             _isInSafeArea = false;
             if (!TeamsManager.RunnersNotInSafeArea.Contains(this))

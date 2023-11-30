@@ -15,7 +15,6 @@ namespace Pathfinding
         [Space]
         [SerializeField] LayerMask _collisionLayer;
         [SerializeField] LayerMask _slowdownAreaLayer;
-        [SerializeField] TagsManager.Tag _bananaTag;
 
         [Space, Header("Gizmos")]
         [SerializeField] bool _isDrawCollisionCheckSize;

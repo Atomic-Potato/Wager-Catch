@@ -20,6 +20,7 @@ namespace Pathfinding
         [SerializeField] Color walkableNodesColor = new Color(0f, 1f, 0f, .5f);
         [SerializeField] Color unwalkableNodesColor = new Color(1f, 0f, 0f, .5f);
         [SerializeField] Color safeNodesColor = new Color(0f, 0f, 1f, .5f);
+        [SerializeField] Color uneditableNodesColor = Color.yellow;
         #endregion
 
         #region Global Variables
@@ -53,7 +54,12 @@ namespace Pathfinding
                     if (n.IsSafe && n.IsWalkable)
                         Gizmos.color = safeNodesColor;
                     else
-                        Gizmos.color = n.IsWalkable ? walkableNodesColor : unwalkableNodesColor;
+                    {
+                        if (n.IsWalkable)
+                            Gizmos.color = !n.IsEditable ? uneditableNodesColor : walkableNodesColor;
+                        else
+                            Gizmos.color = unwalkableNodesColor;
+                    }
                     Gizmos.DrawCube(n.WorldPosition, new Vector3(_nodeDiameter - .1f, _nodeDiameter - .1f));
                 }
             }

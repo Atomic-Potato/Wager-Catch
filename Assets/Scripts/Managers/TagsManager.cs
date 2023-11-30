@@ -1,11 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class TagsManager
 {
+    [Flags]
     public enum Tag
     {
-        Player,
-        SafeArea,
-        Banana,
+        Untagged = 0,
+        Player = 1,
+        SafeArea = 2,
+        Banana = 4,
+    }
+
+    public static Tag GetTagFromString(string tagName)
+    {
+        List<string> tagNames = new List<string>(Enum.GetNames(typeof(Tag)));
+        int tagIndex = tagNames.IndexOf(tagName) - 1;
+        return  tagIndex == -1 ? Tag.Untagged : (Tag)(int)Mathf.Pow(2, tagIndex);
     }
 }

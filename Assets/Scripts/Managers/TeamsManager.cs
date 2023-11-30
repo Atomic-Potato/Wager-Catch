@@ -5,8 +5,8 @@ using UnityEngine.Events;
 
 public class TeamsManager : Singleton<TeamsManager>
 {
-    [SerializeField] GameObject catcherPrefab;
-    [SerializeField] GameObject runnerPrefab;
+    [SerializeField] GameObject _catcherPrefab;
+    [SerializeField] GameObject _runnerPrefab;
     [SerializeField] Pathfinding.Grid playersGrid;
     [SerializeField] PathRequestManager pathRequestManager;
     [Space]
@@ -25,6 +25,16 @@ public class TeamsManager : Singleton<TeamsManager>
 
     [HideInInspector] public UnityEvent TeamsCountBroadcaster;
 
+    int _catcherSpawnPointIndex;
+
+    public enum Team
+    {
+        Runner,
+        Catcher,
+        Nuteral,
+        Guard,
+    }
+
     new void Awake()
     {
         base.Awake();
@@ -35,7 +45,7 @@ public class TeamsManager : Singleton<TeamsManager>
 
     public void AddRunner(Vector2 position)
     {
-        GameObject spawnedRunnerObject = Instantiate(runnerPrefab, position, Quaternion.identity, runnersParent);
+        GameObject spawnedRunnerObject = Instantiate(_runnerPrefab, position, Quaternion.identity, runnersParent);
         Runner runner = spawnedRunnerObject.GetComponent<Runner>();
         runner.TeamsManager = this;
         runner.grid = playersGrid;
@@ -51,12 +61,12 @@ public class TeamsManager : Singleton<TeamsManager>
 
     public void AddCatcher(Vector2 position, Transform spawnPoint = null)
     {
-        GameObject spawnedCactherObject = Instantiate(catcherPrefab, position, Quaternion.identity, catchersParent);
+        GameObject spawnedCactherObject = Instantiate(_catcherPrefab, position, Quaternion.identity, catchersParent);
         Catcher catcher = spawnedCactherObject.GetComponent<Catcher>();
         catcher.TeamsManager = this;
         catcher.grid = playersGrid;
         catcher.PathRequestManager = pathRequestManager;
-        catcher.SpawnPoint = spawnPoint;
+        catcher.SpawnPoint = spawnPoint != null ? spawnPoint : catchersSpawnPoints[_catcherSpawnPointIndex++ % catchersSpawnPoints.Count];
         _catchers.Add(catcher);
     }
 

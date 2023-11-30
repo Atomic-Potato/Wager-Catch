@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 1
+  _isEndlessDuration: 0
 --- !u!212 &1123992007143491319
 SpriteRenderer:
   m_ObjectHideFlags: 0

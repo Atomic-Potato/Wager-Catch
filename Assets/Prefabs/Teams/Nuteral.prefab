@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 6076163641624195383}
   - component: {fileID: 1966106172449178397}
   m_Layer: 0
-  m_Name: Test Unit (WHITE)
-  m_TagString: Untagged
+  m_Name: Nuteral
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,20 +76,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  destinationReachedWaitTime: 3.5
-  target: {fileID: 0}
-  collisionMask:
+  _speed: 2
+  _collisionCheckSize: {x: 0, y: 0}
+  _collisionCheckOffset: {x: 0, y: 0}
+  _collisionLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 0
+  _slowdownAreaLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _isDrawCollisionCheckSize: 0
+  _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
   isDrawPath: 0
   pathColor: {r: 1, g: 1, b: 1, a: 1}
   isRandomPathColor: 0
+  grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
-  TestUnitsManager: {fileID: 0}
-  IsCatcher: 0
-  IsRunner: 0
-  CatcherSpawnPoint: {fileID: 0}
+  TeamsManager: {fileID: 0}
 --- !u!61 &1966106172449178397
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -243,5 +246,5 @@ MonoBehaviour:
   clipWalk_S: {fileID: 7400000, guid: 03c8e674c04d6ef468afa2841655bf64, type: 2}
   clipWalk_SE: {fileID: 7400000, guid: b0a6efbb3bdf5684f9868faa27ef2e4f, type: 2}
   clipWalk_E: {fileID: 7400000, guid: d115c5dc4c5672e46a668f85c4872f6e, type: 2}
-  testUnit: {fileID: 6076163641624195383}
+  player: {fileID: 0}
   spriteParent: {fileID: 5374470096601600781}

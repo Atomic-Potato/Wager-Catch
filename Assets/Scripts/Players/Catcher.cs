@@ -106,7 +106,7 @@ public class Catcher : Player
             _target = _targetRunner.transform.position;
         else
             _target = SpawnPoint.position;
-
+        
         if (!_isPathRequestSent)
             SendPathRequest();
     }

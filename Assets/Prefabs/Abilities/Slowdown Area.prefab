@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 1
+  _isEndlessDuration: 0
   _slowdownFactor: 0.5
 --- !u!61 &8617682443392300749
 BoxCollider2D:
