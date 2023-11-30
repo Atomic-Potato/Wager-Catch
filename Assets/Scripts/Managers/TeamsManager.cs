@@ -93,4 +93,12 @@ public class TeamsManager : Singleton<TeamsManager>
         _catchers.Remove(catcher);
         TeamsCountBroadcaster.Invoke();
     }
+
+    public void RemovePlayer(Player player)
+    {
+        if (player.GetType() == typeof(Catcher))
+            RemoveCatcher((Catcher)player);
+        else if (player.GetType() == typeof(Runner))
+            RemoveRunner((Runner)player);
+    }
 }

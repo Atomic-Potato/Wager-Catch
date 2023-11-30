@@ -50,7 +50,29 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
         bool IsCollisionTag()
         {
             TagsManager.Tag colliderTag = TagsManager.GetTagFromString(collider.gameObject.tag);
-            return (colliderTag & _noCollisionTags) == 0;
+            return TagsManager.IsTagOneOfMultipleTags(colliderTag, _noCollisionTags);
+        }
+    }
+
+    public void PlaceObjectAnywhere(GameObject placedObjectPrefab)
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Node placementNode = _placementGrid.GetNodeFromWorldPosition(mousePosition);
+
+        GameObject spawnedObject = Instantiate(placedObjectPrefab, placementNode.WorldPosition, Quaternion.identity);
+        BoxCollider2D collider = spawnedObject.GetComponent<BoxCollider2D>();
+        _placedObjects.Add(spawnedObject);
+
+        if (collider != null && !collider.isTrigger && IsCollisionTag())
+        {
+            _unitsGrid.UpdateGridSection(collider.bounds.min, collider.bounds.max, placementNode.IsSafe, false);
+            _placementGrid.UpdateGridSection(collider.bounds.min, collider.bounds.max, placementNode.IsSafe, false);
+        }
+
+        bool IsCollisionTag()
+        {
+            TagsManager.Tag colliderTag = TagsManager.GetTagFromString(collider.gameObject.tag);
+            return TagsManager.IsTagOneOfMultipleTags(colliderTag, _noCollisionTags);
         }
     }
 
@@ -69,7 +91,6 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
 
             _unitsGrid.UpdateGridSection(bounds.min, bounds.max, placementNode.IsSafe, true);
             _placementGrid.UpdateGridSection(bounds.min, bounds.max, placementNode.IsSafe, true);
-            Debug.Log("Updated grid");
         }
         
         _placedObjects.Remove(removedObject);

@@ -8,6 +8,8 @@ namespace Abilities
     {
         [SerializeField, Min(0f)] float _duration = 1f;
         [SerializeField] bool _isEndlessDuration;
+        public bool IsCanBeUsedAnywhere;
+        [Space]
         
         Coroutine _selfDestructCoroutine;
 

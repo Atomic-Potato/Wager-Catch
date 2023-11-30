@@ -19,4 +19,9 @@ public class TagsManager
         int tagIndex = tagNames.IndexOf(tagName) - 1;
         return  tagIndex == -1 ? Tag.Untagged : (Tag)(int)Mathf.Pow(2, tagIndex);
     }
+
+    public static bool IsTagOneOfMultipleTags(Tag tag, Tag multipleTags)
+    {
+        return (tag & multipleTags) != 0;
+    }
 }

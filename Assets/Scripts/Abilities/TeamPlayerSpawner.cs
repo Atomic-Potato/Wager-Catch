@@ -14,8 +14,6 @@ namespace Abilities
                 TeamsManager.Instance.AddRunner(transform.position);
             else if (team == TeamsManager.Team.Catcher)
                 TeamsManager.Instance.AddCatcher(transform.position);
-
-            // Destroy();
         }
     }
 }
