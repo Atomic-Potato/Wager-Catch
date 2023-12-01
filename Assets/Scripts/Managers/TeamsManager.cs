@@ -23,7 +23,7 @@ public class TeamsManager : Singleton<TeamsManager>
     public int RunnersCount => _runners.Count;
     [HideInInspector] public List<Runner> RunnersNotInSafeArea = new List<Runner>();
 
-    [HideInInspector] public UnityEvent TeamsCountBroadcaster;
+    [HideInInspector] public CustomUnityEvent TeamsCountBroadcaster;
 
     int _catcherSpawnPointIndex;
 
@@ -40,7 +40,7 @@ public class TeamsManager : Singleton<TeamsManager>
         base.Awake();
         LoadRunners();
         LoadCatchers();
-        TeamsCountBroadcaster = new UnityEvent();
+        TeamsCountBroadcaster = new CustomUnityEvent();
     }
 
     public void AddRunner(Vector2 position)
@@ -100,5 +100,22 @@ public class TeamsManager : Singleton<TeamsManager>
             RemoveCatcher((Catcher)player);
         else if (player.GetType() == typeof(Runner))
             RemoveRunner((Runner)player);
+    }
+
+    public void KillAllPlayers()
+    {   
+        // Note:    Die() removes a player from the list in the teams manager
+        //          So we have to create a copy of the players list to iterate over
+        //          rather than the main players list
+
+        List<Player> players = new List<Player>(_catchers);
+        players.AddRange(_runners);
+        TeamsCountBroadcaster.IsActive = false;
+
+        foreach (Player p in players)
+            p.Die();
+        
+        TeamsCountBroadcaster.IsActive = true;
+        TeamsCountBroadcaster.Invoke();
     }
 }

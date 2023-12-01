@@ -114,7 +114,7 @@ namespace Pathfinding
             {
                 if (coroutine != null)
                     StopCoroutine(coroutine);
-                return StartCoroutine(FollowPath());
+                return gameObject.activeSelf ? StartCoroutine(FollowPath()) : null;
             }
         }
 

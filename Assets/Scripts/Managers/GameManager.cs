@@ -82,6 +82,8 @@ public class GameManager : Singleton<GameManager>
         int runnersCount = TeamsManager.Instance.RunnersCount; 
         int catchersCount = TeamsManager.Instance.CatchersCount;
 
+        Debug.Log("R: " + runnersCount + " C : " + catchersCount);        
+
         if (runnersCount == 0 && catchersCount == 0)
             _matchWinner = Winner.Draw;
         else if (catchersCount == 0)

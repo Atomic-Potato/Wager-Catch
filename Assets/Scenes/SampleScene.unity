@@ -4533,6 +4533,11 @@ PrefabInstance:
       objectReference: {fileID: 376140511}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
+      propertyPath: runnersCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
+        type: 3}
       propertyPath: runnersParent
       value: 
       objectReference: {fileID: 2028001949}
@@ -4639,6 +4644,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 610561677}
     m_Modifications:
+    - target: {fileID: 7514907773450749476, guid: 4aac0d4c674bc3b4c8f088642c03dc79,
+        type: 3}
+      propertyPath: _abilityPrefab
+      value: 
+      objectReference: {fileID: 9006420800842426866, guid: 862635fcededc7d489b04e6c78faa433,
+        type: 3}
     - target: {fileID: 7514907773450749482, guid: 4aac0d4c674bc3b4c8f088642c03dc79,
         type: 3}
       propertyPath: m_Name
