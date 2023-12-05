@@ -7,6 +7,14 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] GameState _startingGameState = GameState.InGame;
     [SerializeField, Min(0f)] float _matchLengthInSeconds = 60f;
     
+    [Space]
+    [SerializeField] Transform _playerSpawnPoint;
+    public Transform PlayerSpawnPoint => _playerSpawnPoint;
+    [Tooltip("The point where the player will walk to automatically before gaining control")]
+    [SerializeField] Transform _playerEntryPoint;
+    public Transform PlayerEntryPoint => _playerEntryPoint;
+    
+
     float? _matchStartTime;
     float _matchTimePassed;
     public float MatchTimeLeftInSeconds => _matchLengthInSeconds - _matchTimePassed;

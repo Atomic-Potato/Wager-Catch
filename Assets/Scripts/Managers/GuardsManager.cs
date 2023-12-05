@@ -41,7 +41,7 @@ public class GuardsManager : MonoBehaviour
             {
                 Guard guard = _availableGuards[0];
                 _availableGuards.Remove(_availableGuards[0]);
-                guard.SetTarget(dObject.GetTransform().position, dObject);
+                guard.SetTarget(dObject.GetTransform(), dObject);
                 DangersBeingHandled.Add(dObject);
             }
         }

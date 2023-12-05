@@ -10,6 +10,7 @@ public class Guard : TeamPlayer
     Transform _spawnPoint;
     GuardsManager _manger;
     IDangerousObject _dangerousObject;
+    Transform _targetTransform;
 
     public enum State
     {
@@ -22,12 +23,16 @@ public class Guard : TeamPlayer
     {
         _spawnPoint = spawnPoint;
         _manger = manager;
-        this.PathRequestManager = pathRequestManager;
+        PathRequestManager = pathRequestManager;
     }
 
     new void Update()
     {
         base.Update();
+
+        if (_targetTransform != null)
+            _target = _targetTransform.position;
+
         if (CurrentState == State.Hunting && !_isPathRequestSent)
             SendPathRequest();
 
@@ -51,10 +56,10 @@ public class Guard : TeamPlayer
         }
     }
 
-    public void SetTarget(Vector2 target, IDangerousObject danger)
+    public void SetTarget(Transform target, IDangerousObject danger)
     {
         CurrentState = State.Hunting;
-        _target = target;
+        _targetTransform = target;
         _dangerousObject = danger;
     }
 
@@ -68,10 +73,10 @@ public class Guard : TeamPlayer
     void Catch()
     {
         CurrentState = State.Catching;
+        _targetTransform = null;
         _target = _spawnPoint.position;
         _dangerousObject.Deactivate();
         _dangerousObject.SetParent(transform);
-        // _dangerousObject.SetLocalPosition(_caughtObjectHoldingPosition.position);
         _dangerousObject.SetPosition(_caughtObjectHoldingPosition.position);
         SendPathRequest();
     }

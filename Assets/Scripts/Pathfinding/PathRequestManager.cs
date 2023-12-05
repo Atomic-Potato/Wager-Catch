@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Pathfinding
 {
-    public class PathRequestManager : MonoBehaviour
+    public class PathRequestManager : Singleton<PathRequestManager>
     {
         [SerializeField] Pathfinder pathfinder;
 

@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using UnityEngine;
+
 public class DangerousObjectsManager : Singleton<DangerousObjectsManager>
 {
     List<IDangerousObject> _spawnedObjects = new List<IDangerousObject>();
@@ -6,9 +9,14 @@ public class DangerousObjectsManager : Singleton<DangerousObjectsManager>
 
     public void DestroyAllObjects()
     {
-        List<IDangerousObject> objetcs = new List<IDangerousObject>(_spawnedObjects);
-        foreach (IDangerousObject o in _spawnedObjects)
+        List<IDangerousObject> objects = new List<IDangerousObject>(_spawnedObjects);
+        foreach (IDangerousObject o in objects)
             o.DestroySelf();
         _spawnedObjects.Clear();
+    }
+
+    public void Update()
+    {
+        UnityEngine.Debug.Log("Dangers: " + SpawnedObjects.Count);
     }
 }
