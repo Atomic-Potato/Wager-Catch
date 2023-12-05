@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: 1
   _isEndlessDuration: 1
+  IsCanBeUsedAnywhere: 0
   _playerSleepDuration: 0.25
   _teamPlayerLayerMask:
     serializedVersion: 2
@@ -116,7 +117,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 30
   m_Sprite: {fileID: -3305594363399233836, guid: 22a131992908a75499ffad0edd6b28e5,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
-using UnityEngine.Events;
 
 public class TeamsManager : Singleton<TeamsManager>
 {
@@ -17,9 +16,9 @@ public class TeamsManager : Singleton<TeamsManager>
     [SerializeField] List<Transform> catchersSpawnPoints;
     [SerializeField, Min(0)] int runnersCount;
     
-    public List<Catcher> _catchers = new List<Catcher>();
+    List<Catcher> _catchers = new List<Catcher>();
     public int CatchersCount => _catchers.Count;
-    public List<Runner> _runners = new List<Runner>();
+    List<Runner> _runners = new List<Runner>();
     public int RunnersCount => _runners.Count;
     [HideInInspector] public List<Runner> RunnersNotInSafeArea = new List<Runner>();
 
