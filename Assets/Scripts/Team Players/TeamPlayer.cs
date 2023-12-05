@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Pathfinding
 {
-    public class Player : MonoBehaviour, IPlayer
+    public class TeamPlayer : MonoBehaviour, ITeamPlayer
     {
         [SerializeField] float _speed = 2f;
         

@@ -17,7 +17,7 @@ namespace Abilities
 
             if (collider != null)
             {
-                Player player = collider.gameObject.GetComponent<Player>();
+                TeamPlayer player = collider.gameObject.GetComponent<TeamPlayer>();
                 TeamsManager.Instance.RemovePlayer(player);
                 player.Die();
             }

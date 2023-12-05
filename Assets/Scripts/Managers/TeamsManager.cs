@@ -93,7 +93,7 @@ public class TeamsManager : Singleton<TeamsManager>
         TeamsCountBroadcaster.Invoke();
     }
 
-    public void RemovePlayer(Player player)
+    public void RemovePlayer(TeamPlayer player)
     {
         if (player.GetType() == typeof(Catcher))
             RemoveCatcher((Catcher)player);
@@ -107,11 +107,11 @@ public class TeamsManager : Singleton<TeamsManager>
         //          So we have to create a copy of the players list to iterate over
         //          rather than the main players list
 
-        List<Player> players = new List<Player>(_catchers);
+        List<TeamPlayer> players = new List<TeamPlayer>(_catchers);
         players.AddRange(_runners);
         TeamsCountBroadcaster.IsActive = false;
 
-        foreach (Player p in players)
+        foreach (TeamPlayer p in players)
             p.Die();
         
         TeamsCountBroadcaster.IsActive = true;

@@ -1,6 +1,6 @@
 ﻿using Pathfinding;
 using UnityEngine;
-public class Guard : Player
+public class Guard : TeamPlayer
 {
     [Space]
     [Header("Guard Properties")]

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Pathfinding;
 using UnityEngine;
 
-public class Runner : Player
+public class Runner : TeamPlayer
 {
     [Space, Header("Runner Properites")]
     [SerializeField, Min(0f)] Vector2 randomTimeRangeToStartRunning = new Vector2(.25f, 1f);

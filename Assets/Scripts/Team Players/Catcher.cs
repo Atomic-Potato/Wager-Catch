@@ -2,7 +2,7 @@
 using Pathfinding;
 using UnityEngine;
 
-public class Catcher : Player
+public class Catcher : TeamPlayer
 {
     [Space, Header("Catcher Properties")]
     [SerializeField, Min(0f)] float _timeToCatch = 0.5f;

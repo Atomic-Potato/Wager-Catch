@@ -26,7 +26,7 @@ public class AnimationManager : MonoBehaviour
     [SerializeField] AnimationClip clipWalk_E;
 
     [Space, Header("Other")]
-    [SerializeField] Player player;
+    [SerializeField] TeamPlayer player;
     [SerializeField] Transform spriteParent;
     #endregion
 

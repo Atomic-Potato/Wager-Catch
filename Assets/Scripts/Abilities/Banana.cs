@@ -71,7 +71,7 @@ namespace Abilities
 
             if (1 << collider.gameObject.layer == _teamPlayerLayerMask)
             {
-                Player player = collider.gameObject.GetComponent<Player>();
+                TeamPlayer player = collider.gameObject.GetComponent<TeamPlayer>();
                 player.Sleep();
                 _isHasSlipped = true;
                 _sprite.enabled = false;
@@ -79,7 +79,7 @@ namespace Abilities
             }
         }
 
-        IEnumerator WakeUpTeamPlayer(Player player)
+        IEnumerator WakeUpTeamPlayer(TeamPlayer player)
         {
             yield return new WaitForSeconds(_playerSleepDuration);
             player.Wake();
