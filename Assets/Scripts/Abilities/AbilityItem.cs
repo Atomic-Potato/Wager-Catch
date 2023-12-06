@@ -10,6 +10,8 @@ namespace Ability
         [SerializeField, Min(-1)] int _numberOfUses = -1;
         [SerializeField] UnityEngine.GameObject _abilityPrefab;
         [SerializeField] Text _usesText;
+        [SerializeField] GameObject _iconActive;
+        [SerializeField] GameObject _iconInactive;
         
         int _usesLeft;
     
@@ -23,6 +25,10 @@ namespace Ability
         void OnEnable()
         {
             _usesLeft = _numberOfUses;
+
+            if (!IsCanBeConsumed)
+                DecativateIcon();
+
             if (IsUnlimited)
                 _usesText.text = "∞";
             else
@@ -42,6 +48,8 @@ namespace Ability
 
             _usesLeft--;
             UpdateUIText();
+            if (_usesLeft <= 0)
+                DecativateIcon();
         }
 
         void UpdateUIText()
@@ -49,6 +57,18 @@ namespace Ability
             if (IsUnlimited)
                 return;
             _usesText.text = _usesLeft.ToString();
+        }
+
+        void DecativateIcon()
+        {
+            _iconActive.SetActive(false);
+            _iconInactive.SetActive(true);
+        }
+
+        void ActivateIcon()
+        {
+            _iconActive.SetActive(true);
+            _iconInactive.SetActive(false);
         }
     }
 }
