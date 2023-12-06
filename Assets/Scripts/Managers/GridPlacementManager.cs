@@ -22,13 +22,18 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
             PlaceObject(_objectToSpawn);
     }
 
-    public void PlaceObject(GameObject placedObjectPrefab)
+    /// <summary>
+    /// Instantiates an object on the grid
+    /// </summary>
+    /// <param name="placedObjectPrefab"></param>
+    /// <returns>If it was successful, i.e. object was placed</returns>
+    public bool PlaceObject(GameObject placedObjectPrefab)
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Node placementNode = _placementGrid.GetNodeFromWorldPosition(mousePosition);
 
         if (!IsCanPlaceOnNode())
-            return;
+            return false;
 
         GameObject spawnedObject = Instantiate(placedObjectPrefab, placementNode.WorldPosition, Quaternion.identity);
         BoxCollider2D collider = spawnedObject.GetComponent<BoxCollider2D>();
@@ -40,6 +45,8 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
             _placementGrid.UpdateGridSection(collider.bounds.min, collider.bounds.max, placementNode.IsSafe, false);
         }
         
+        return true;
+
         bool IsCanPlaceOnNode()
         {
             BoxCollider2D toSpawnCollider = placedObjectPrefab.GetComponent<BoxCollider2D>();
@@ -54,7 +61,12 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
         }
     }
 
-    public void PlaceObjectAnywhere(GameObject placedObjectPrefab)
+    /// <summary>
+    /// Instantiates an object on the grid
+    /// </summary>
+    /// <param name="placedObjectPrefab"></param>
+    /// <returns>If it was successful, i.e. object was placed</returns>
+    public bool PlaceObjectAnywhere(GameObject placedObjectPrefab)
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Node placementNode = _placementGrid.GetNodeFromWorldPosition(mousePosition);
@@ -68,6 +80,8 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
             _unitsGrid.UpdateGridSection(collider.bounds.min, collider.bounds.max, placementNode.IsSafe, false);
             _placementGrid.UpdateGridSection(collider.bounds.min, collider.bounds.max, placementNode.IsSafe, false);
         }
+        
+        return true;
 
         bool IsCollisionTag()
         {
