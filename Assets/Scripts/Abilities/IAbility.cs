@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Abilities
+namespace Ability
 {
     public interface IAbility 
     {

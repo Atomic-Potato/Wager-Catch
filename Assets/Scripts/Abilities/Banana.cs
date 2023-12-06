@@ -3,7 +3,7 @@ using System.Diagnostics;
 using Pathfinding;
 using UnityEngine;
 
-namespace Abilities
+namespace Ability
 {
     public class Banana : AbilityBase, IDangerousObject
     {

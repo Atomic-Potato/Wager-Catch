@@ -1,22 +1,34 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Abilities;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilitiesManager : Singleton<AbilitiesManager>
+namespace Ability
 {
-    [SerializeField] GameObject _abilityPrefab;
-
-    void Update()
+    public class AbilitiesManager : Singleton<AbilitiesManager>
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            AbilityBase ability = _abilityPrefab.GetComponent<AbilityBase>();
+        [SerializeField] List<AbilityItem> _abilityItems = new List<AbilityItem>();
+        public List<AbilityItem> AbilityItems => _abilityItems;
+        
+        [HideInInspector] public AbilityItem SelectedAbilityItem;
 
-            if (ability.IsCanBeUsedAnywhere)
-                GridPlacementManager.Instance.PlaceObjectAnywhere(_abilityPrefab);
-            else
-                GridPlacementManager.Instance.PlaceObjectAnywhere(_abilityPrefab);
+        void Update()
+        {
+            if (Input.GetMouseButtonDown(0) && SelectedAbilityItem != null)
+            {
+                if (SelectedAbilityItem.IsCanBeConsumed)
+                {
+                    SelectedAbilityItem.Consume();
+                    if (SelectedAbilityItem.Ability.IsCanBeUsedAnywhere)
+                        GridPlacementManager.Instance.PlaceObjectAnywhere(SelectedAbilityItem.Prefab);
+                    else
+                        GridPlacementManager.Instance.PlaceObject(SelectedAbilityItem.Prefab);
+                }
+                else
+                {
+                    SelectedAbilityItem = null;
+                }
+            }
         }
+
     }
+
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Abilities
+namespace Ability
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public abstract class AbilityBase : MonoBehaviour, IAbility

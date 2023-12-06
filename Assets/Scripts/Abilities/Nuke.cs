@@ -1,4 +1,4 @@
-﻿namespace Abilities
+﻿namespace Ability
 {
     public class Nuke : AbilityBase
     {

@@ -1,14 +1,18 @@
 ﻿using TMPro;
 using UnityEngine;
 using System;
+using Ability;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] TMP_Text _gameTimerText;
+    [SerializeField] RectTransform _abilityItemsListParent;
 
     void Start()
     {
         GameManager.Instance.MatchTimeBroadcaster.AddListener(UpdateGameTimer);
+        LoadAbilityItems();
     }
 
     void UpdateGameTimer()
@@ -26,5 +30,11 @@ public class UIManager : MonoBehaviour
             _gameTimerText.text = timeSpan.Seconds.ToString("0");
         }
             
+    }
+
+    void LoadAbilityItems()
+    {
+        foreach (AbilityItem item in AbilitiesManager.Instance.AbilityItems)
+            Instantiate(item.gameObject, _abilityItemsListParent);
     }
 }

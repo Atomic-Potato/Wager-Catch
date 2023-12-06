@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using Abilities;
+using Ability;
 using UnityEngine;
 
 namespace Pathfinding

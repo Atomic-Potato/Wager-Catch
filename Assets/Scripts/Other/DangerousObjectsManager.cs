@@ -14,9 +14,4 @@ public class DangerousObjectsManager : Singleton<DangerousObjectsManager>
             o.DestroySelf();
         _spawnedObjects.Clear();
     }
-
-    public void Update()
-    {
-        UnityEngine.Debug.Log("Dangers: " + SpawnedObjects.Count);
-    }
 }
