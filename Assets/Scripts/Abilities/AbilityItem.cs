@@ -25,6 +25,7 @@ namespace Ability
         void OnEnable()
         {
             _usesLeft = _numberOfUses;
+            Ability.Item = this;
 
             if (!IsCanBeConsumed)
                 DecativateIcon();
@@ -50,6 +51,16 @@ namespace Ability
             UpdateUIText();
             if (_usesLeft <= 0)
                 DecativateIcon();
+        }
+
+        public void Restore()
+        {
+            if (_usesLeft >= _numberOfUses)
+                return;
+            _usesLeft++;
+            UpdateUIText();
+            if (_usesLeft > 0)
+                ActivateIcon();
         }
 
         void UpdateUIText()

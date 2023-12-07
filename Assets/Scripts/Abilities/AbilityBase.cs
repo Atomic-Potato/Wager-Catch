@@ -9,6 +9,7 @@ namespace Ability
         [SerializeField, Min(0f)] float _duration = 1f;
         [SerializeField] bool _isEndlessDuration;
         public bool IsCanBeUsedAnywhere;
+        [HideInInspector] public AbilityItem Item;
         [Space]
         
         Coroutine _selfDestructCoroutine;
@@ -23,6 +24,7 @@ namespace Ability
         {
             if (!_isEndlessDuration && _selfDestructCoroutine == null)
                 _selfDestructCoroutine = StartCoroutine(SelfDestruct());
+            Item.Consume();
         }
 
         void OnEnable()

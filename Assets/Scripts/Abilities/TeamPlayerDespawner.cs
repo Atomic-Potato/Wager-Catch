@@ -20,6 +20,10 @@ namespace Ability
                 TeamsManager.Instance.RemovePlayer(player);
                 player.Die();
             }
+            else
+            {
+                Item.Restore();
+            }
 
             Collider2D GetColliderWithTeamPlayerTag()
             {
@@ -27,7 +31,6 @@ namespace Ability
                 {
                     string colliderTag = col.gameObject.tag;
                     TagsManager.Tag oppositeTeamTag = GameManager.Instance.OppositeTeam;
-                    Debug.Log("FOUND: " + colliderTag + " OPPOSITE: " + oppositeTeamTag.ToString() + " PLAYER: " + GameManager.Instance.PlayerTeam.ToString());
                     if (oppositeTeamTag == TagsManager.Tag.NuteralPlayer || colliderTag == oppositeTeamTag.ToString())
                         return col;
                 }
