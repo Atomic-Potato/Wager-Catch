@@ -26,14 +26,6 @@ public class TeamsManager : Singleton<TeamsManager>
 
     int _catcherSpawnPointIndex;
 
-    public enum Team
-    {
-        Runner,
-        Catcher,
-        Nuteral,
-        Guard,
-    }
-
     new void Awake()
     {
         base.Awake();

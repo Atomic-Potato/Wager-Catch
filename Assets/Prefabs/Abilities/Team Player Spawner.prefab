@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1155509796661948547}
   - component: {fileID: 8071179955092991833}
   m_Layer: 0
-  m_Name: Runner Spawner
+  m_Name: Team Player Spawner
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9006420800842426866}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.86, y: 4.02, z: -2.7560792}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -46,7 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: 0.1
   _isEndlessDuration: 0
-  team: 0
+  IsCanBeUsedAnywhere: 0
+  Item: {fileID: 0}
 --- !u!61 &8071179955092991833
 BoxCollider2D:
   m_ObjectHideFlags: 0
