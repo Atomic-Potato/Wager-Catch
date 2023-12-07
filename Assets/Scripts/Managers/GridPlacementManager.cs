@@ -6,21 +6,10 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
 {
     [SerializeField] Pathfinding.Grid _placementGrid;
     [SerializeField] Pathfinding.Grid _unitsGrid;
-    [SerializeField] GameObject _objectToSpawn;
     [SerializeField] LayerMask _invalidPlacementLayers;
 
     [SerializeField] TagsManager.Tag _noCollisionTags;
     public List<GameObject> _placedObjects = new List<GameObject>(); 
-
-    void Start()
-    {
-    }
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-            PlaceObject(_objectToSpawn);
-    }
 
     /// <summary>
     /// Instantiates an object on the grid

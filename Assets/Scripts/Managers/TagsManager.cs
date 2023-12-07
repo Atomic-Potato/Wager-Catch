@@ -16,6 +16,15 @@ public class TagsManager
         NuteralPlayer = 32,
     }
 
+    public static Tag TeamTags =>  Tag.NuteralPlayer | Tag.Catcher | Tag.Runner;
+
+    public enum TeamTag
+    {
+        NuteralPlayer = 32,
+        Runner = 8,
+        Catcher = 16,
+    }
+
     public static Tag GetTagFromString(string tagName)
     {
         List<string> tagNames = new List<string>(Enum.GetNames(typeof(Tag)));
@@ -26,5 +35,18 @@ public class TagsManager
     public static bool IsTagOneOfMultipleTags(Tag tag, Tag multipleTags)
     {
         return (tag & multipleTags) != 0;
+    }
+
+    public static Tag ConvertTeamTagToTag(TeamTag tag)
+    {
+        switch (tag)
+        {
+            case TeamTag.Runner:
+                return Tag.Runner;
+            case TeamTag.Catcher:
+                return Tag.Catcher;
+            default:
+                return Tag.NuteralPlayer;
+        }
     }
 }

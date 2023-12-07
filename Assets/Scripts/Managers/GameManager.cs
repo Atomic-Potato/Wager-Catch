@@ -5,6 +5,24 @@ using UnityEngine.Events;
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField] GameState _startingGameState = GameState.InGame;
+    [SerializeField] TagsManager.TeamTag _playerTeam = TagsManager.TeamTag.NuteralPlayer;
+    public TagsManager.Tag PlayerTeam => TagsManager.ConvertTeamTagToTag(_playerTeam);
+    
+    public TagsManager.Tag OppositeTeam
+    {
+        get
+        {
+            switch (PlayerTeam)
+            {
+                case TagsManager.Tag.Runner:
+                    return TagsManager.Tag.Catcher;
+                case TagsManager.Tag.Catcher:
+                    return TagsManager.Tag.Runner;
+                default:
+                    return TagsManager.Tag.NuteralPlayer;
+            }
+        }
+    }
     [SerializeField, Min(0f)] float _matchLengthInSeconds = 60f;
     
     [Space]
