@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class DynamicIcon : MonoBehaviour
 {
+    [SerializeField] bool _isUseOppositeTeamIcon;
     [SerializeField] Sprite _catchersIcon;
     [SerializeField] Sprite _runnersIcon;
     [SerializeField] Sprite _nuteralIcon;
 
     [Space]
-    [SerializeField] SpriteRenderer[] _iconRenderes;
+    [SerializeField] Image[] _iconRenderes;
 
     void Start()
     {
         Sprite icon; 
-        switch (GameManager.Instance.PlayerTeam)
+        TagsManager.Tag team = _isUseOppositeTeamIcon ? GameManager.Instance.OppositeTeam : GameManager.Instance.PlayerTeam;
+        switch (team)
         {
             case TagsManager.Tag.Catcher:
                 icon = _catchersIcon;
@@ -25,7 +28,7 @@ public class DynamicIcon : MonoBehaviour
                 break;
         }
         
-        foreach (SpriteRenderer renderer in _iconRenderes)
+        foreach (Image renderer in _iconRenderes)
             renderer.sprite = icon;
     }
 }
