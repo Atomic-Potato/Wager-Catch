@@ -16,12 +16,9 @@ namespace Ability
             {
                 if (SelectedAbilityItem.IsCanBeConsumed)
                 {
-                    if (SelectedAbilityItem.Ability.IsCanBeUsedAnywhere)
-                        GridPlacementManager.Instance.PlaceObjectAnywhere(SelectedAbilityItem.Prefab);
-                    else
-                        GridPlacementManager.Instance.PlaceObject(SelectedAbilityItem.Prefab);
-                    
-                    RemoveAbilitySelection();
+                    bool isConsumed = SelectedAbilityItem.Consume();
+                    if (isConsumed)
+                        RemoveAbilitySelection();
                 }
             }
         }

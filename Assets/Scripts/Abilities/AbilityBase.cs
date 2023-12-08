@@ -24,7 +24,6 @@ namespace Ability
         {
             if (!_isEndlessDuration && _selfDestructCoroutine == null)
                 _selfDestructCoroutine = StartCoroutine(SelfDestruct());
-            Item.Consume();
         }
 
         void OnEnable()

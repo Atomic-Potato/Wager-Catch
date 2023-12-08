@@ -45,15 +45,33 @@ namespace Ability
             }
         }
 
-        public void Consume()
+        /// <summary>
+        /// Activates the ability
+        /// </summary>
+        /// <returns>If the ability was activated</returns>
+        public bool Consume()
         {
             if (_numberOfUses <= 0)
-                return;
+                return false;
+
+            bool isActived = ActivateAbility();
+            if (!isActived)
+                return false;
 
             _usesLeft--;
             UpdateUIText();
             if (_usesLeft <= 0)
                 DecativateIcon();
+
+            return true;
+
+            bool ActivateAbility()
+            {
+                if (Ability.IsCanBeUsedAnywhere)
+                    return GridPlacementManager.Instance.PlaceObjectAnywhere(Prefab);
+                else
+                    return GridPlacementManager.Instance.PlaceObject(Prefab);
+            }
         }
 
         public void Restore()
