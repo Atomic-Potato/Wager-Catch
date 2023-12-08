@@ -39,7 +39,10 @@ namespace Ability
         public void Select()
         {
             if (IsCanBeConsumed)
+            {
                 AbilitiesManager.Instance.SelectedAbilityItem = this;
+                GridPlacementManager.Instance.SetPreviewSprite(_iconActive.GetComponent<Image>().sprite);
+            }
         }
 
         public void Consume()

@@ -20,14 +20,17 @@ namespace Ability
                         GridPlacementManager.Instance.PlaceObjectAnywhere(SelectedAbilityItem.Prefab);
                     else
                         GridPlacementManager.Instance.PlaceObject(SelectedAbilityItem.Prefab);
-                }
-                else
-                {
-                    SelectedAbilityItem = null;
+                    
+                    RemoveAbilitySelection();
                 }
             }
         }
 
+        void RemoveAbilitySelection()
+        {
+            SelectedAbilityItem = null;
+            GridPlacementManager.Instance.RemovePreviewSprite();
+        }
     }
 
 }

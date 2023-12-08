@@ -1,15 +1,48 @@
 ﻿using UnityEngine;
 using Pathfinding;
 using System.Collections.Generic;
-using System;
+using UnityEditor.U2D.Sprites;
 public class GridPlacementManager : Singleton<GridPlacementManager>
 {
     [SerializeField] Pathfinding.Grid _placementGrid;
     [SerializeField] Pathfinding.Grid _unitsGrid;
     [SerializeField] LayerMask _invalidPlacementLayers;
-
     [SerializeField] TagsManager.Tag _noCollisionTags;
-    public List<GameObject> _placedObjects = new List<GameObject>(); 
+
+    [Space, Header("Placement Preview")]
+    [SerializeField] Color _invalidPlacementColor = new Color(1f, 0f, 0f);
+    [SerializeField] SpriteRenderer _previewSpriteRenderer;
+    [SerializeField] BoxCollider2D _previewCollider;
+    [HideInInspector] public List<GameObject> PlacedObjects = new List<GameObject>(); 
+    Camera _mainCamera;
+
+    void Start()
+    {
+        _mainCamera = Camera.main;
+    }
+
+    void Update()
+    {
+        if (_previewSpriteRenderer.sprite != null)
+            ShowPreviewSprite();
+    }
+
+    void ShowPreviewSprite()
+    {
+        Vector2 mousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        Node mouseNode = _placementGrid.GetNodeFromWorldPosition(mousePosition);
+        _previewSpriteRenderer.color = !IsCanPlaceOnNode(mouseNode, _previewCollider) ? _invalidPlacementColor : Color.white; 
+        _previewSpriteRenderer.gameObject.transform.position = mouseNode.WorldPosition;
+    }
+
+    public void SetPreviewSprite(Sprite sprite)
+    {
+        _previewSpriteRenderer.sprite = sprite;
+    }
+    public void RemovePreviewSprite()
+    {
+        _previewSpriteRenderer.sprite = null;
+    }
 
     /// <summary>
     /// Instantiates an object on the grid
@@ -21,12 +54,12 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Node placementNode = _placementGrid.GetNodeFromWorldPosition(mousePosition);
 
-        if (!IsCanPlaceOnNode())
+        if (!IsCanPlaceOnNode(placementNode, placedObjectPrefab.GetComponent<BoxCollider2D>()))
             return false;
 
         GameObject spawnedObject = Instantiate(placedObjectPrefab, placementNode.WorldPosition, Quaternion.identity);
         BoxCollider2D collider = spawnedObject.GetComponent<BoxCollider2D>();
-        _placedObjects.Add(spawnedObject);
+        PlacedObjects.Add(spawnedObject);
 
         if (collider != null && !collider.isTrigger && IsCollisionTag())
         {
@@ -36,18 +69,18 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
         
         return true;
 
-        bool IsCanPlaceOnNode()
-        {
-            BoxCollider2D toSpawnCollider = placedObjectPrefab.GetComponent<BoxCollider2D>();
-            bool isAgentOnNode = Physics2D.OverlapBox(placementNode.WorldPosition, toSpawnCollider.size, 0f, _invalidPlacementLayers) != null;
-            return !placementNode.IsSafe && placementNode.IsWalkable && placementNode.IsEditable && !isAgentOnNode;
-        }
 
         bool IsCollisionTag()
         {
             TagsManager.Tag colliderTag = TagsManager.GetTagFromString(collider.gameObject.tag);
             return TagsManager.IsTagOneOfMultipleTags(colliderTag, _noCollisionTags);
         }
+    }
+    
+    bool IsCanPlaceOnNode(Node node, BoxCollider2D toSpawnCollider)
+    {
+        bool isAgentOnNode = Physics2D.OverlapBox(node.WorldPosition, toSpawnCollider.size, 0f, _invalidPlacementLayers) != null;
+        return !node.IsSafe && node.IsWalkable && node.IsEditable && !isAgentOnNode;
     }
 
     /// <summary>
@@ -62,7 +95,7 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
 
         GameObject spawnedObject = Instantiate(placedObjectPrefab, placementNode.WorldPosition, Quaternion.identity);
         BoxCollider2D collider = spawnedObject.GetComponent<BoxCollider2D>();
-        _placedObjects.Add(spawnedObject);
+        PlacedObjects.Add(spawnedObject);
 
         if (collider != null && !collider.isTrigger && IsCollisionTag())
         {
@@ -81,7 +114,7 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
 
     public void RemoveObject(GameObject removedObject)
     {
-        if (!_placedObjects.Contains(removedObject))
+        if (!PlacedObjects.Contains(removedObject))
             return;
 
         BoxCollider2D collider = removedObject.GetComponent<BoxCollider2D>();
@@ -96,7 +129,7 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
             _placementGrid.UpdateGridSection(bounds.min, bounds.max, placementNode.IsSafe, true);
         }
         
-        _placedObjects.Remove(removedObject);
+        PlacedObjects.Remove(removedObject);
         
     }
 
