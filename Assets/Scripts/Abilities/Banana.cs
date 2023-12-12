@@ -72,18 +72,11 @@ namespace Ability
             if (1 << collider.gameObject.layer == _teamPlayerLayerMask)
             {
                 TeamPlayer player = collider.gameObject.GetComponent<TeamPlayer>();
-                player.Sleep();
+                player.Sleep(_playerSleepDuration);
                 _isHasSlipped = true;
                 _sprite.enabled = false;
-                StartCoroutine(WakeUpTeamPlayer(player));
+                Destroy(gameObject);
             }
-        }
-
-        IEnumerator WakeUpTeamPlayer(TeamPlayer player)
-        {
-            yield return new WaitForSeconds(_playerSleepDuration);
-            player.Wake();
-            Destroy(gameObject);
         }
     }
 }

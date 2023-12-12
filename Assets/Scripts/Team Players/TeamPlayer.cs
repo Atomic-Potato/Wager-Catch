@@ -49,6 +49,8 @@ namespace Pathfinding
 
         float _appliedSpeed;
 
+        Coroutine _wakeCoroutine;
+
         protected void OnDrawGizmos()
         {
             if(isDrawPath)
@@ -252,15 +254,20 @@ namespace Pathfinding
             return Physics2D.OverlapBoxAll((Vector2)transform.position + _collisionCheckOffset, _collisionCheckSize, 0f);
         }
 
-        public void Sleep()
+        public void Sleep(float time)
         {
             _isSleeping = true;
             _isMoving = false;
-        }
 
-        public void Wake()
-        {
-            _isSleeping = false;
+            if (_wakeCoroutine != null)
+                _wakeCoroutine = StartCoroutine(Wake());
+
+            IEnumerator Wake()
+            {
+                yield return new WaitForSeconds(time);
+                _isSleeping = false;
+                _wakeCoroutine = null;
+            }
         }
 
         public virtual void Die()

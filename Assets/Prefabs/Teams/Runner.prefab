@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa258684ab173fe42a050ea2dce327cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
+  _speed: 2.5
   _collisionCheckSize: {x: 1, y: 1.045}
   _collisionCheckOffset: {x: 0, y: 0.45}
   _collisionLayer:
