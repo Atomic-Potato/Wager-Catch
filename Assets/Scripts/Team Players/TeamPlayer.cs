@@ -50,7 +50,9 @@ namespace Pathfinding
         protected bool _isCollided;
         protected bool _isSlowedDown;
         protected bool _isSleeping;
+        public bool IsSleeping => _isSleeping;
         protected bool _isSprinting;
+        public bool IsSprinting => _isSprinting;
         protected bool _isRecoveringSprint;
 
         float _appliedSpeed;
@@ -263,6 +265,11 @@ namespace Pathfinding
             }
         }
     
+        public float GetStaminaPercentage()
+        {
+            return _sprintTimer / _sprintDuration;
+        }
+
         void UpdateFacingDirection()
         {
             if (_previousPosition == null)
