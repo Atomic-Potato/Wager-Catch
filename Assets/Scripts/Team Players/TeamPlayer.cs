@@ -6,7 +6,11 @@ namespace Pathfinding
 {
     public class TeamPlayer : MonoBehaviour, ITeamPlayer
     {
-        [SerializeField] float _speed = 2f;
+        [SerializeField, Min(0f)] float _speed = 2f;
+        [SerializeField, Min(0f)] bool _isCanSprint;
+        [SerializeField, Min(0f)] float _sprintSpeedMultiplier = 1.75f;
+        [SerializeField, Min(0f)] float _sprintDuration = 1.75f;
+        [SerializeField, Min(0f)] float _sprintRecoveryMultiplier = 2f;
         
         [Space]
         [SerializeField] Vector2 _collisionCheckSize = Vector2.one;
@@ -46,8 +50,11 @@ namespace Pathfinding
         protected bool _isCollided;
         protected bool _isSlowedDown;
         protected bool _isSleeping;
+        protected bool _isSprinting;
+        protected bool _isRecoveringSprint;
 
         float _appliedSpeed;
+        float _sprintTimer;
 
         Coroutine _wakeCoroutine;
 
@@ -80,6 +87,7 @@ namespace Pathfinding
                 pathColor = new Color(Random.Range(.8f,1f), Random.Range(.4f,8f), Random.Range(0f,4f), 1f);
 
             _appliedSpeed = _speed;
+            _sprintTimer = _sprintDuration;
         }
 
         protected void Update()
@@ -87,6 +95,8 @@ namespace Pathfinding
             UpdateFacingDirection();
             CheckForCollisions();
             CheckForSlowdownAreas();
+            if (_isCanSprint)
+                Sprint();
         }
 
         
@@ -188,6 +198,71 @@ namespace Pathfinding
             }
         }
 
+        void Sprint()
+        {
+            if (IsCanSprint())
+                StartSprinting();
+            
+            if (IsStillSprinting())
+                ExhaustSprint();
+            else
+            {
+                if (!_isRecoveringSprint)
+                    StartRecoveringSprint();
+                
+                if (!IsRecoveredSprint())
+                    RecoverSprint();
+                else
+                    StopSprintRecovery();
+            }
+
+            bool IsCanSprint()
+            {
+                return !_isSprinting && !_isRecoveringSprint;
+            }
+            void StartSprinting()
+            {
+                _isSprinting = true;
+                _appliedSpeed *= _sprintSpeedMultiplier;
+                _sprintTimer = _sprintDuration;
+            }
+            bool IsStillSprinting()
+            {
+                return _sprintTimer > 0 && _isMoving && !_isRecoveringSprint;
+            }
+            void ExhaustSprint()
+            {
+                _sprintTimer -= Time.deltaTime;
+            }
+            void StartRecoveringSprint()
+            {
+                _isRecoveringSprint = true;
+                _isSprinting = false;
+                _appliedSpeed /= _sprintSpeedMultiplier;
+            }
+            bool IsRecoveredSprint()
+            {
+                return _sprintTimer > _sprintDuration;
+            }
+            void RecoverSprint()
+            {
+                _sprintTimer += Time.deltaTime * _sprintRecoveryMultiplier;
+            }
+            void StopSprintRecovery()
+            {
+                if (_sprintTimer > _sprintDuration)
+                {
+                    _sprintTimer = _sprintDuration;
+                    _isRecoveringSprint = false;
+                    
+                }
+                else
+                {
+                    _isRecoveringSprint = false;
+                }
+            }
+        }
+    
         void UpdateFacingDirection()
         {
             if (_previousPosition == null)
@@ -235,14 +310,12 @@ namespace Pathfinding
                     slowdownArea = collider.gameObject.GetComponent<SlowdownArea>();
             }
 
-            if (slowdownArea == null)
+            if (slowdownArea == null && _isSlowedDown)
             {
-                _appliedSpeed = _speed;
+                _appliedSpeed /= slowdownArea.SlowdownFactor;
                 _isSlowedDown = false;
-                return;
             }
-            
-            if (!_isSlowedDown)
+            else if (slowdownArea != null && !_isSlowedDown)
             {
                 _appliedSpeed *= slowdownArea.SlowdownFactor;
                 _isSlowedDown = true;
