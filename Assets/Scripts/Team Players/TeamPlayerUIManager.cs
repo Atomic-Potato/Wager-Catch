@@ -1,4 +1,5 @@
-﻿using Pathfinding;
+﻿using System.Linq.Expressions;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.UI;
 public class TeamPlayerUIManager : MonoBehaviour
@@ -13,19 +14,34 @@ public class TeamPlayerUIManager : MonoBehaviour
 
 
     [Space, Header("Stun Bar")]
-    [SerializeField] GameObject _stunBar;
+    [SerializeField] RectTransform _sleepBarTransform;
+
+    [Space]
     [SerializeField] Canvas _canvas;
+
+    bool _isUpdateSleepBar;
+    float _sleepTimer;
+
+    void Awake()
+    {
+        // Hiding the sleep bar
+        _sleepBarTransform.localScale = new Vector3(0f, _sleepBarTransform.localScale.y, _sleepBarTransform.localScale.y);
+    }
 
     void Start()
     {
         _canvas.worldCamera = Camera.main;
         if (!_teamPlayer.IsCanSprint)
             _staminaBarImage.enabled = false;
+        _teamPlayer.SleepEvent.AddListener(StartSleepBarUpdate);
     }
 
     void Update()
     {
-        UpdateStaminaBar();
+        if (_staminaBarTransform)
+            UpdateStaminaBar();
+        if (_sleepBarTransform)
+            UpdateSleepBar();
     }
 
     void UpdateStaminaBar()
@@ -50,8 +66,32 @@ public class TeamPlayerUIManager : MonoBehaviour
         }
     }
 
-    void UpdateStunBar()
+    void UpdateSleepBar()
     {
+        if (!_isUpdateSleepBar)
+            return;
+        
+        _sleepTimer -= Time.deltaTime;
+        float sleepPerecentage = _sleepTimer / _teamPlayer.CurrentSleepTime;
+        
+        if (sleepPerecentage <= 0)
+        {
+            HideSleepBar();
+            _isUpdateSleepBar = false;
+        }
 
+        _sleepBarTransform.localScale = new Vector3(sleepPerecentage, _sleepBarTransform.localScale.y, _sleepBarTransform.localScale.y);
+
+        void HideSleepBar()
+        {
+            if (_sleepBarTransform.localScale.x != 0f)
+                _sleepBarTransform.localScale = new Vector3(0f, _sleepBarTransform.localScale.y, _sleepBarTransform.localScale.y);
+        }
+    }
+
+    void StartSleepBarUpdate()
+    {
+        _isUpdateSleepBar = true;
+        _sleepTimer = _teamPlayer.CurrentSleepTime;
     }
 }

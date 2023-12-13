@@ -58,8 +58,13 @@ namespace Pathfinding
 
         float _appliedSpeed;
         float _sprintTimer;
+        float _currentSleepTime;
+        public float CurrentSleepTime => _currentSleepTime;
 
         Coroutine _wakeCoroutine;
+
+        CustomUnityEvent _sleepEvent;
+        public CustomUnityEvent SleepEvent => _sleepEvent;
 
         protected void OnDrawGizmos()
         {
@@ -86,9 +91,11 @@ namespace Pathfinding
 
         protected void Awake()
         {
+#if UNITY_EDITOR
             if (isRandomPathColor)
                 pathColor = new Color(Random.Range(.8f,1f), Random.Range(.4f,8f), Random.Range(0f,4f), 1f);
-
+#endif
+            _sleepEvent = new CustomUnityEvent();
             _appliedSpeed = _speed;
             _sprintTimer = _sprintDuration;
         }
@@ -337,11 +344,15 @@ namespace Pathfinding
 
         public void Sleep(float time)
         {
-            _isSleeping = true;
-            _isMoving = false;
 
-            if (_wakeCoroutine != null)
+            if (_wakeCoroutine == null)
+            {
+                _isSleeping = true;
+                _isMoving = false;
+                _currentSleepTime = time;
+                _sleepEvent.Invoke();
                 _wakeCoroutine = StartCoroutine(Wake());
+            }
 
             IEnumerator Wake()
             {
