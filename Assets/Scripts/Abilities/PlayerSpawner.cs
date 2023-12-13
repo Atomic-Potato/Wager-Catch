@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Ability
 {
@@ -8,10 +9,16 @@ namespace Ability
 
         public override void Spawn()
         {
-            base.Spawn();
-
-            Vector2 _spawnPoint = GameManager.Instance.PlayerSpawnPoint.position;
-            Instantiate(_playerPrefab, _spawnPoint, Quaternion.identity);
+            if (GameManager.Instance.PlayerInstance == null)
+            {
+                base.Spawn();
+                Vector2 spawnPoint = GameManager.Instance.PlayerSpawnPoint.position;
+                GameManager.Instance.PlayerInstance = Instantiate(_playerPrefab, spawnPoint, Quaternion.identity);
+            }
+            else
+            {
+                Destroy();
+            }
         }
     }
 }

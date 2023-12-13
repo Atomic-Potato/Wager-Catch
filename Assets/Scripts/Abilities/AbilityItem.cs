@@ -55,6 +55,7 @@ namespace Ability
                 return false;
 
             bool isActived = ActivateAbility();
+            Debug.Log(isActived);
             if (!isActived)
                 return false;
 
@@ -67,6 +68,9 @@ namespace Ability
 
             bool ActivateAbility()
             {
+                if (Prefab.GetComponent<PlayerSpawner>() != null && GameManager.Instance.PlayerInstance != null)
+                    return false;
+
                 if (Ability.IsCanBeUsedAnywhere)
                     return GridPlacementManager.Instance.PlaceObjectAnywhere(Prefab);
                 else

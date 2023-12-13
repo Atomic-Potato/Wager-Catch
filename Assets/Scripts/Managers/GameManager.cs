@@ -8,6 +8,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] TagsManager.TeamTag _playerTeam = TagsManager.TeamTag.NuteralPlayer;
     public TagsManager.Tag PlayerTeam => TagsManager.ConvertTeamTagToTag(_playerTeam);
     
+    [HideInInspector] public Player PlayerInstance;
+
     public TagsManager.Tag OppositeTeam
     {
         get
