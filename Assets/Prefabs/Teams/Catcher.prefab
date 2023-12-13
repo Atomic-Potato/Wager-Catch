@@ -598,7 +598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4126791744b7054b9839fa71f99b838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _teamPlayer: {fileID: 0}
+  _teamPlayer: {fileID: 2041393261797506488}
   _staminaBarTransform: {fileID: 7530733891508068748}
   _staminaBarImage: {fileID: 6908053029770565335}
   _sprintingColor: {r: 0, g: 1, b: 0, a: 0.5}

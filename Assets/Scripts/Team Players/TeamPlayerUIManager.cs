@@ -19,6 +19,8 @@ public class TeamPlayerUIManager : MonoBehaviour
     void Start()
     {
         _canvas.worldCamera = Camera.main;
+        if (!_teamPlayer.IsCanSprint)
+            _staminaBarImage.enabled = false;
     }
 
     void Update()
@@ -28,6 +30,9 @@ public class TeamPlayerUIManager : MonoBehaviour
 
     void UpdateStaminaBar()
     {
+        if (!_teamPlayer.IsCanSprint)
+            return;
+
         float stamina = _teamPlayer.GetStaminaPercentage();
         if (stamina >= 1f)
         {

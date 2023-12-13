@@ -8,6 +8,7 @@ namespace Pathfinding
     {
         [SerializeField, Min(0f)] float _speed = 2f;
         [SerializeField, Min(0f)] bool _isCanSprint;
+        public bool IsCanSprint => _isCanSprint;
         [SerializeField, Min(0f)] float _sprintSpeedMultiplier = 1.75f;
         [SerializeField, Min(0f)] float _sprintDuration = 1.75f;
         [SerializeField, Min(0f)] float _sprintRecoveryMultiplier = 2f;
