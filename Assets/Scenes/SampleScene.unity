@@ -5839,6 +5839,11 @@ PrefabInstance:
       objectReference: {fileID: 2028001949}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
+      propertyPath: _catchersCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
+        type: 3}
       propertyPath: catchersParent
       value: 
       objectReference: {fileID: 1947969868}
@@ -5854,6 +5859,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
+      propertyPath: _catchersSpawnPoints.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
+        type: 3}
       propertyPath: catchersSpawnPoints.Array.data[0]
       value: 
       objectReference: {fileID: 2074931494}
@@ -5865,6 +5875,21 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: catchersSpawnPoints.Array.data[2]
+      value: 
+      objectReference: {fileID: 30491003}
+    - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
+        type: 3}
+      propertyPath: _catchersSpawnPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 2074931494}
+    - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
+        type: 3}
+      propertyPath: _catchersSpawnPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 393290509}
+    - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
+        type: 3}
+      propertyPath: _catchersSpawnPoints.Array.data[2]
       value: 
       objectReference: {fileID: 30491003}
     m_RemovedComponents: []
@@ -6302,7 +6327,7 @@ PrefabInstance:
     - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}
       propertyPath: _playerTeam
-      value: 8
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}

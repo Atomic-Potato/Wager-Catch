@@ -13,8 +13,9 @@ public class TeamsManager : Singleton<TeamsManager>
     [SerializeField] Transform runnersParent;
 
     [Space, Header("Players Count")]
-    [SerializeField] List<Transform> catchersSpawnPoints;
-    [SerializeField, Min(0)] int runnersCount;
+    [SerializeField, Min(0)] int _runnersCount = 5;
+    [SerializeField, Min(0)] int _catchersCount = 3;
+    [SerializeField] List<Transform> _catchersSpawnPoints;
     
     List<Catcher> _catchers = new List<Catcher>();
     public int CatchersCount => _catchers.Count;
@@ -46,7 +47,7 @@ public class TeamsManager : Singleton<TeamsManager>
 
     void LoadRunners()
     {
-        for (int i=0; i < runnersCount; i++)
+        for (int i=0; i < _runnersCount; i++)
             AddRunner(GetRandomSafeNode().WorldPosition);
     }
 
@@ -57,14 +58,17 @@ public class TeamsManager : Singleton<TeamsManager>
         catcher.TeamsManager = this;
         catcher.grid = playersGrid;
         catcher.PathRequestManager = pathRequestManager;
-        catcher.SpawnPoint = spawnPoint != null ? spawnPoint : catchersSpawnPoints[_catcherSpawnPointIndex++ % catchersSpawnPoints.Count];
+        catcher.SpawnPoint = spawnPoint != null ? spawnPoint : _catchersSpawnPoints[_catcherSpawnPointIndex++ % _catchersSpawnPoints.Count];
         _catchers.Add(catcher);
     }
 
     void LoadCatchers()
     {
-        foreach (Transform spawnPoint in catchersSpawnPoints)
+        for (int i=0; i < _catchersCount; i++)
+        {
+            Transform spawnPoint = _catchersSpawnPoints[i%_catchersSpawnPoints.Count];
             AddCatcher(spawnPoint.position, spawnPoint);
+        }
     }
 
     public Node GetRandomSafeNode()
