@@ -6,6 +6,9 @@ namespace Ability
 {
     public class AbilityItem : MonoBehaviour
     {
+        [SerializeField, Min(0f)] int _cost;
+        public int Cost => _cost;
+
         [Tooltip("-1: Infinite number of uses")]
         [SerializeField, Min(-1)] int _numberOfUses = -1;
         [SerializeField] UnityEngine.GameObject _abilityPrefab;
@@ -55,7 +58,6 @@ namespace Ability
                 return false;
 
             bool isActived = ActivateAbility();
-            Debug.Log(isActived);
             if (!isActived)
                 return false;
 

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -6,6 +7,13 @@ public class GameManager : Singleton<GameManager>
 {
     #region Global Variables
     [SerializeField] GameState _startingGameState = GameState.InGame;
+    
+    [Space]
+    [SerializeField, Min(0f)] int _minBalance = 150;
+    [SerializeField, Min(0f)] int _balance = 150;
+    public int Balance => _balance;
+
+    [Space]
     [SerializeField] TagsManager.TeamTag _playerTeam = TagsManager.TeamTag.NuteralPlayer;
     public TagsManager.Tag PlayerTeam => TagsManager.ConvertTeamTagToTag(_playerTeam);
     
@@ -42,6 +50,7 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public UnityEvent MatchTimeBroadcaster;
     [HideInInspector] public UnityEvent MatchEndBroadcaster;
+    [HideInInspector] public CustomUnityEvent BalanceChangeBroadcaster;
     [HideInInspector] public GameState CurrentGameState;    
     public enum GameState
     {
@@ -75,6 +84,7 @@ public class GameManager : Singleton<GameManager>
         CurrentGameState = _startingGameState;
         MatchTimeBroadcaster = new UnityEvent();
         MatchEndBroadcaster = new UnityEvent();
+        BalanceChangeBroadcaster = new CustomUnityEvent();
     }
 
     void Start()
@@ -87,6 +97,14 @@ public class GameManager : Singleton<GameManager>
     {
         if (CurrentGameState == GameState.InGame)
             UpdateGameTimer();
+    }
+
+    public void DeductBalance(int amount)
+    {
+        _balance -= amount;
+        if (_balance < 0)
+            _balance = 0;
+        BalanceChangeBroadcaster.Invoke();
     }
 
     void UpdateGameTimer()

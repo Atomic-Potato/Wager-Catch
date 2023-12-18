@@ -5834,13 +5834,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
+      propertyPath: _runnersCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
+        type: 3}
       propertyPath: runnersParent
       value: 
       objectReference: {fileID: 2028001949}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _catchersCount
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}

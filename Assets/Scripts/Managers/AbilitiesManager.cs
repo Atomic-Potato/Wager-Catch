@@ -12,13 +12,16 @@ namespace Ability
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0) && SelectedAbilityItem != null)
+            if (Input.GetMouseButtonDown(0) && SelectedAbilityItem != null && SelectedAbilityItem.Cost <= GameManager.Instance.Balance)
             {
                 if (SelectedAbilityItem.IsCanBeConsumed)
                 {
                     bool isConsumed = SelectedAbilityItem.Consume();
                     if (isConsumed)
+                    {
+                        GameManager.Instance.DeductBalance(SelectedAbilityItem.Cost);
                         RemoveAbilitySelection();
+                    }
                 }
             }
         }
