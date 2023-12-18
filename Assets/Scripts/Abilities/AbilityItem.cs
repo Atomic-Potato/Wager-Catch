@@ -42,7 +42,7 @@ namespace Ability
             _usesLeft = _numberOfUses;
             Ability.Item = this;
 
-            _costText.text = _cost.ToString() + (_cost >= 1000 ? "K" : "") + "$";
+            _costText.text =  _cost >= 1000 ? (_cost/1000).ToString()+"K$" : _cost+ "$";
             UpdateCostColor();
             GameManager.Instance.BalanceChangeBroadcaster.AddListener(UpdateCostColor);
 
