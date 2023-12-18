@@ -70,7 +70,7 @@ namespace Ability
         /// <returns>If the ability was activated</returns>
         public bool Consume()
         {
-            if (_numberOfUses <= 0)
+            if (_numberOfUses <= 0 && !IsUnlimited)
                 return false;
 
             bool isActived = ActivateAbility();
