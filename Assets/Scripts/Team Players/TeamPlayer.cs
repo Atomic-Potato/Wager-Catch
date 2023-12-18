@@ -12,7 +12,8 @@ namespace Pathfinding
         [SerializeField, Min(0f)] bool _isCanSprint;
         public bool IsCanSprint => _isCanSprint;
         [SerializeField, Min(0f)] float _sprintSpeedMultiplier = 1.75f;
-        [SerializeField, Min(0f)] float _sprintDuration = 1.75f;
+        [SerializeField, Min(0f)] Vector2 _sprintDurationRange = new Vector2(1.75f, 1.75f);
+        float _sprintDuration = 1.75f;
         [SerializeField, Min(0f)] float _sprintRecoveryMultiplier = 2f;
         
         [Space]
@@ -101,10 +102,12 @@ namespace Pathfinding
             _sleepEvent = new CustomUnityEvent();
             _appliedSpeed = _speed;
             _sprintTimer = _sprintDuration;
+            RandomizeValues();
 
             void RandomizeValues()
             {
                 _speed = UnityEngine.Random.Range(_speedRange.x, _speedRange.y);
+                _sprintDuration = UnityEngine.Random.Range(_sprintDurationRange.x, _sprintDurationRange.y);
             }
         }
 
