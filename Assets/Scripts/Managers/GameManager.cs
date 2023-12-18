@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public class GameManager : Singleton<GameManager>
 {
+    #region Global Variables
     [SerializeField] GameState _startingGameState = GameState.InGame;
     [SerializeField] TagsManager.TeamTag _playerTeam = TagsManager.TeamTag.NuteralPlayer;
     public TagsManager.Tag PlayerTeam => TagsManager.ConvertTeamTagToTag(_playerTeam);
@@ -66,6 +67,7 @@ public class GameManager : Singleton<GameManager>
         Catchers,
         Runners
     }
+    #endregion
 
     new void Awake()
     {

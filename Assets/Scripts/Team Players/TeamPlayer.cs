@@ -9,11 +9,17 @@ namespace Pathfinding
         #region Global Variables
         [SerializeField, Min(0f)] Vector2 _speedRange = new Vector2(1f, 5f);
         float _speed = 1f;
+        public float MaxSpeed => _speedRange.y;
+        public float Speed => _speed;
+
+        [Space]
         [SerializeField, Min(0f)] bool _isCanSprint;
         public bool IsCanSprint => _isCanSprint;
         [SerializeField, Min(0f)] float _sprintSpeedMultiplier = 1.75f;
         [SerializeField, Min(0f)] Vector2 _sprintDurationRange = new Vector2(0.5f, 4f);
         float _sprintDuration = 1.75f;
+        public float MaxSprintDuration => _sprintDurationRange.y;
+        public float SprintDuration => _sprintDuration;
         [SerializeField, Min(0f)] float _sprintRecoveryMultiplier = 2f;
         
         [Space]

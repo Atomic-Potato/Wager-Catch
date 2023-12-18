@@ -19,8 +19,12 @@ public class TeamsManager : Singleton<TeamsManager>
     
     List<Catcher> _catchers = new List<Catcher>();
     public int CatchersCount => _catchers.Count;
+    float _catchersStrengthScale;
+    public float CatchersStrengthScale => _catchersStrengthScale; 
     List<Runner> _runners = new List<Runner>();
     public int RunnersCount => _runners.Count;
+    float _runnersStrengthScale;
+    public float RunnersStrengthScale => _runnersStrengthScale;
     [HideInInspector] public List<Runner> RunnersNotInSafeArea = new List<Runner>();
 
     [HideInInspector] public CustomUnityEvent TeamsCountBroadcaster;
@@ -33,6 +37,8 @@ public class TeamsManager : Singleton<TeamsManager>
         LoadRunners();
         LoadCatchers();
         TeamsCountBroadcaster = new CustomUnityEvent();
+        _runnersStrengthScale = GetRunnersTeamStrengthScale();
+        Debug.Log("Runners team strength: " + _runnersStrengthScale);
     }
 
     public void AddRunner(Vector2 position)
@@ -43,6 +49,7 @@ public class TeamsManager : Singleton<TeamsManager>
         runner.grid = playersGrid;
         runner.PathRequestManager = pathRequestManager;
         _runners.Add(runner);
+        Debug.Log("Runer stats: \n SPEED: " + runner.Speed + " | SPRINT :" + runner.SprintDuration);
     }
 
     void LoadRunners()
@@ -69,6 +76,21 @@ public class TeamsManager : Singleton<TeamsManager>
             Transform spawnPoint = _catchersSpawnPoints[i%_catchersSpawnPoints.Count];
             AddCatcher(spawnPoint.position, spawnPoint);
         }
+    }
+
+    float GetRunnersTeamStrengthScale()
+    {
+        if (RunnersCount == 0)
+            return 0;
+        
+        float totalScore = 0f;
+        foreach (Runner runner in _runners)
+        {
+            float speedScore = (runner.Speed / runner.MaxSpeed) * .5f;
+            float sprintScore = (runner.SprintDuration / runner.MaxSprintDuration) * .5f;
+            totalScore += speedScore + sprintScore;
+        }
+        return totalScore / RunnersCount;
     }
 
     public Node GetRandomSafeNode()
