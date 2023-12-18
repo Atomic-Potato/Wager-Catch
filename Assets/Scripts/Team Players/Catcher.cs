@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Catcher : TeamPlayer
 {
+    #region Global Variables
     [Space, Header("Catcher Properties")]
     [SerializeField, Min(0f)] float _timeToCatch = 0.5f;
     [SerializeField, Min(0f)] float _timeToRecoverCatch = 1.25f;
-    [SerializeField, Min(0f)] float _catchAreaRadius = .75f;
+    [SerializeField, Min(0f)] Vector2 _catchAreaRadiusRange = new Vector2(.25f, 3f);
+    float _catchAreaRadius = .75f;
     [SerializeField] Transform _catchAreaOrigin;
 
     [Space]
@@ -18,12 +20,14 @@ public class Catcher : TeamPlayer
 
     [Space, Header("Catcher Gizmos")]
     [SerializeField] bool _isDrawCatchArea;
+    [SerializeField] float _catchAreaDisplayedRadius = .75f;
     [SerializeField] Color _catchAreaColor = new Color(1f, 0f, 0f, 1f);
 
     [HideInInspector] public Transform SpawnPoint;
     Runner _targetRunner;
     bool _isCatchingTarget;
     Coroutine _catchCoroutine;
+    #endregion
 
     new void Awake()
     {
@@ -31,6 +35,12 @@ public class Catcher : TeamPlayer
 
         if (_catchToolSprite.enabled)
             _catchToolSprite.enabled = false;
+        RandomizeValues();
+
+        void RandomizeValues()
+        {
+            _catchAreaRadius = UnityEngine.Random.Range(_catchAreaRadiusRange.x, _catchAreaRadiusRange.y);
+        }
     }
 
     new void OnDrawGizmos()
@@ -41,7 +51,7 @@ public class Catcher : TeamPlayer
         {
             Vector3 origin = _catchAreaOrigin != null ? _catchAreaOrigin.position : transform.position;
             Gizmos.color = _catchAreaColor;
-            Gizmos.DrawWireSphere(origin, _catchAreaRadius);
+            Gizmos.DrawWireSphere(origin, _catchAreaDisplayedRadius);
         }
     }
 
