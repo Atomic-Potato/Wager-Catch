@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Ability
@@ -9,6 +10,12 @@ namespace Ability
         public List<AbilityItem> AbilityItems => _abilityItems;
         
         [HideInInspector] public AbilityItem SelectedAbilityItem;
+
+        new void Awake()
+        {
+            base.Awake();
+            _abilityItems = _abilityItems.OrderBy(item => item.Cost).ToList();
+        }
 
         void Update()
         {
