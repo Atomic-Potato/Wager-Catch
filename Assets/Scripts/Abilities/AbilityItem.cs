@@ -79,7 +79,7 @@ namespace Ability
 
             _usesLeft--;
             UpdateUIText();
-            if (_usesLeft <= 0)
+            if (_usesLeft <= 0 && !IsUnlimited)
                 DecativateIcon();
 
             return true;
