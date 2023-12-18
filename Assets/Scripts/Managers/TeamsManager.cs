@@ -38,7 +38,7 @@ public class TeamsManager : Singleton<TeamsManager>
         LoadCatchers();
         TeamsCountBroadcaster = new CustomUnityEvent();
         _runnersStrengthScale = GetRunnersTeamStrengthScale();
-        Debug.Log("Runners team strength: " + _runnersStrengthScale);
+        _catchersStrengthScale = GetCatchersTeamStrengthScale();
     }
 
     public void AddRunner(Vector2 position)
@@ -49,7 +49,6 @@ public class TeamsManager : Singleton<TeamsManager>
         runner.grid = playersGrid;
         runner.PathRequestManager = pathRequestManager;
         _runners.Add(runner);
-        Debug.Log("Runer stats: \n SPEED: " + runner.Speed + " | SPRINT :" + runner.SprintDuration);
     }
 
     void LoadRunners()
@@ -88,6 +87,21 @@ public class TeamsManager : Singleton<TeamsManager>
         {
             float speedScore = (runner.Speed / runner.MaxSpeed) * .5f;
             float sprintScore = (runner.SprintDuration / runner.MaxSprintDuration) * .5f;
+            totalScore += speedScore + sprintScore;
+        }
+        return totalScore / RunnersCount;
+    }
+
+    float GetCatchersTeamStrengthScale()
+    {
+        if (RunnersCount == 0)
+            return 0;
+        
+        float totalScore = 0f;
+        foreach (Catcher catcher in _catchers)
+        {
+            float speedScore = (catcher.Speed / catcher.MaxSpeed) * .5f;
+            float sprintScore = (catcher.CatchAreaRadius / catcher.MaxCatchAreaRadius) * .5f;
             totalScore += speedScore + sprintScore;
         }
         return totalScore / RunnersCount;
