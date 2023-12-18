@@ -1,39 +1,27 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &3171076744434348794
+--- !u!1001 &5868242944610483579
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1587079348692172706, guid: 383cd89b7802aca4eb70067fadc89974,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -6336263851895887206, guid: 22a131992908a75499ffad0edd6b28e5,
-        type: 3}
     - target: {fileID: 7108418180357756224, guid: 383cd89b7802aca4eb70067fadc89974,
         type: 3}
       propertyPath: m_Name
-      value: Nuke Item
+      value: 'Banana Item '
       objectReference: {fileID: 0}
     - target: {fileID: 7108418180357756225, guid: 383cd89b7802aca4eb70067fadc89974,
         type: 3}
       propertyPath: _cost
-      value: 1000
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 7108418180357756225, guid: 383cd89b7802aca4eb70067fadc89974,
         type: 3}
       propertyPath: _numberOfUses
-      value: 1
+      value: -1
       objectReference: {fileID: 0}
-    - target: {fileID: 7108418180357756225, guid: 383cd89b7802aca4eb70067fadc89974,
-        type: 3}
-      propertyPath: _abilityPrefab
-      value: 
-      objectReference: {fileID: 8640100191156822906, guid: 1e2123c7bc02b2245a3ee75acc5d54f5,
-        type: 3}
     - target: {fileID: 7529516330459696243, guid: 383cd89b7802aca4eb70067fadc89974,
         type: 3}
       propertyPath: m_Pivot.x
@@ -139,11 +127,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8073408229326258477, guid: 383cd89b7802aca4eb70067fadc89974,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -6336263851895887206, guid: 22a131992908a75499ffad0edd6b28e5,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 383cd89b7802aca4eb70067fadc89974, type: 3}

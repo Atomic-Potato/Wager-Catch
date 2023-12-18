@@ -12,7 +12,7 @@ namespace Ability
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0) && SelectedAbilityItem != null && SelectedAbilityItem.Cost <= GameManager.Instance.Balance)
+            if (Input.GetMouseButtonDown(0) && SelectedAbilityItem != null)
             {
                 if (SelectedAbilityItem.IsCanBeConsumed)
                 {

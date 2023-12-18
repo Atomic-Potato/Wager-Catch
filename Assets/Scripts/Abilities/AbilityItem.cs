@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,13 +7,23 @@ namespace Ability
 {
     public class AbilityItem : MonoBehaviour
     {
+        #region Global Variables
         [SerializeField, Min(0f)] int _cost;
         public int Cost => _cost;
 
         [Tooltip("-1: Infinite number of uses")]
         [SerializeField, Min(-1)] int _numberOfUses = -1;
         [SerializeField] UnityEngine.GameObject _abilityPrefab;
+        
+        [Space]
         [SerializeField] Text _usesText;
+        
+        [Space]
+        [SerializeField] TMP_Text _costText;
+        [SerializeField] Color _cheapColor = new Color(0f, 0.490566f, 0f, 1f);
+        [SerializeField] Color _expensiveColor = new Color(1f, 0f, 0f, 1f);
+        
+        [Space]
         [SerializeField] GameObject _iconActive;
         [SerializeField] GameObject _iconInactive;
         
@@ -23,12 +34,17 @@ namespace Ability
         public UnityEngine.GameObject Prefab => _abilityPrefab;
         public bool IsUnlimited => _numberOfUses < 0;
         public bool IsActive => IsUnlimited || _usesLeft > 0;
-        public bool IsCanBeConsumed => IsUnlimited || _usesLeft > 0;
-        
+        public bool IsCanBeConsumed => (IsUnlimited || _usesLeft > 0) && _cost <= GameManager.Instance.Balance;
+        #endregion
+
         void OnEnable()
         {
             _usesLeft = _numberOfUses;
             Ability.Item = this;
+
+            _costText.text = _cost.ToString() + (_cost >= 1000 ? "K" : "") + "$";
+            UpdateCostColor();
+            GameManager.Instance.BalanceChangeBroadcaster.AddListener(UpdateCostColor);
 
             if (!IsCanBeConsumed)
                 DecativateIcon();
@@ -107,6 +123,11 @@ namespace Ability
         {
             _iconActive.SetActive(true);
             _iconInactive.SetActive(false);
+        }
+
+        void UpdateCostColor()
+        {
+            _costText.color = _cost <= GameManager.Instance.Balance ? _cheapColor : _expensiveColor;
         }
     }
 }
