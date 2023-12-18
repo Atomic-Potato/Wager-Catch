@@ -6,7 +6,9 @@ namespace Pathfinding
 {
     public class TeamPlayer : MonoBehaviour, ITeamPlayer
     {
-        [SerializeField, Min(0f)] float _speed = 2f;
+        #region Global Variables
+        [SerializeField, Min(0f)] Vector2 _speedRange = new Vector2(1f, 5f);
+        float _speed = 1f;
         [SerializeField, Min(0f)] bool _isCanSprint;
         public bool IsCanSprint => _isCanSprint;
         [SerializeField, Min(0f)] float _sprintSpeedMultiplier = 1.75f;
@@ -65,6 +67,7 @@ namespace Pathfinding
 
         CustomUnityEvent _sleepEvent;
         public CustomUnityEvent SleepEvent => _sleepEvent;
+        #endregion
 
         protected void OnDrawGizmos()
         {
@@ -98,6 +101,11 @@ namespace Pathfinding
             _sleepEvent = new CustomUnityEvent();
             _appliedSpeed = _speed;
             _sprintTimer = _sprintDuration;
+
+            void RandomizeValues()
+            {
+                _speed = UnityEngine.Random.Range(_speedRange.x, _speedRange.y);
+            }
         }
 
         protected void Update()
