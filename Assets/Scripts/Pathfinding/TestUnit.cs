@@ -7,14 +7,14 @@ namespace Pathfinding
     {
         [SerializeField] float speed = 10f;
         [SerializeField] float destinationReachedWaitTime = 2f;
-        [SerializeField] Transform target;
+        public Transform target;
 
         [Space, Header("Gizmos")]
         [SerializeField] bool isDrawPath;
         [SerializeField] Color pathColor = new Color(0f, 0f, 1f, .5f);
         [SerializeField] bool isRandomPathColor = true;
 
-        [HideInInspector] public PathRequestManager PathRequestManager;
+        public PathRequestManager PathRequestManager;
         [HideInInspector] public TestUnitsManager TestUnitsManager;
 
         Vector2 _facingDirection  = Vector2.down; 
@@ -42,8 +42,6 @@ namespace Pathfinding
                 for(int i = _pathIndex; i < _pathToTarget.Length; i++)
                 {
                     Gizmos.color = pathColor;
-                    if(i != _pathIndex)
-                        Gizmos.DrawLine(_pathToTarget[i-1], _pathToTarget[i]);
                     Gizmos.DrawCube(_pathToTarget[i], new Vector3(.25f, .25f, 0f));
                 }
             }
@@ -62,11 +60,8 @@ namespace Pathfinding
 
         void Update()
         {
-            if (_isReachedDestination && !_isPathRequestSent)
+            if (!_isPathRequestSent)
             {
-                if (_waitTimer < destinationReachedWaitTime)
-                    _waitTimer += Time.deltaTime;
-                else
                     SendPathRequest();
             }
 
@@ -87,7 +82,6 @@ namespace Pathfinding
             _isPathRequestSent = false;   
             _endNodeCache = endNode;
 
-            Debug.Log(gameObject.name + " " + isFoundPath);
             if (!isFoundPath)
                 return;
             _pathToTarget = newPath;

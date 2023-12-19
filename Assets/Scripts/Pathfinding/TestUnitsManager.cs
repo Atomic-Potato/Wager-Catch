@@ -11,6 +11,7 @@ namespace Pathfinding
         [SerializeField] Transform testUnitParent;
         [SerializeField] Grid grid;
         [SerializeField] PathRequestManager pathRequestManager;
+        [SerializeField] Transform target;
 
         List<TestUnit> _units = new List<TestUnit>();
         int _currentUnitObjectIndex = 0;        
@@ -33,6 +34,7 @@ namespace Pathfinding
                     TestUnit unit = spawnedUnit.GetComponent<TestUnit>();
                     unit.PathRequestManager = pathRequestManager;
                     unit.TestUnitsManager = this;
+                    unit.target = target;
                     _units.Add(unit);
 
                     unitsCount--;
