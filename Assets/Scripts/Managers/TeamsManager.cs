@@ -104,7 +104,7 @@ public class TeamsManager : Singleton<TeamsManager>
             float sprintScore = (catcher.CatchAreaRadius / catcher.MaxCatchAreaRadius) * .5f;
             totalScore += speedScore + sprintScore;
         }
-        return totalScore / RunnersCount;
+        return totalScore / CatchersCount;
     }
 
     public Node GetRandomSafeNode()

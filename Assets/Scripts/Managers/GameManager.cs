@@ -8,10 +8,13 @@ public class GameManager : Singleton<GameManager>
     #region Global Variables
     [SerializeField] GameState _startingGameState = GameState.InGame;
     
-    [Space]
+    [Space, Header("MONEY")]
     [SerializeField, Min(0f)] int _minBalance = 150;
     [SerializeField, Min(0f)] int _balance = 150;
     public int Balance => _balance;
+
+    [Space, Header("BETTING")]
+    [SerializeField, Min(0)] float MaxProfitMultiplier = 5; 
 
     [Space]
     [SerializeField] TagsManager.TeamTag _playerTeam = TagsManager.TeamTag.NuteralPlayer;
@@ -76,6 +79,11 @@ public class GameManager : Singleton<GameManager>
         Catchers,
         Runners
     }
+
+    float _runnersBetProfitScale;
+    float _runnersBetLossScale;
+    float _catchersBetProfitScale;
+    float _catchersBetLossScale;
     #endregion
 
     new void Awake()
@@ -90,6 +98,10 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         TeamsManager.Instance.TeamsCountBroadcaster.AddListener(UpdateMatchWinnerUsingTeamCount);
+        CalculateTeamsBetProfitScale();
+        CalculateTeamsBetLossScale();
+        Debug.Log("Runners win loss bets\n WIN: " + (int)(_runnersBetProfitScale * 100) + " | LOSS: " + (int)(_runnersBetLossScale * 100));
+        Debug.Log("Catchers win loss bets\n WIN: " + (int)(_catchersBetProfitScale * 100) + " | LOSS: " + (int)(_catchersBetLossScale * 100));
         StartMatch();
     }
 
@@ -105,6 +117,20 @@ public class GameManager : Singleton<GameManager>
         if (_balance < 0)
             _balance = 0;
         BalanceChangeBroadcaster.Invoke();
+    }
+
+    void CalculateTeamsBetProfitScale()
+    {
+        TeamsManager teams = TeamsManager.Instance;
+        _catchersBetProfitScale = teams.RunnersStrengthScale * MaxProfitMultiplier;
+        _runnersBetProfitScale = teams.CatchersStrengthScale * MaxProfitMultiplier;
+    }
+    
+    void CalculateTeamsBetLossScale()
+    {
+        TeamsManager teams = TeamsManager.Instance;
+        _catchersBetLossScale = teams.RunnersStrengthScale;
+        _runnersBetLossScale = teams.CatchersStrengthScale;
     }
 
     void UpdateGameTimer()
