@@ -81,9 +81,13 @@ public class GameManager : Singleton<GameManager>
     }
 
     float _runnersBetProfitScale;
+    public int RunnersProfitPercentage => (int)_runnersBetProfitScale * 100;
     float _runnersBetLossScale;
+    public int RunnersLossPercentage => (int)_runnersBetLossScale * 100;
     float _catchersBetProfitScale;
+    public int CatchersProfitPercentage => (int)_catchersBetProfitScale * 100;
     float _catchersBetLossScale;
+    public int CatchersLossPercentage => (int)_catchersBetLossScale * 100;
     #endregion
 
     new void Awake()
@@ -100,8 +104,6 @@ public class GameManager : Singleton<GameManager>
         TeamsManager.Instance.TeamsCountBroadcaster.AddListener(UpdateMatchWinnerUsingTeamCount);
         CalculateTeamsBetProfitScale();
         CalculateTeamsBetLossScale();
-        Debug.Log("Runners win loss bets\n WIN: " + (int)(_runnersBetProfitScale * 100) + " | LOSS: " + (int)(_runnersBetLossScale * 100));
-        Debug.Log("Catchers win loss bets\n WIN: " + (int)(_catchersBetProfitScale * 100) + " | LOSS: " + (int)(_catchersBetLossScale * 100));
         StartMatch();
     }
 
