@@ -81,13 +81,13 @@ public class GameManager : Singleton<GameManager>
     }
 
     float _runnersBetProfitScale;
-    public int RunnersProfitPercentage => (int)_runnersBetProfitScale * 100;
+    public int RunnersProfitPercentage => (int)(_runnersBetProfitScale * 100f);
     float _runnersBetLossScale;
-    public int RunnersLossPercentage => (int)_runnersBetLossScale * 100;
+    public int RunnersLossPercentage => (int)(_runnersBetLossScale * 100f);
     float _catchersBetProfitScale;
-    public int CatchersProfitPercentage => (int)_catchersBetProfitScale * 100;
+    public int CatchersProfitPercentage => (int)(_catchersBetProfitScale * 100f);
     float _catchersBetLossScale;
-    public int CatchersLossPercentage => (int)_catchersBetLossScale * 100;
+    public int CatchersLossPercentage => (int)(_catchersBetLossScale * 100f);
     #endregion
 
     new void Awake()
