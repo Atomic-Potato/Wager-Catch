@@ -284,10 +284,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0406e5ae007941042a07bea6c7881639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
+  _speedRange: {x: 1, y: 5}
   _isCanSprint: 0
   _sprintSpeedMultiplier: 1.75
-  _sprintDuration: 1.75
+  _sprintDurationRange: {x: 0.5, y: 4}
   _sprintRecoveryMultiplier: 2
   _collisionCheckSize: {x: 1, y: 1.045}
   _collisionCheckOffset: {x: 0, y: 0.45}
@@ -307,12 +307,13 @@ MonoBehaviour:
   TeamsManager: {fileID: 0}
   _timeToCatch: 1.15
   _timeToRecoverCatch: 2.5
-  _catchAreaRadius: 0.75
+  _catchAreaRadiusRange: {x: 0.25, y: 3}
   _catchAreaOrigin: {fileID: 8101666772180373965}
   _catchToolSprite: {fileID: 8977168415014358857}
   _catchToolEndPoint: {fileID: 0}
   _catchEffect: {fileID: 0}
   _isDrawCatchArea: 1
+  _catchAreaDisplayedRadius: 0.75
   _catchAreaColor: {r: 1, g: 0, b: 0, a: 1}
   SpawnPoint: {fileID: 0}
 --- !u!61 &3044994074815680745
