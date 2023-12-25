@@ -4544,9 +4544,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c150fd423a07c84ba486d97e68633ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _teamSelectionUIParent: {fileID: 206032496}
+  _teamSelectionUIBalanceText: {fileID: 853748011}
+  _wagerText: {fileID: 721030944}
+  _bettingSliderFill: {fileID: 284660388}
+  _runnersList: {fileID: 678218247}
+  _runnersWinText: {fileID: 1305458709}
+  _runnersLossText: {fileID: 281706806}
+  _catchersList: {fileID: 1627851369}
+  _catchersWinText: {fileID: 1491323005}
+  _catchersLossText: {fileID: 1962532571}
+  _inGameUIParent: {fileID: 1203760527}
   _gameTimerText: {fileID: 352773372}
   _balanceText: {fileID: 1346650366}
   _abilityItemsListParent: {fileID: 1284925853}
+  _defaultScreen: 0
 --- !u!1 &853748009
 GameObject:
   m_ObjectHideFlags: 0

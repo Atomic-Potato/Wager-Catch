@@ -104,7 +104,9 @@ public class GameManager : Singleton<GameManager>
         TeamsManager.Instance.TeamsCountBroadcaster.AddListener(UpdateMatchWinnerUsingTeamCount);
         CalculateTeamsBetProfitScale();
         CalculateTeamsBetLossScale();
-        StartMatch();
+        UIManager.Instance.SetScreen(UIManager.UI.TeamSelection);
+        Time.timeScale = 0f;
+        // StartMatch();
     }
 
     void Update()
