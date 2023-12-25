@@ -2,11 +2,8 @@
 using UnityEngine;
 using System;
 using Ability;
-using UnityEngine.UI;
-using UnityEngine.PlayerLoop;
-using System.Collections.Generic;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
     [Space, Header("Team Selection UI")]
     [Space, SerializeField] GameObject _teamSelectionUIParent;
