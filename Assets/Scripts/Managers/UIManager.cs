@@ -55,6 +55,7 @@ public class UIManager : Singleton<UIManager>
         DisableCurrentScreen();
         _currentScreen = screen;
         EnableCurrentScreen();
+        UpdateScreen();
     }
 
     public void UpdateScreen()
