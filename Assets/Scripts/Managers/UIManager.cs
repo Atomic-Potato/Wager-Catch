@@ -83,6 +83,9 @@ public class UIManager : Singleton<UIManager>
             case UI.TeamSelection:
                 UpdateTeamSelectionUIText();
                 break;
+            case UI.InGame:
+                UpdateBalanceText();
+                break;
         }
     }
 

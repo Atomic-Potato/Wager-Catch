@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -190,9 +191,12 @@ public class GameManager : Singleton<GameManager>
         _currentMatchState = MatchState.Finished;
         MatchEndBroadcaster.Invoke();
         AddWinningsToBalance();
-        TeamsManager.Instance.LoadNewPlayers();
-        GuardsManager.Instance.LoadNewGuards();
-        SetGameState(GameState.InTeamSelection);
+        // TeamsManager.Instance.LoadNewPlayers();
+        // GuardsManager.Instance.LoadNewGuards();
+        // CalculateTeamsBetProfitScale();
+        // CalculateTeamsBetProfitScale();
+        SceneManager.LoadScene("SampleScene");
+        // SetGameState(GameState.InTeamSelection);
 
         void AddWinningsToBalance()
         {
