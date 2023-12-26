@@ -9,6 +9,7 @@ TagManager:
   - Runner
   - Catcher
   - NuteralPlayer
+  - None
   layers:
   - Default
   - TransparentFX

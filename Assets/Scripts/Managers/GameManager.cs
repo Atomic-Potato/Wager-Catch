@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager>
     
     [Space, Header("MONEY")]
     [SerializeField, Min(0f)] int _minBalance = 150;
-    [SerializeField, Min(0f)] int _balance = 150;
+    int _balance = 150;
     public int Balance => _balance;
 
     [Space, Header("BETTING")]
@@ -95,6 +95,9 @@ public class GameManager : Singleton<GameManager>
         MatchTimeBroadcaster = new UnityEvent();
         MatchEndBroadcaster = new UnityEvent();
         BalanceChangeBroadcaster = new CustomUnityEvent();
+        PlayerData data = DataSavingManager.LoadData();
+        _balance = data.Balance < 150 ? 150 : data.Balance;
+        
     }
 
     void Start()
@@ -191,12 +194,9 @@ public class GameManager : Singleton<GameManager>
         _currentMatchState = MatchState.Finished;
         MatchEndBroadcaster.Invoke();
         AddWinningsToBalance();
-        // TeamsManager.Instance.LoadNewPlayers();
-        // GuardsManager.Instance.LoadNewGuards();
-        // CalculateTeamsBetProfitScale();
-        // CalculateTeamsBetProfitScale();
+        DataSavingManager.Save();
+        Debug.Log("Balance: " + DataSavingManager.LoadData().Balance);
         SceneManager.LoadScene("SampleScene");
-        // SetGameState(GameState.InTeamSelection);
 
         void AddWinningsToBalance()
         {
