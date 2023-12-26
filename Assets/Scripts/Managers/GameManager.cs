@@ -202,8 +202,12 @@ public class GameManager : Singleton<GameManager>
 
     void StartMatch()
     {
-        Time.timeScale = 1f;
         _currentMatchState = MatchState.Playing;
+        Time.timeScale = 1f;
+
+        _wager = UIManager.Instance.SelectedWager;
+        _balance -= _wager;
+
         if (_matchStartTime == null)
             _matchStartTime = Time.time;
     }
@@ -213,7 +217,6 @@ public class GameManager : Singleton<GameManager>
         if (_currentGameState != GameState.InTeamSelection)
             return;
         _playerTeam = TagsManager.TeamTag.Runner;
-        _wager = UIManager.Instance.SelectedWager;
         SetGameState(GameState.InGame);
     }
 
@@ -222,7 +225,6 @@ public class GameManager : Singleton<GameManager>
         if (_currentGameState != GameState.InTeamSelection)
             return;
         _playerTeam = TagsManager.TeamTag.Catcher;
-        _wager = UIManager.Instance.SelectedWager;
         SetGameState(GameState.InGame);
     }
 }
