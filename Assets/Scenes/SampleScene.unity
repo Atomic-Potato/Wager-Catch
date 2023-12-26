@@ -4473,7 +4473,7 @@ MonoBehaviour:
   _teamSelectionUIParent: {fileID: 206032496}
   _teamSelectionUIBalanceText: {fileID: 853748011}
   _wagerText: {fileID: 721030944}
-  _bettingSliderFill: {fileID: 0}
+  _slider: {fileID: 1920488086}
   _runnersList: {fileID: 678218247}
   _runnersWinText: {fileID: 1305458709}
   _runnersLossText: {fileID: 281706806}
@@ -7615,7 +7615,18 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 839613601}
+        m_MethodName: UpdateWager
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1947969867
 GameObject:
   m_ObjectHideFlags: 0

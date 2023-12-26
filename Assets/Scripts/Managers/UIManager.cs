@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using Ability;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -9,7 +10,7 @@ public class UIManager : Singleton<UIManager>
     [Space, SerializeField] GameObject _teamSelectionUIParent;
     [SerializeField] TMP_Text _teamSelectionUIBalanceText;
     [SerializeField] TMP_Text _wagerText;
-    [SerializeField] RectTransform _bettingSliderFill;
+    [SerializeField] Slider _slider;
     [Space, SerializeField] RectTransform _runnersList;
     [SerializeField] TMP_Text _runnersWinText;
     [SerializeField] TMP_Text _runnersLossText;
@@ -89,6 +90,20 @@ public class UIManager : Singleton<UIManager>
             default:
                 return null;
         }
+    }
+    #endregion
+
+    #region SELECTING A WAGER
+    int _selectedWager;
+    public int SelectedWager => _selectedWager;
+    public void UpdateWager()
+    {
+        float balance = GameManager.Instance.Balance;
+        float percentage = _slider.value;
+        _selectedWager = (int)(balance * percentage);
+
+        _teamSelectionUIBalanceText.text = "Balance:\n" + (balance - _selectedWager) + "$";
+        _wagerText.text = "Wager:\n" + (int)(percentage * 100) + "% " + _selectedWager + "$";
     }
     #endregion
 

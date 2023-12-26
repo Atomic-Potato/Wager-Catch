@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField, Min(0f)] int _minBalance = 150;
     [SerializeField, Min(0f)] int _balance = 150;
     public int Balance => _balance;
+    [HideInInspector] public int Wager; 
 
     [Space, Header("BETTING")]
     [SerializeField, Min(0)] float MaxProfitMultiplier = 5; 
