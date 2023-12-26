@@ -32,6 +32,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] TMP_Text _gameTimerText;
     [SerializeField] TMP_Text _balanceText;
     [SerializeField] RectTransform _abilityItemsListParent;
+    [SerializeField] TMP_Text _yourTeamText;
 
     [Space, Header("Other")]
     [SerializeField] UI _defaultScreen;
@@ -49,6 +50,8 @@ public class UIManager : Singleton<UIManager>
     {
         base.Awake();
         SetScreen(_defaultScreen);
+        
+         Debug.Log( GameManager.Instance.PlayerTeam.ToString());
     }
 
     void Start()
@@ -89,6 +92,7 @@ public class UIManager : Singleton<UIManager>
                 UpdateTeamSelectionUIText();
                 break;
             case UI.InGame:
+                UpdatePlayerTeamText();
                 UpdateBalanceText();
                 break;
         }
@@ -132,6 +136,12 @@ public class UIManager : Singleton<UIManager>
         _wagerText.text = "Wager:\n" + (int)(percentage * 100) + "% " + ConvertIntToShortMoney(_selectedWager);
     }
     #endregion
+
+    void UpdatePlayerTeamText()
+    {
+        _yourTeamText.color = GameManager.Instance.PlayerTeamColor;
+        _yourTeamText.text = GameManager.Instance.PlayerTeam.ToString();
+    }
 
     void LoadPlayersStatsList()
     {

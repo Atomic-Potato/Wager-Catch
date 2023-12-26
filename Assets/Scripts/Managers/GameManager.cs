@@ -18,7 +18,29 @@ public class GameManager : Singleton<GameManager>
     [SerializeField, Min(0)] float MaxProfitMultiplier = 5; 
 
     [Space]
-    [SerializeField] TagsManager.TeamTag _playerTeam = TagsManager.TeamTag.NuteralPlayer;
+    [SerializeField] Color _runnersColor = new Color(0f, 1f, 0f, 1f);
+    public Color RunnersColor => _runnersColor;
+    [SerializeField] Color _catchersColor = new Color(1f, 0f, 0f, 1f);
+    public Color CatchersColor => _catchersColor;
+    [SerializeField] Color _nuteralColor = new Color(1f, 1f, 1f, 1f);
+    public Color NuteralColor => _nuteralColor;
+    public Color PlayerTeamColor
+    {
+        get
+        {
+            switch (PlayerTeam)
+            {
+                case TagsManager.Tag.Runner:
+                    return RunnersColor;
+                case TagsManager.Tag.Catcher:
+                    return CatchersColor;
+                default:
+                    return NuteralColor;
+            }
+        }
+    }
+
+    TagsManager.TeamTag _playerTeam = TagsManager.TeamTag.NuteralPlayer;
     public TagsManager.Tag PlayerTeam => TagsManager.ConvertTeamTagToTag(_playerTeam);
     
     [HideInInspector] public Player PlayerInstance;
@@ -96,7 +118,7 @@ public class GameManager : Singleton<GameManager>
         MatchEndBroadcaster = new UnityEvent();
         BalanceChangeBroadcaster = new CustomUnityEvent();
         PlayerData data = DataSavingManager.LoadData();
-        _balance = data.Balance < 150 ? 150 : data.Balance;
+        _balance = data.Balance < _minBalance ? _minBalance : data.Balance;
         
     }
 
