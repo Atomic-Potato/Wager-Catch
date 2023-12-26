@@ -11,12 +11,16 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] TMP_Text _teamSelectionUIBalanceText;
     [SerializeField] TMP_Text _wagerText;
     [SerializeField] Slider _slider;
+
     [Space, SerializeField] RectTransform _runnersList;
     [SerializeField] TMP_Text _runnersWinText;
     [SerializeField] TMP_Text _runnersLossText;
+    [SerializeField] Button _runnersBetButton;
+
     [Space, SerializeField] RectTransform _catchersList;
     [SerializeField] TMP_Text _catchersWinText;
     [SerializeField] TMP_Text _catchersLossText;
+    [SerializeField] Button _catchersBetButton;
     
 
     [Space, Header("In Game UI")]
@@ -37,8 +41,9 @@ public class UIManager : Singleton<UIManager>
     UI _currentScreen;
     public UI CurrentScreen => _currentScreen;
 
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         SetScreen(_defaultScreen);
     }
 
@@ -46,6 +51,8 @@ public class UIManager : Singleton<UIManager>
     {
         GameManager.Instance.BalanceChangeBroadcaster.AddListener(UpdateBalanceText);
         GameManager.Instance.MatchTimeBroadcaster.AddListener(UpdateGameTimer);
+        _runnersBetButton.onClick.AddListener(GameManager.Instance.BetOnRunners);
+        _catchersBetButton.onClick.AddListener(GameManager.Instance.BetOnCatchers);
         UpdateBalanceText();
         LoadAbilityItems();
     }

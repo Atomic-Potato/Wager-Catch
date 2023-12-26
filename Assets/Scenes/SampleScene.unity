@@ -4477,9 +4477,11 @@ MonoBehaviour:
   _runnersList: {fileID: 678218247}
   _runnersWinText: {fileID: 1305458709}
   _runnersLossText: {fileID: 281706806}
+  _runnersBetButton: {fileID: 653544689}
   _catchersList: {fileID: 1627851369}
   _catchersWinText: {fileID: 1491323005}
   _catchersLossText: {fileID: 1962532571}
+  _catchersBetButton: {fileID: 1264249743}
   _inGameUIParent: {fileID: 1203760527}
   _gameTimerText: {fileID: 352773372}
   _balanceText: {fileID: 1346650366}
@@ -7618,7 +7620,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 839613601}
         m_MethodName: UpdateWager
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8742,7 +8744,7 @@ PrefabInstance:
     - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}
       propertyPath: _playerTeam
-      value: 16
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}
@@ -8754,6 +8756,11 @@ PrefabInstance:
       propertyPath: _playerSpawnPoint
       value: 
       objectReference: {fileID: 1467999695}
+    - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
+        type: 3}
+      propertyPath: _startingGameState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7852513696091412339, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}
       propertyPath: m_RootOrder

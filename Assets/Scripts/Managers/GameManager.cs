@@ -12,7 +12,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField, Min(0f)] int _minBalance = 150;
     [SerializeField, Min(0f)] int _balance = 150;
     public int Balance => _balance;
-    [HideInInspector] public int Wager; 
 
     [Space, Header("BETTING")]
     [SerializeField, Min(0)] float MaxProfitMultiplier = 5; 
@@ -82,6 +81,9 @@ public class GameManager : Singleton<GameManager>
         Catchers,
         Runners
     }
+
+    int _wager;
+    public int Wager => _wager;
 
     float _runnersBetProfitScale;
     public int RunnersProfitPercentage => (int)(_runnersBetProfitScale * 100f);
@@ -206,8 +208,21 @@ public class GameManager : Singleton<GameManager>
             _matchStartTime = Time.time;
     }
 
-    // public void BetOnRunners()
-    // {
-    //     if (_currentMatchState)
-    // }
+    public void BetOnRunners()
+    {
+        if (_currentGameState != GameState.InTeamSelection)
+            return;
+        _playerTeam = TagsManager.TeamTag.Runner;
+        _wager = UIManager.Instance.SelectedWager;
+        SetGameState(GameState.InGame);
+    }
+
+    public void BetOnCatchers()
+    {
+        if (_currentGameState != GameState.InTeamSelection)
+            return;
+        _playerTeam = TagsManager.TeamTag.Catcher;
+        _wager = UIManager.Instance.SelectedWager;
+        SetGameState(GameState.InGame);
+    }
 }
