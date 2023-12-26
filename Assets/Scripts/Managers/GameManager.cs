@@ -55,10 +55,12 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector] public UnityEvent MatchTimeBroadcaster;
     [HideInInspector] public UnityEvent MatchEndBroadcaster;
     [HideInInspector] public CustomUnityEvent BalanceChangeBroadcaster;
-    [HideInInspector] public GameState CurrentGameState;    
+    
+    GameState _currentGameState;
+    public GameState CurrentGameState => _currentGameState;    
     public enum GameState
     {
-        InMenu,
+        InTeamSelection,
         InGame,
     }
 
@@ -94,7 +96,6 @@ public class GameManager : Singleton<GameManager>
     new void Awake()
     {
         base.Awake();
-        CurrentGameState = _startingGameState;
         MatchTimeBroadcaster = new UnityEvent();
         MatchEndBroadcaster = new UnityEvent();
         BalanceChangeBroadcaster = new CustomUnityEvent();
@@ -105,9 +106,7 @@ public class GameManager : Singleton<GameManager>
         TeamsManager.Instance.TeamsCountBroadcaster.AddListener(UpdateMatchWinnerUsingTeamCount);
         CalculateTeamsBetProfitScale();
         CalculateTeamsBetLossScale();
-        UIManager.Instance.SetScreen(UIManager.UI.TeamSelection);
-        Time.timeScale = 0f;
-        // StartMatch();
+        SetGameState(_startingGameState);
     }
 
     void Update()
@@ -122,6 +121,22 @@ public class GameManager : Singleton<GameManager>
         if (_balance < 0)
             _balance = 0;
         BalanceChangeBroadcaster.Invoke();
+    }
+
+    void SetGameState(GameState state)
+    {
+        _currentGameState = state;
+        switch (state)
+        {
+            case GameState.InTeamSelection:
+                Time.timeScale = 0f;
+                UIManager.Instance.SetScreen(UIManager.UI.TeamSelection);
+                break;
+            case GameState.InGame:
+                StartMatch();
+                UIManager.Instance.SetScreen(UIManager.UI.InGame);
+                break;
+        }
     }
 
     void CalculateTeamsBetProfitScale()
@@ -185,8 +200,14 @@ public class GameManager : Singleton<GameManager>
 
     void StartMatch()
     {
+        Time.timeScale = 1f;
         _currentMatchState = MatchState.Playing;
         if (_matchStartTime == null)
             _matchStartTime = Time.time;
     }
+
+    // public void BetOnRunners()
+    // {
+    //     if (_currentMatchState)
+    // }
 }

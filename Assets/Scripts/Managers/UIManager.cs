@@ -151,7 +151,7 @@ public class UIManager : Singleton<UIManager>
     {
         GameManager gameManager = GameManager.Instance;
         _teamSelectionUIBalanceText.text = "Balance:\n" + ConvertIntToShortMoney(gameManager.Balance);
-        _wagerText.text = "Wager:\n";
+        _wagerText.text = "Wager:\n0% 0$";
         _runnersWinText.text = "WIN: " + gameManager.RunnersProfitPercentage + "%";
         _runnersLossText.text = "LOSS: " + gameManager.RunnersLossPercentage + "%";
         _catchersWinText.text = "WIN: " + gameManager.CatchersProfitPercentage + "%";
