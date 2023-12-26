@@ -7,14 +7,13 @@ public class DataSavingManager : Singleton<DataSavingManager>
     static string _playerDataFileName = "PlayerData.json";
     public static string PlayerDataFileName => _playerDataFileName;
 
-    void Awake()
+    new void Awake()
     {
+        base.Awake();
         string path = Path.Combine(Application.persistentDataPath, _playerDataFileName);
 
         if (!File.Exists(path))
             CreateSaveFile();
-
-        Debug.Log("Path: " + path);
     }
 
     public void CreateSaveFile()

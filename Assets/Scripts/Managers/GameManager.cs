@@ -195,7 +195,6 @@ public class GameManager : Singleton<GameManager>
         MatchEndBroadcaster.Invoke();
         AddWinningsToBalance();
         DataSavingManager.Save();
-        Debug.Log("Balance: " + DataSavingManager.LoadData().Balance);
         SceneManager.LoadScene("SampleScene");
 
         void AddWinningsToBalance()
