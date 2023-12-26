@@ -50,6 +50,16 @@ public class UIManager : Singleton<UIManager>
         LoadAbilityItems();
     }
 
+    public static string ConvertIntToShortMoney(int money)
+    {
+        if (money / 1000f < 1f)
+            return money.ToString() + "$";
+        else if (money / 1000000f < 1f)
+            return (money/1000).ToString() + "K$";
+        else
+            return (money/1000000).ToString() + "M$";
+    }
+
     #region SCREEN MANAGEMENT
     public void SetScreen(UI screen)
     {
@@ -98,12 +108,13 @@ public class UIManager : Singleton<UIManager>
     public int SelectedWager => _selectedWager;
     public void UpdateWager()
     {
-        float balance = GameManager.Instance.Balance;
+        int balance = GameManager.Instance.Balance;
         float percentage = _slider.value;
         _selectedWager = (int)(balance * percentage);
+        
 
-        _teamSelectionUIBalanceText.text = "Balance:\n" + (balance - _selectedWager) + "$";
-        _wagerText.text = "Wager:\n" + (int)(percentage * 100) + "% " + _selectedWager + "$";
+        _teamSelectionUIBalanceText.text = "Balance:\n" + ConvertIntToShortMoney(balance - _selectedWager);
+        _wagerText.text = "Wager:\n" + (int)(percentage * 100) + "% " + ConvertIntToShortMoney(_selectedWager);
     }
     #endregion
 
@@ -133,13 +144,13 @@ public class UIManager : Singleton<UIManager>
     void UpdateBalanceText()
     {
         int balance = GameManager.Instance.Balance;
-        _balanceText.text = balance + "$";
+        _balanceText.text = ConvertIntToShortMoney(balance);
     }
 
     void UpdateTeamSelectionUIText()
     {
         GameManager gameManager = GameManager.Instance;
-        _teamSelectionUIBalanceText.text = "Balance:\n" + gameManager.Balance;
+        _teamSelectionUIBalanceText.text = "Balance:\n" + ConvertIntToShortMoney(gameManager.Balance);
         _wagerText.text = "Wager:\n";
         _runnersWinText.text = "WIN: " + gameManager.RunnersProfitPercentage + "%";
         _runnersLossText.text = "LOSS: " + gameManager.RunnersLossPercentage + "%";
