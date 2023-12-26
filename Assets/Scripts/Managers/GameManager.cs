@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
@@ -109,6 +107,9 @@ public class GameManager : Singleton<GameManager>
     public int CatchersProfitPercentage => (int)(_catchersBetProfitScale * 100f);
     float _catchersBetLossScale;
     public int CatchersLossPercentage => (int)(_catchersBetLossScale * 100f);
+
+    int _profit;
+    public int Profit => _profit;
     #endregion
 
     new void Awake()
@@ -139,8 +140,11 @@ public class GameManager : Singleton<GameManager>
     public void DeductBalance(int amount)
     {
         _balance -= amount;
+        _profit -= amount;
         if (_balance < 0)
             _balance = 0;
+        if (_profit < 0)
+            _profit = 0;
         BalanceChangeBroadcaster.Invoke();
     }
 
@@ -215,7 +219,10 @@ public class GameManager : Singleton<GameManager>
 
         _currentMatchState = MatchState.Finished;
         MatchEndBroadcaster.Invoke();
-        AddWinningsToBalance();
+        if (_matchWinner == _playerTeam)
+            AddWinningsToBalance();
+        else
+            AddRemainingWagedMoney();
         DataSavingManager.Save();
         SceneManager.LoadScene("SampleScene");
 
@@ -225,8 +232,18 @@ public class GameManager : Singleton<GameManager>
             if (_matchWinner == TagsManager.TeamTag.Runner)
                 winnings = (int)(winnings * _runnersBetProfitScale);
             else if(_matchWinner == TagsManager.TeamTag.Catcher)
-                winnings = (int)(winnings * _runnersBetProfitScale);
+                winnings = (int)(winnings * _catchersBetProfitScale);
             _balance += winnings;
+        }
+
+        void AddRemainingWagedMoney()
+        {
+            int remaining = _wager;
+            if (_matchWinner == TagsManager.TeamTag.Runner)
+                remaining = (int)(remaining * _catchersBetLossScale);
+            else if(_matchWinner == TagsManager.TeamTag.Catcher)
+                remaining = (int)(remaining * _runnersBetLossScale);
+            _balance += remaining;
         }
     }
 
@@ -238,8 +255,24 @@ public class GameManager : Singleton<GameManager>
         _wager = UIManager.Instance.SelectedWager;
         _balance -= _wager;
 
+        
+        _profit = (int)((float)_wager - (float)_wager * GetProfitScale());
+
         if (_matchStartTime == null)
             _matchStartTime = Time.time;
+
+        float GetProfitScale()
+        {
+            switch (_playerTeam)
+            {
+                case TagsManager.TeamTag.Runner:
+                    return _runnersBetProfitScale;
+                case TagsManager.TeamTag.Catcher:
+                    return -_catchersBetProfitScale;
+                default:
+                    return 1f;
+            }
+        }
     }
 
     public void BetOnRunners()

@@ -3,8 +3,6 @@ using UnityEngine;
 using System;
 using Ability;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using JetBrains.Annotations;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -31,6 +29,7 @@ public class UIManager : Singleton<UIManager>
     [Space, SerializeField] GameObject _inGameUIParent;
     [SerializeField] TMP_Text _gameTimerText;
     [SerializeField] TMP_Text _balanceText;
+    [SerializeField] TMP_Text _profitText;
     [SerializeField] RectTransform _abilityItemsListParent;
     [SerializeField] TMP_Text _yourTeamText;
 
@@ -196,7 +195,9 @@ public class UIManager : Singleton<UIManager>
     void UpdateBalanceText()
     {
         int balance = GameManager.Instance.Balance;
+        int profit = GameManager.Instance.Profit;
         _balanceText.text = ConvertIntToShortMoney(balance);
+        _profitText.text = "PROFIT: " + ConvertIntToShortMoney(profit);
     }
 
     void UpdateTeamSelectionUIText()
