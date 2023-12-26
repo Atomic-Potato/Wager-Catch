@@ -72,15 +72,8 @@ public class GameManager : Singleton<GameManager>
         Paused
     }
 
-    Winner _matchWinner = Winner.None;
-    public Winner MatchWinner => _matchWinner;
-    public enum Winner
-    {
-        None,
-        Draw,
-        Catchers,
-        Runners
-    }
+    TagsManager.TeamTag _matchWinner = TagsManager.TeamTag.None;
+    public TagsManager.TeamTag MatchWinner => _matchWinner;
 
     int _wager;
     public int Wager => _wager;
@@ -168,7 +161,7 @@ public class GameManager : Singleton<GameManager>
         else
         {
             _matchTimePassed = _matchLengthInSeconds;
-            _matchWinner = Winner.Runners;
+            _matchWinner = TagsManager.TeamTag.Runner;
             EndMatch();            
         }
     }
@@ -179,13 +172,13 @@ public class GameManager : Singleton<GameManager>
         int catchersCount = TeamsManager.Instance.CatchersCount;
 
         if (runnersCount == 0 && catchersCount == 0)
-            _matchWinner = Winner.Draw;
+            _matchWinner = TagsManager.TeamTag.NuteralPlayer;
         else if (catchersCount == 0)
-            _matchWinner = Winner.Runners;
+            _matchWinner = TagsManager.TeamTag.Runner;
         else if (runnersCount == 0)
-            _matchWinner = Winner.Catchers;
+            _matchWinner = TagsManager.TeamTag.Catcher;
         
-        if (_matchWinner != Winner.None)
+        if (_matchWinner != TagsManager.TeamTag.None)
                 EndMatch();
     }
 
@@ -196,8 +189,20 @@ public class GameManager : Singleton<GameManager>
 
         _currentMatchState = MatchState.Finished;
         MatchEndBroadcaster.Invoke();
+        AddWinningsToBalance();
+        TeamsManager.Instance.LoadNewPlayers();
+        GuardsManager.Instance.LoadNewGuards();
+        SetGameState(GameState.InTeamSelection);
 
-        Debug.Log("Match winner: " + _matchWinner + "\n" + _currentMatchState);
+        void AddWinningsToBalance()
+        {
+            int winnings = _wager;
+            if (_matchWinner == TagsManager.TeamTag.Runner)
+                winnings = (int)(winnings * _runnersBetProfitScale);
+            else if(_matchWinner == TagsManager.TeamTag.Catcher)
+                winnings = (int)(winnings * _runnersBetProfitScale);
+            _balance += winnings;
+        }
     }
 
     void StartMatch()

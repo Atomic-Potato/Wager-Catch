@@ -2,7 +2,7 @@
 using Pathfinding;
 using UnityEngine;
 
-public class GuardsManager : MonoBehaviour
+public class GuardsManager : Singleton<GuardsManager>
 {
     [SerializeField, Min(0)] int _guardsToCache;
     [SerializeField] Transform _guardsParent;
@@ -18,9 +18,23 @@ public class GuardsManager : MonoBehaviour
     void Start()
     {
         _dangersManager = DangerousObjectsManager.Instance;
-        LoadGuards();
-        
-        void LoadGuards()
+        LoadNewGuards();
+    }
+
+    public void LoadNewGuards()
+    {
+        DestroyAllGuards();
+        CreateGuards();
+
+        void DestroyAllGuards()
+        {
+            foreach (Guard guard in _guards)
+                Destroy(guard);
+            _guards.Clear();
+        }
+
+
+        void CreateGuards()
         {
             for (int i=0; i < _guardsToCache; i++)
             {

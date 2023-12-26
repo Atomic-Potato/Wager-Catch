@@ -34,11 +34,8 @@ public class TeamsManager : Singleton<TeamsManager>
     new void Awake()
     {
         base.Awake();
-        LoadRunners();
-        LoadCatchers();
         TeamsCountBroadcaster = new CustomUnityEvent();
-        _runnersStrengthScale = GetRunnersTeamStrengthScale();
-        _catchersStrengthScale = GetCatchersTeamStrengthScale();
+        LoadNewPlayers();
     }
 
     public void AddRunner(Vector2 position)
@@ -148,5 +145,26 @@ public class TeamsManager : Singleton<TeamsManager>
         
         TeamsCountBroadcaster.IsActive = true;
         TeamsCountBroadcaster.Invoke();
+    }
+
+    public void LoadNewPlayers()
+    {
+        RemoveCurrentPlayers();
+
+        LoadRunners();
+        LoadCatchers();
+
+        _runnersStrengthScale = GetRunnersTeamStrengthScale();
+        _catchersStrengthScale = GetCatchersTeamStrengthScale();
+
+        void RemoveCurrentPlayers()
+        {
+            List<TeamPlayer> players = new List<TeamPlayer>(_catchers);
+            players.AddRange(_runners);
+            foreach (TeamPlayer p in players)
+                Destroy(p.gameObject);
+            _catchers.Clear();
+            _runners.Clear();
+        }
     }
 }

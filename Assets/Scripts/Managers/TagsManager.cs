@@ -14,6 +14,7 @@ public class TagsManager
         Runner = 8,
         Catcher = 16,
         NuteralPlayer = 32,
+        None = 64,
     }
 
     public static Tag TeamTags =>  Tag.NuteralPlayer | Tag.Catcher | Tag.Runner;
@@ -23,6 +24,7 @@ public class TagsManager
         NuteralPlayer = 32,
         Runner = 8,
         Catcher = 16,
+        None = 64,
     }
 
     public static Tag GetTagFromString(string tagName)
