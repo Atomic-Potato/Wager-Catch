@@ -3,6 +3,8 @@ using UnityEngine;
 using System;
 using Ability;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -13,11 +15,13 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] Slider _slider;
 
     [Space, SerializeField] RectTransform _runnersList;
+    [SerializeField] RunnerStatsDisplay _runnerStatsDisplayPrefab;
     [SerializeField] TMP_Text _runnersWinText;
     [SerializeField] TMP_Text _runnersLossText;
     [SerializeField] Button _runnersBetButton;
 
     [Space, SerializeField] RectTransform _catchersList;
+    [SerializeField] CatcherStatsDisplay _catcherStatsDisplayPrefab;
     [SerializeField] TMP_Text _catchersWinText;
     [SerializeField] TMP_Text _catchersLossText;
     [SerializeField] Button _catchersBetButton;
@@ -55,6 +59,7 @@ public class UIManager : Singleton<UIManager>
         _catchersBetButton.onClick.AddListener(GameManager.Instance.BetOnCatchers);
         UpdateBalanceText();
         LoadAbilityItems();
+        LoadPlayersStatsList();
     }
 
     public static string ConvertIntToShortMoney(int money)
@@ -127,6 +132,33 @@ public class UIManager : Singleton<UIManager>
         _wagerText.text = "Wager:\n" + (int)(percentage * 100) + "% " + ConvertIntToShortMoney(_selectedWager);
     }
     #endregion
+
+    void LoadPlayersStatsList()
+    {
+        TeamsManager teamsManager = TeamsManager.Instance;
+        LoadRunnersStatsList();
+        LoadCatchersStatsList();
+
+        void LoadRunnersStatsList()
+        {
+            foreach (RunnerStats runnerStats in teamsManager.GetRunnersStatsList())
+            {
+                RunnerStatsDisplay runnerDisplayItem = Instantiate(_runnerStatsDisplayPrefab, _runnersList);
+                runnerDisplayItem.SetSpeedValue((runnerStats.Speed / runnerStats.MaxSpeed) * 100f);
+                runnerDisplayItem.SetStaminaValue((runnerStats.Stamina / runnerStats.MaxStamina) * 100f);
+            }
+        }
+
+        void LoadCatchersStatsList()
+        {
+            foreach (CatcherStats catcherStats in teamsManager.GetCatchersStatsList())
+            {
+                CatcherStatsDisplay runnerDisplayItem = Instantiate(_catcherStatsDisplayPrefab, _catchersList);
+                runnerDisplayItem.SetSpeedValue((catcherStats.Speed / catcherStats.MaxSpeed) * 100f);
+                runnerDisplayItem.SetCatchRangeValue((catcherStats.CatchRange / catcherStats.MaxCatchRange) * 100f);
+            }
+        }
+    }
 
     void UpdateGameTimer()
     {

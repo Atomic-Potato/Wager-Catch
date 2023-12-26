@@ -4,8 +4,8 @@ using Pathfinding;
 
 public class TeamsManager : Singleton<TeamsManager>
 {
-    [SerializeField] GameObject _catcherPrefab;
-    [SerializeField] GameObject _runnerPrefab;
+    [SerializeField] Catcher _catcherPrefab;
+    [SerializeField] Runner _runnerPrefab;
     [SerializeField] Pathfinding.Grid playersGrid;
     [SerializeField] PathRequestManager pathRequestManager;
     [Space]
@@ -38,10 +38,25 @@ public class TeamsManager : Singleton<TeamsManager>
         LoadNewPlayers();
     }
 
+    public List<RunnerStats> GetRunnersStatsList()
+    {
+        List<RunnerStats> stats = new List<RunnerStats>();
+        foreach (Runner runner in _runners)
+            stats.Add(new RunnerStats(runner.SprintDuration, runner.MaxSprintDuration, runner.Speed, runner.MaxSpeed));
+        return stats;
+    }
+
+    public List<CatcherStats> GetCatchersStatsList()
+    {
+        List<CatcherStats> stats = new List<CatcherStats>();
+        foreach (Catcher catcher in _catchers)
+            stats.Add(new CatcherStats(catcher.CatchAreaRadius, catcher.MaxCatchAreaRadius, catcher.Speed, catcher.MaxSpeed));
+        return stats;
+    }
+
     public void AddRunner(Vector2 position)
     {
-        GameObject spawnedRunnerObject = Instantiate(_runnerPrefab, position, Quaternion.identity, runnersParent);
-        Runner runner = spawnedRunnerObject.GetComponent<Runner>();
+        Runner runner = Instantiate(_runnerPrefab, position, Quaternion.identity, runnersParent);
         runner.TeamsManager = this;
         runner.grid = playersGrid;
         runner.PathRequestManager = pathRequestManager;
@@ -56,8 +71,7 @@ public class TeamsManager : Singleton<TeamsManager>
 
     public void AddCatcher(Vector2 position, Transform spawnPoint = null)
     {
-        GameObject spawnedCactherObject = Instantiate(_catcherPrefab, position, Quaternion.identity, catchersParent);
-        Catcher catcher = spawnedCactherObject.GetComponent<Catcher>();
+        Catcher catcher = Instantiate(_catcherPrefab, position, Quaternion.identity, catchersParent);
         catcher.TeamsManager = this;
         catcher.grid = playersGrid;
         catcher.PathRequestManager = pathRequestManager;
