@@ -159,5 +159,11 @@ public class AnimationManager : MonoBehaviour
     bool IsFacingWest => Mathf.Approximately(player.FacingDirection.y, 0f) && player.FacingDirection.x < 0f; 
     #endregion
 
-    
+    #region Events
+    public void PlayTouchGrassSound()
+    {
+        SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.Grass, true);
+    }
+
+    #endregion
 }

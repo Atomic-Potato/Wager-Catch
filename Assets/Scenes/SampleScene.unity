@@ -6215,6 +6215,9 @@ MonoBehaviour:
   _characterDeathClip:
     _clip: {fileID: 8300000, guid: 6457ec77133409141b24265c91a1d1c9, type: 3}
     _volume: 1
+  _grassTouch:
+    _clip: {fileID: 8300000, guid: d995d21ab0c36584f8cf09409be87c34, type: 3}
+    _volume: 0.5
   _screamClips:
     _clips:
     - {fileID: 8300000, guid: 458dd4f3662368d46a86eccf0c54a658, type: 3}
@@ -6609,7 +6612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1284925853
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9479,7 +9482,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _runnersCount
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
@@ -9495,7 +9498,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _catchersCount
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}

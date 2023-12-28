@@ -13,6 +13,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] SoundClip _gunCock;
     [SerializeField] SoundClip _gunBoom;
     [SerializeField] SoundClip _characterDeathClip;
+    [SerializeField] SoundClip _grassTouch;
     [SerializeField] RandomSoundClip _screamClips;
 
     public enum Sound
@@ -21,6 +22,7 @@ public class SoundManager : Singleton<SoundManager>
         GunCock,
         GunBoom,
         Scream,
+        Grass,
     }
 
     public float PlaySoundAtPosition(Vector2 position, Sound sound, bool isRandomPitch = false)
@@ -61,6 +63,8 @@ public class SoundManager : Singleton<SoundManager>
                 return _gunBoom;
             case Sound.Scream:
                 return _screamClips;
+            case Sound.Grass:
+                return _grassTouch;
             default:
                 return null;
         }
