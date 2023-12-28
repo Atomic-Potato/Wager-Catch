@@ -49,8 +49,6 @@ public class UIManager : Singleton<UIManager>
     {
         base.Awake();
         SetScreen(_defaultScreen);
-        
-         Debug.Log( GameManager.Instance.PlayerTeam.ToString());
     }
 
     void Start()

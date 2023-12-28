@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.IO;
 using Pathfinding;
 using UnityEngine;
 
@@ -65,6 +66,38 @@ public class Catcher : TeamPlayer
         Pathfind();
         if (_catchCoroutine == null && _isTargetWithinCatchRange)
             _catchCoroutine = StartCoroutine(Catch());
+        CorrectGunPointSide();
+    }
+
+    void CorrectGunPointSide()
+    {
+        if (_targetRunner == null && !_catchToolSprite.enabled)
+            return;
+        
+        if (_targetRunner.transform.position.x < transform.position.x)
+        {
+            if (!_catchToolSprite.flipX)
+            {
+                _catchToolSprite.transform.localPosition = new Vector3 (-_catchToolSprite.transform.localPosition.x, _catchToolSprite.transform.localPosition.y, _catchToolSprite.transform.localPosition.z);
+                _catchToolSprite.flipX = true;
+            }
+        }
+        else
+        {
+            if (_catchToolSprite.flipX)
+            {
+                _catchToolSprite.transform.localPosition = new Vector3 (-_catchToolSprite.transform.localPosition.x, _catchToolSprite.transform.localPosition.y, _catchToolSprite.transform.localPosition.z);
+                _catchToolSprite.flipX = false;
+            }
+        }
+    }
+
+    int GetTargetXDirection()
+    {
+        if (_targetRunner == null)
+            return 0;
+
+        return  _targetRunner.transform.position.x < transform.position.x ? -1 : 1;
     }
 
     #region Catching
@@ -91,14 +124,23 @@ public class Catcher : TeamPlayer
 
         if (_isTargetWithinCatchRange)
         {
-            if (_catchEffect != null)
-                Instantiate(_catchEffect, _catchToolEndPoint.position, Quaternion.identity);
+            DisplayCatchEffect();
             _targetRunner.Die();
         }
         _catchToolSprite.enabled = false;
 
         yield return new WaitForSeconds(_timeToRecoverCatch);
         _catchCoroutine = null;
+
+        void DisplayCatchEffect()
+        {
+            if (_catchEffect == null)
+                return;
+
+            int direction = GetTargetXDirection();
+            Quaternion rotation =  Quaternion.Euler(new Vector3(0f, direction * 90f, 0f));
+            Instantiate(_catchEffect, _catchToolEndPoint.position, rotation);
+        }
     }
 
     public void RemoveTarget()
