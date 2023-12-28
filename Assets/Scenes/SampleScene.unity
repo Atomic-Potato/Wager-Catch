@@ -6205,6 +6205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ffbb1abb46ef9944843190762251565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _randomPitchRange: {x: 0.5, y: 1}
   _screamClips:
   - {fileID: 8300000, guid: 458dd4f3662368d46a86eccf0c54a658, type: 3}
   - {fileID: 8300000, guid: f301ae4fa99a95b428af51b6305d345f, type: 3}
@@ -6216,6 +6217,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b2fddaf5626dd7a43a5e7ec185e6634a, type: 3}
   - {fileID: 8300000, guid: 97f747f7dc0acb3459608a9d73d6f422, type: 3}
   - {fileID: 8300000, guid: 7649e0579a0c94a41a8e24da87fdd823, type: 3}
+  _characterDeathClip: {fileID: 8300000, guid: 6457ec77133409141b24265c91a1d1c9, type: 3}
 --- !u!1 &1164637858
 GameObject:
   m_ObjectHideFlags: 0
@@ -9467,7 +9469,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _runnersCount
-      value: 160
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
@@ -9483,7 +9485,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _catchersCount
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
