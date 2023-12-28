@@ -91,10 +91,7 @@ public class Runner : TeamPlayer
         foreach (RaycastHit2D hit in hits)
         {
             if (hit.collider.gameObject.tag == TagsManager.Tag.Catcher.ToString())
-            {
-                Debug.Log(hit.collider.gameObject.tag);
                 catchers.Add(hit);
-            }
         }
 
         return catchers;
@@ -117,7 +114,7 @@ public class Runner : TeamPlayer
 
             IEnumerator Scream()
             {
-                float length = SoundManager.Instance.PlayRandomScreamAtPosition(transform.position);
+                float length = SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.Scream);
                 yield return new WaitForSeconds(length);
                 _screamCoroutine = null;
             }

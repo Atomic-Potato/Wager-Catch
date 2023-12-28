@@ -6206,18 +6206,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _randomPitchRange: {x: 0.5, y: 1}
+  _gunCock:
+    _clip: {fileID: 8300000, guid: 1aa07380788c67445a45f925de201634, type: 3}
+    _volume: 0.75
+  _gunBoom:
+    _clip: {fileID: 8300000, guid: f1a0e54e90e89c64b816aeec2faad18d, type: 3}
+    _volume: 0.5
+  _characterDeathClip:
+    _clip: {fileID: 8300000, guid: 6457ec77133409141b24265c91a1d1c9, type: 3}
+    _volume: 1
   _screamClips:
-  - {fileID: 8300000, guid: 458dd4f3662368d46a86eccf0c54a658, type: 3}
-  - {fileID: 8300000, guid: f301ae4fa99a95b428af51b6305d345f, type: 3}
-  - {fileID: 8300000, guid: f8ab37d8f8c8e19498d21b80540921d9, type: 3}
-  - {fileID: 8300000, guid: c67653dd9cb97fc41b931f3216964483, type: 3}
-  - {fileID: 8300000, guid: a3c1321bb85531045b66d269de4ab085, type: 3}
-  - {fileID: 8300000, guid: 61b577ca3c64f434eb7c6b502c7b4535, type: 3}
-  - {fileID: 8300000, guid: 9541ac4c787d8664ca0c3a1913f831d0, type: 3}
-  - {fileID: 8300000, guid: b2fddaf5626dd7a43a5e7ec185e6634a, type: 3}
-  - {fileID: 8300000, guid: 97f747f7dc0acb3459608a9d73d6f422, type: 3}
-  - {fileID: 8300000, guid: 7649e0579a0c94a41a8e24da87fdd823, type: 3}
-  _characterDeathClip: {fileID: 8300000, guid: 6457ec77133409141b24265c91a1d1c9, type: 3}
+    _clips:
+    - {fileID: 8300000, guid: 458dd4f3662368d46a86eccf0c54a658, type: 3}
+    - {fileID: 8300000, guid: f301ae4fa99a95b428af51b6305d345f, type: 3}
+    - {fileID: 8300000, guid: f8ab37d8f8c8e19498d21b80540921d9, type: 3}
+    - {fileID: 8300000, guid: c67653dd9cb97fc41b931f3216964483, type: 3}
+    - {fileID: 8300000, guid: a3c1321bb85531045b66d269de4ab085, type: 3}
+    - {fileID: 8300000, guid: 61b577ca3c64f434eb7c6b502c7b4535, type: 3}
+    - {fileID: 8300000, guid: 9541ac4c787d8664ca0c3a1913f831d0, type: 3}
+    - {fileID: 8300000, guid: b2fddaf5626dd7a43a5e7ec185e6634a, type: 3}
+    - {fileID: 8300000, guid: 97f747f7dc0acb3459608a9d73d6f422, type: 3}
+    - {fileID: 8300000, guid: 7649e0579a0c94a41a8e24da87fdd823, type: 3}
+    _volume: 0.075
 --- !u!1 &1164637858
 GameObject:
   m_ObjectHideFlags: 0

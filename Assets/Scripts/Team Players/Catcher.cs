@@ -120,11 +120,12 @@ public class Catcher : TeamPlayer
     IEnumerator Catch()
     {
         _catchToolSprite.enabled = true;
+        SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.GunCock, true);
         yield return new WaitForSeconds(_timeToCatch);
 
         if (_isTargetWithinCatchRange)
         {
-            DisplayCatchEffect();
+            PlayCatchEffect();
             _targetRunner.Die();
         }
         _catchToolSprite.enabled = false;
@@ -132,7 +133,7 @@ public class Catcher : TeamPlayer
         yield return new WaitForSeconds(_timeToRecoverCatch);
         _catchCoroutine = null;
 
-        void DisplayCatchEffect()
+        void PlayCatchEffect()
         {
             if (_catchEffect == null)
                 return;
@@ -140,6 +141,8 @@ public class Catcher : TeamPlayer
             int direction = GetTargetXDirection();
             Quaternion rotation =  Quaternion.Euler(new Vector3(0f, direction * 90f, 0f));
             Instantiate(_catchEffect, _catchToolEndPoint.position, rotation);
+
+            SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.GunBoom, true);
         }
     }
 

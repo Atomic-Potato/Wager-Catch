@@ -386,7 +386,7 @@ namespace Pathfinding
         {
             if (_deathEffect != null)
                 Instantiate(_deathEffect, transform.position, Quaternion.identity);
-            SoundManager.Instance.PlayDeathWithRandomPitchAtPosition(transform.position);
+            SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.Death, true);
             gameObject.SetActive(false);
         }
     }
