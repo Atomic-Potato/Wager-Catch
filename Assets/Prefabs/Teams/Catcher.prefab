@@ -327,6 +327,8 @@ MonoBehaviour:
   _slowdownAreaLayer:
     serializedVersion: 2
     m_Bits: 2048
+  _deathEffect: {fileID: 2983881910522846901, guid: 4b237c93686724944b61e18535936aa0,
+    type: 3}
   _isDrawCollisionCheckSize: 1
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
   isDrawPath: 1

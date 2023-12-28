@@ -29,6 +29,9 @@ namespace Pathfinding
         [Space]
         [SerializeField] LayerMask _collisionLayer;
         [SerializeField] LayerMask _slowdownAreaLayer;
+        
+        [Space]
+        [SerializeField] GameObject _deathEffect;
 
         [Space, Header("Gizmos")]
         [SerializeField] bool _isDrawCollisionCheckSize;
@@ -381,6 +384,8 @@ namespace Pathfinding
 
         public virtual void Die()
         {
+            if (_deathEffect != null)
+                Instantiate(_deathEffect, transform.position, Quaternion.identity);
             gameObject.SetActive(false);
         }
     }
