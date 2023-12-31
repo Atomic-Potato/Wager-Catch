@@ -108,10 +108,10 @@ namespace Pathfinding
             if (isRandomPathColor)
                 pathColor = new Color(Random.Range(.8f,1f), Random.Range(.4f,8f), Random.Range(0f,4f), 1f);
 #endif
+            RandomizeValues();
             _sleepEvent = new CustomUnityEvent();
             _appliedSpeed = _speed;
             _sprintTimer = _sprintDuration;
-            RandomizeValues();
 
             void RandomizeValues()
             {
@@ -147,7 +147,10 @@ namespace Pathfinding
             _endNodeCache = endNode;
 
             if (!isFoundPath)
+            {
+                _isReachedDestination = true;
                 return;
+            }
             _pathToTarget = newPath;
 
             _followPathCoroutine = ResetartCoroutine(_followPathCoroutine);
@@ -182,7 +185,7 @@ namespace Pathfinding
                     yield break;
                 }
 
-                if ((Vector2)transform.position == (Vector2)_currentWaypoint)
+                if (IsReachedWayPoint())
                 {
                     _pathIndex++;
                     if (_pathIndex >= _pathToTarget.Length)
@@ -225,6 +228,15 @@ namespace Pathfinding
                     }
                 }
                 return minIndex;
+            }
+
+            bool IsReachedWayPoint()
+            {
+                if (!Mathf.Approximately(transform.position.x, ((Vector2)_currentWaypoint).x))
+                    return false;
+                if (!Mathf.Approximately(transform.position.y, ((Vector2)_currentWaypoint).y))
+                    return false;
+                return true;
             }
         }
 

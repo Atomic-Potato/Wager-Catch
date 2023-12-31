@@ -133,6 +133,11 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene("SampleScene");
+#endif
+
         if (CurrentGameState == GameState.InGame)
             UpdateGameTimer();
     }
