@@ -58,7 +58,7 @@ public class TeamsManager : Singleton<TeamsManager>
     {
         Runner runner = Instantiate(_runnerPrefab, position, Quaternion.identity, runnersParent);
         runner.TeamsManager = this;
-        runner.grid = playersGrid;
+        runner.Grid = playersGrid;
         runner.PathRequestManager = pathRequestManager;
         _runners.Add(runner);
     }
@@ -73,7 +73,7 @@ public class TeamsManager : Singleton<TeamsManager>
     {
         Catcher catcher = Instantiate(_catcherPrefab, position, Quaternion.identity, catchersParent);
         catcher.TeamsManager = this;
-        catcher.grid = playersGrid;
+        catcher.Grid = playersGrid;
         catcher.PathRequestManager = pathRequestManager;
         catcher.SpawnPoint = spawnPoint != null ? spawnPoint : _catchersSpawnPoints[_catcherSpawnPointIndex++ % _catchersSpawnPoints.Count];
         _catchers.Add(catcher);

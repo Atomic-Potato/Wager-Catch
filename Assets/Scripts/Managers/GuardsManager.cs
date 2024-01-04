@@ -9,10 +9,11 @@ public class GuardsManager : Singleton<GuardsManager>
     [SerializeField] Guard _guardPrefab;
     [SerializeField] PathRequestManager _pathRequestManager;
     [SerializeField] Transform[] _spawnPoints;
+    [SerializeField] Pathfinding.Grid _playerGrid;
 
     List<Guard> _guards = new List<Guard>();
     List<Guard> _availableGuards = new List<Guard>();
-   public List<IDangerousObject> DangersBeingHandled = new List<IDangerousObject>();
+    public List<IDangerousObject> DangersBeingHandled = new List<IDangerousObject>();
     DangerousObjectsManager _dangersManager;
 
     void Start()
@@ -39,7 +40,7 @@ public class GuardsManager : Singleton<GuardsManager>
             for (int i=0; i < _guardsToCache; i++)
             {
                 Guard guard = Instantiate(_guardPrefab, _spawnPoints[i%_spawnPoints.Length].position, Quaternion.identity, _guardsParent);
-                guard.SetupGuard(_spawnPoints[i%_spawnPoints.Length], this, _pathRequestManager);
+                guard.SetupGuard(_spawnPoints[i%_spawnPoints.Length], this, _pathRequestManager, _playerGrid);
                 _guards.Add(guard);
                 _availableGuards.Add(guard);
             }

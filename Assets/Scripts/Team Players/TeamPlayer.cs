@@ -40,7 +40,7 @@ namespace Pathfinding
         [SerializeField] Color pathColor = new Color(0f, 0f, 1f, .5f);
         [SerializeField] bool isRandomPathColor = true;
 
-        [HideInInspector] public Grid grid;
+        [HideInInspector] public Grid Grid;
         [HideInInspector] public PathRequestManager PathRequestManager;
         [HideInInspector] public TeamsManager TeamsManager;
 
@@ -143,9 +143,9 @@ namespace Pathfinding
 
             bool IsTargetPositiongUnchanged()
             {
-                if (_endNodeCache == null)
+                if (_endNodeCache == null || targetPosition == null)
                     return false;
-                return grid.GetNodeFromWorldPosition((Vector2)targetPosition).WorldPosition == _endNodeCache.WorldPosition;
+                return Grid.GetNodeFromWorldPosition((Vector2)targetPosition).WorldPosition == _endNodeCache.WorldPosition;
             }
         }
 
@@ -159,8 +159,7 @@ namespace Pathfinding
             {
                 if (enable_dat)
                     Debug.Log("Did not find path");
-                // _isReachedDestination = true;
-                // SendPathRequest();
+                _isReachedDestination = true;
                 return;
             }
             if (enable_dat)
@@ -216,12 +215,7 @@ namespace Pathfinding
                 yield return new WaitForEndOfFrame();
             }
 
-            void StopFollowingPath()
-            {
-                _isReachedDestination = true;
-                _isMoving = false;
-                _currentWaypoint = null;
-            }
+            
 
             int GetClosestPathPointIndex()
             {
@@ -253,6 +247,13 @@ namespace Pathfinding
                     return false;
                 return true;
             }
+        }
+        
+        void StopFollowingPath()
+        {
+            _isReachedDestination = true;
+            _isMoving = false;
+            _currentWaypoint = null;
         }
 
         void Sprint()

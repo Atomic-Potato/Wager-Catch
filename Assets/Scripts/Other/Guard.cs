@@ -19,11 +19,12 @@ public class Guard : TeamPlayer
         Catching,
     }
 
-    public void SetupGuard(Transform spawnPoint, GuardsManager manager, PathRequestManager pathRequestManager)
+    public void SetupGuard(Transform spawnPoint, GuardsManager manager, PathRequestManager pathRequestManager, Pathfinding.Grid grid)
     {
         _spawnPoint = spawnPoint;
         _manger = manager;
         PathRequestManager = pathRequestManager;
+        Grid = grid;
     }
 
     new void Update()
@@ -36,18 +37,16 @@ public class Guard : TeamPlayer
         if (CurrentState == State.Hunting && !_isPathRequestSent)
             SendPathRequest();
 
-        if (CurrentState == State.Hunting)
+        if (CurrentState == State.Hunting && GetDistanceToTarget() <= _distanceToCatchTarget)
         {
-                float distanceToTarget = Vector2.Distance(transform.position, (Vector2)_target);
-                if (distanceToTarget <= _distanceToCatchTarget)
-                    Catch();
+            Catch();
+            ReturnToSpawn();
         }
-            Debug.Log(_isReachedDestination);
 
-        if (CurrentState == State.Catching && _isReachedDestination)
+        if (CurrentState == State.Catching && GetDistanceToTarget() < 0.1f)
         {
-            _dangerousObject.DestroySelf();
             CurrentState = State.OnStandBy;
+            DestroyTarget();
         }
     }
 
@@ -68,12 +67,26 @@ public class Guard : TeamPlayer
     {
         CurrentState = State.Catching;
         _targetTransform = null;
-        _target = _spawnPoint.position;
-        _dangerousObject.Deactivate();
-        // _dangerousObject.SetParent(transform);
-        // _dangerousObject.SetPosition(_caughtObjectHoldingPosition.position);
+        GrabDangerousObject();
+
+        void GrabDangerousObject()
+        {
+            _dangerousObject.Deactivate();
+            _dangerousObject.SetParent(transform);
+            _dangerousObject.SetPosition(_caughtObjectHoldingPosition.position);
+        }
+    }
+
+    float GetDistanceToTarget()
+    {
+        return Vector2.Distance(transform.position, (Vector2)_target);
+    }
+
+    public void DestroyTarget()
+    {
+        DangerousObjectsManager.Instance.SpawnedObjects.Remove(_dangerousObject);
         _manger.DangersBeingHandled.Remove(_dangerousObject);
-        ReturnToSpawn();
+        _dangerousObject.DestroySelf();
     }
 
     public override void Die()
