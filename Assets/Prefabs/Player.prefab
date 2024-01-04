@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 2927814130775270471}
   - component: {fileID: 355975116312113726}
   - component: {fileID: 355975116312113713}
-  m_Layer: 0
+  - component: {fileID: -392448932323579486}
+  m_Layer: 12
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -49,6 +50,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 10
+  _impulseForce: 50
+  _impulsedSpeed: 1
+  _deathExplosionRadius: 0
+  _impulseInitialForceDropOff: 0.15
+  _affectedObjectsLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  _impulseCollider: {fileID: -392448932323579486}
+  _rigidbody: {fileID: 355975116312113713}
   _collisionCheckSize: {x: 1, y: 1.045}
   _collisionCheckOffset: {x: 0, y: 0.45}
   _collisionLayer:
@@ -56,9 +66,10 @@ MonoBehaviour:
     m_Bits: 256
   _isDrawCollisionCheckSize: 0
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
-  isDrawPath: 0
+  _isDrawPath: 0
   pathColor: {r: 0, g: 0, b: 1, a: 0.5}
   isRandomPathColor: 0
+  _isDrawDeathExplosionRadius: 0
   grid: {fileID: 0}
   UnitPathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
@@ -131,6 +142,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!58 &-392448932323579486
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355975116312113712}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.04, y: 0.43}
+  serializedVersion: 2
+  m_Radius: 0.6
 --- !u!1 &1927416691020429200
 GameObject:
   m_ObjectHideFlags: 0

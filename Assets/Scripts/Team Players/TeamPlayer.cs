@@ -21,6 +21,16 @@ namespace Pathfinding
         public float MaxSprintDuration => _sprintDurationRange.y;
         public float SprintDuration => _sprintDuration;
         [SerializeField, Min(0f)] float _sprintRecoveryMultiplier = 2f;
+
+        [Space, Header("Death")]
+        [SerializeField, Min(0f)] float _impulseForce = 1f;
+        [SerializeField, Min(.1f)] float _impulsedSpeed = 1f;
+        [Tooltip("Lower values imply faster initial force drop off")]
+        [SerializeField, Min(.01f)] float _impulseInitialForceDropOff = .2f; 
+        [SerializeField, Min(0f)] float _deathExplosionRadius = 3.5f;
+        [SerializeField] LayerMask _affectedObjectsLayers;
+        [SerializeField] Collider2D _impulseCollider;
+        [SerializeField] Rigidbody2D _rigidbody;
         
         [Space]
         [SerializeField] Vector2 _collisionCheckSize = Vector2.one;
@@ -39,6 +49,7 @@ namespace Pathfinding
         [SerializeField] bool isDrawPath;
         [SerializeField] Color pathColor = new Color(0f, 0f, 1f, .5f);
         [SerializeField] bool isRandomPathColor = true;
+        [SerializeField] bool _isDrawDeathExplosionRadius = true;
 
         [HideInInspector] public Grid Grid;
         [HideInInspector] public PathRequestManager PathRequestManager;
@@ -76,6 +87,7 @@ namespace Pathfinding
         public float CurrentSleepTime => _currentSleepTime;
 
         Coroutine _wakeCoroutine;
+        Coroutine _impulseCoroutine;
 
         CustomUnityEvent _sleepEvent;
         public CustomUnityEvent SleepEvent => _sleepEvent;
@@ -102,6 +114,11 @@ namespace Pathfinding
                 Gizmos.color = _collisionCheckCollor;
                 Gizmos.DrawWireCube(transform.position + (Vector3)_collisionCheckOffset, _collisionCheckSize);
             }
+
+            if (_isDrawDeathExplosionRadius)
+            {
+                Gizmos.DrawWireSphere(transform.position, _deathExplosionRadius);
+            }
         }
 
         protected void Awake()
@@ -114,6 +131,9 @@ namespace Pathfinding
             _sleepEvent = new CustomUnityEvent();
             _appliedSpeed = _speed;
             _sprintTimer = _sprintDuration;
+
+            if (_impulseCollider.enabled)
+                _impulseCollider.enabled = false;
 
             void RandomizeValues()
             {
@@ -158,12 +178,9 @@ namespace Pathfinding
             if (!isFoundPath)
             {
                 if (enable_dat)
-                    Debug.Log("Did not find path");
                 _isReachedDestination = true;
                 return;
             }
-            if (enable_dat)
-                Debug.Log("Found");
 
             _pathToTarget = newPath;
 
@@ -410,12 +427,77 @@ namespace Pathfinding
             }
         }
 
+        public void Sleep()
+        {
+            _isSleeping = true;
+            _isMoving = false;
+        }
+
+        public void Wake()
+        {
+            if (_wakeCoroutine != null)
+                return;
+            _isSleeping = false;
+        }
+
+        public void ImpulseFromPoint(Vector2 point)
+        {
+            if (_impulseCoroutine == null)
+                _impulseCoroutine = StartCoroutine(Impulse());
+            else
+            {
+                StopCoroutine(_impulseCoroutine);
+                _impulseCoroutine = StartCoroutine(Impulse());
+            }
+                
+
+            IEnumerator Impulse()
+            {
+                Sleep();
+                _impulseCollider.enabled = true;
+                Vector2 direction = ((Vector2)transform.position - point).normalized;
+                float x = 0;
+                
+                do 
+                {
+                    float dropOff = -_impulseInitialForceDropOff*Mathf.Log10(x);
+                    x += Time.deltaTime * _impulsedSpeed;
+                    _rigidbody.velocity = direction * _impulseForce * dropOff;
+                    yield return null;
+                } while (x <= 1f);
+
+                _impulseCollider.enabled = false;
+                _rigidbody.velocity = Vector2.zero;
+                Wake();
+            }
+        }
+
         public virtual void Die()
         {
             if (_deathEffect != null)
                 Instantiate(_deathEffect, transform.position, Quaternion.identity);
             SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.Death, true);
+            ImpulseObjectsInPorximity();
             gameObject.SetActive(false);
+
+            void ImpulseObjectsInPorximity()
+            {
+                RaycastHit2D[] hits =  Physics2D.CircleCastAll(transform.position, _deathExplosionRadius, Vector2.zero, 50f,  _affectedObjectsLayers);
+                foreach (RaycastHit2D hit in hits)
+                {
+                    TeamPlayer teamPlayer = hit.collider.gameObject.GetComponent<TeamPlayer>();
+                    if (teamPlayer == this || (teamPlayer is Runner && ((Runner)teamPlayer).IsInSafeArea))
+                        continue;
+
+                    if (teamPlayer != null)
+                        teamPlayer.ImpulseFromPoint(transform.position);
+                    else
+                    {
+                        UnitBase unit = hit.collider.gameObject.GetComponent<UnitBase>();
+                        unit.ImpulseFromPoint(transform.position);
+                    }
+                }
+            }
         }
     }
 }

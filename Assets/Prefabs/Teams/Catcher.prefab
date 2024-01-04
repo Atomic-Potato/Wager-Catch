@@ -277,6 +277,8 @@ GameObject:
   - component: {fileID: 4640423005932321774}
   - component: {fileID: 2041393261797506488}
   - component: {fileID: 3044994074815680745}
+  - component: {fileID: 4962630148478432293}
+  - component: {fileID: 2880542828082606420}
   m_Layer: 9
   m_Name: Catcher
   m_TagString: Catcher
@@ -319,6 +321,15 @@ MonoBehaviour:
   _sprintSpeedMultiplier: 1.75
   _sprintDurationRange: {x: 0.5, y: 4}
   _sprintRecoveryMultiplier: 2
+  _impulseForce: 50
+  _impulsedSpeed: 1
+  _impulseInitialForceDropOff: 0.15
+  _deathExplosionRadius: 3.5
+  _affectedObjectsLayers:
+    serializedVersion: 2
+    m_Bits: 4608
+  _impulseCollider: {fileID: 4962630148478432293}
+  _rigidbody: {fileID: 2880542828082606420}
   _collisionCheckSize: {x: 1, y: 1.045}
   _collisionCheckOffset: {x: 0, y: 0.45}
   _collisionLayer:
@@ -334,7 +345,7 @@ MonoBehaviour:
   isDrawPath: 1
   pathColor: {r: 1, g: 0, b: 0.0264287, a: 0.5}
   isRandomPathColor: 0
-  grid: {fileID: 0}
+  Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
   enable_dat: 1
@@ -376,6 +387,43 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.045}
   m_EdgeRadius: 0
+--- !u!58 &4962630148478432293
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207024369822522638}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.04, y: 0.43}
+  serializedVersion: 2
+  m_Radius: 0.6
+--- !u!50 &2880542828082606420
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207024369822522638}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &5359318903301345992
 GameObject:
   m_ObjectHideFlags: 0
