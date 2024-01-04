@@ -47,27 +47,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bf442f539aad94409c6bc6f33a12d41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
+  _speedRange: {x: 2, y: 2}
   _isCanSprint: 0
   _sprintSpeedMultiplier: 1.75
-  _sprintDuration: 1.75
+  _sprintDurationRange: {x: 0.5, y: 4}
   _sprintRecoveryMultiplier: 2
   _collisionCheckSize: {x: 1, y: 1}
   _collisionCheckOffset: {x: 0, y: 0}
   _collisionLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   _slowdownAreaLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
+  _deathEffect: {fileID: 0}
   _isDrawCollisionCheckSize: 0
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
-  isDrawPath: 0
+  isDrawPath: 1
   pathColor: {r: 0, g: 0, b: 1, a: 0.5}
   isRandomPathColor: 1
   grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
+  enable_dat: 1
   _distanceToCatchTarget: 1
   _caughtObjectHoldingPosition: {fileID: 3629998371522151062}
   CurrentState: 0
@@ -552,7 +554,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 8
   m_Sprite: {fileID: 5804860221266551222, guid: 6e60d242bc9e7b54aabc08e52e331afe,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

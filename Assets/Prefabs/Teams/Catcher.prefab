@@ -337,6 +337,7 @@ MonoBehaviour:
   grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
+  enable_dat: 1
   _timeToCatch: 1.15
   _timeToRecoverCatch: 1
   _catchAreaRadiusRange: {x: 0.25, y: 1}

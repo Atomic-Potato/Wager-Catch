@@ -44,6 +44,8 @@ namespace Pathfinding
         [HideInInspector] public PathRequestManager PathRequestManager;
         [HideInInspector] public TeamsManager TeamsManager;
 
+        public bool enable_dat;
+
         protected Vector2? _target;
         Vector2 _facingDirection  = Vector2.down; 
         public Vector2 FacingDirection => _facingDirection;
@@ -133,11 +135,18 @@ namespace Pathfinding
         protected void SendPathRequest()
         {
             Vector2? targetPosition = (Vector2)_target;
-            if (targetPosition == null || _isSleeping)
+            if (targetPosition == null || _isSleeping || IsTargetPositiongUnchanged())
                 return;
             
             PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, _endNodeCache, _startNodeCache, UpdatePath);
             _isPathRequestSent = true;
+
+            bool IsTargetPositiongUnchanged()
+            {
+                if (_endNodeCache == null)
+                    return false;
+                return grid.GetNodeFromWorldPosition((Vector2)targetPosition).WorldPosition == _endNodeCache.WorldPosition;
+            }
         }
 
         void UpdatePath(Vector2[] newPath, bool isFoundPath, Node endNode)
@@ -148,9 +157,15 @@ namespace Pathfinding
 
             if (!isFoundPath)
             {
-                _isReachedDestination = true;
+                if (enable_dat)
+                    Debug.Log("Did not find path");
+                // _isReachedDestination = true;
+                // SendPathRequest();
                 return;
             }
+            if (enable_dat)
+                Debug.Log("Found");
+
             _pathToTarget = newPath;
 
             _followPathCoroutine = ResetartCoroutine(_followPathCoroutine);

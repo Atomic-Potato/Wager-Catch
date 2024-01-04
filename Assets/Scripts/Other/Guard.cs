@@ -38,21 +38,16 @@ public class Guard : TeamPlayer
 
         if (CurrentState == State.Hunting)
         {
-            if (_dangerousObject.IsDeactivated())
-                ReturnToSpawn();
-            else
-            {
                 float distanceToTarget = Vector2.Distance(transform.position, (Vector2)_target);
                 if (distanceToTarget <= _distanceToCatchTarget)
                     Catch();
-            }
         }
+            Debug.Log(_isReachedDestination);
 
         if (CurrentState == State.Catching && _isReachedDestination)
         {
-            _manger.DangersBeingHandled.Remove(_dangerousObject);
             _dangerousObject.DestroySelf();
-            ReturnToSpawn();
+            CurrentState = State.OnStandBy;
         }
     }
 
@@ -65,7 +60,6 @@ public class Guard : TeamPlayer
 
     public void ReturnToSpawn()
     {
-        CurrentState = State.OnStandBy;
         _target = _spawnPoint.position;
         SendPathRequest();
     }
@@ -76,9 +70,10 @@ public class Guard : TeamPlayer
         _targetTransform = null;
         _target = _spawnPoint.position;
         _dangerousObject.Deactivate();
-        _dangerousObject.SetParent(transform);
-        _dangerousObject.SetPosition(_caughtObjectHoldingPosition.position);
-        SendPathRequest();
+        // _dangerousObject.SetParent(transform);
+        // _dangerousObject.SetPosition(_caughtObjectHoldingPosition.position);
+        _manger.DangersBeingHandled.Remove(_dangerousObject);
+        ReturnToSpawn();
     }
 
     public override void Die()

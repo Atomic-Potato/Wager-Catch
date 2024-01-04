@@ -6,6 +6,7 @@ public class Player : UnitBase, IDangerousObject
     [Space, Header("Player Settings")]
     
     [SerializeField] Rigidbody2D _rigidbody;
+    [SerializeField] Collider2D _collider;
 
     bool _isActive = true;
     bool _isUserInControl;
@@ -50,6 +51,7 @@ public class Player : UnitBase, IDangerousObject
     {
         _isActive = false;
         _isMoving = false;
+        _collider.enabled = false;
         _rigidbody.velocity = Vector2.zero;
     }
 

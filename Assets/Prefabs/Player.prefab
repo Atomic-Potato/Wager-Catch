@@ -63,6 +63,7 @@ MonoBehaviour:
   UnitPathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
   _rigidbody: {fileID: 355975116312113713}
+  _collider: {fileID: 355975116312113726}
 --- !u!114 &2927814130775270471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,8 +79,10 @@ MonoBehaviour:
   _nuteralStunTime: 2
   _runnerStunTime: 1
   _catcherStunTime: 3
-  _stunRange: 0.7
+  _stunRange: 2
   _stunRangeOrigin: {fileID: 2552508171493242701}
+  _stunEffect: {fileID: 3021128966029848650, guid: ae769e0975a6c764296ebaed0ed2fada,
+    type: 3}
   _isDrawStunRange: 1
 --- !u!61 &355975116312113726
 BoxCollider2D:

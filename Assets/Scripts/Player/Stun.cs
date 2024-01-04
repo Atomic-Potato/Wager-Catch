@@ -11,6 +11,9 @@ public class Stun : MonoBehaviour
     [SerializeField, Min(0f)] float _stunRange = 1f;
     [SerializeField] Transform _stunRangeOrigin;
 
+    [Space]
+    [SerializeField] GameObject _stunEffect;
+
     [Space, Header("GIZMOS")]
     [SerializeField] bool _isDrawStunRange;
     Vector2 _stunOrigin => _stunRangeOrigin != null ? (Vector2)_stunRangeOrigin.position : Vector2.zero;
@@ -45,6 +48,7 @@ public class Stun : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Mouse1))
         {
+            ShowStunEffect();
             RaycastHit2D[] hits = Physics2D.CircleCastAll(_stunOrigin, _stunRange, Vector2.zero); 
             foreach (RaycastHit2D hit in hits)
             {
@@ -56,5 +60,10 @@ public class Stun : MonoBehaviour
                 }
             }
         }
+    }
+
+    void ShowStunEffect()
+    {
+        Instantiate(_stunEffect, transform.position, Quaternion.identity);
     }
 }
