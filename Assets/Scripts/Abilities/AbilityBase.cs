@@ -34,7 +34,7 @@ namespace Ability
         IEnumerator SelfDestruct()
         {
             yield return new WaitForSeconds(_duration);
-            Destroy();
+            DestroyImmediate(this.gameObject);
         }
     }
 }

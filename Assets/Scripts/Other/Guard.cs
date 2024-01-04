@@ -37,10 +37,22 @@ public class Guard : TeamPlayer
         if (CurrentState == State.Hunting && !_isPathRequestSent)
             SendPathRequest();
 
-        if (CurrentState == State.Hunting && GetDistanceToTarget() <= _distanceToCatchTarget)
+
+        if (CurrentState == State.Hunting)
         {
-            Catch();
-            ReturnToSpawn();
+            // This is a weird bug with unity when destroying an object inheriting from an interface
+            // so it doesnt really become null, just "marked" as null ig ??
+            if (_dangerousObject.ToString() == "null")
+            {
+                _targetTransform = null;
+                CurrentState = State.OnStandBy;
+                ReturnToSpawn();
+            }
+            else if (GetDistanceToTarget() <= _distanceToCatchTarget)
+            {
+                Catch();
+                ReturnToSpawn();
+            }
         }
 
         if (CurrentState == State.Catching && GetDistanceToTarget() < 0.1f)
