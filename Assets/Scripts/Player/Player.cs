@@ -56,6 +56,7 @@ public class Player : UnitBase, IDangerousObject
 
     public void DestroySelf()
     {
+        GameManager.Instance.PlayerInstance = null;
         gameObject.SetActive(false);
     }
 
