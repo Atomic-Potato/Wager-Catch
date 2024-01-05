@@ -45,10 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _abilityItems:
   - {fileID: 3735176727535822906, guid: 6e422014d813eaf43b0f5456121d501a, type: 3}
-  - {fileID: 8302691316682147852, guid: b306eab6e4a3fd8488e1312048189495, type: 3}
   - {fileID: 5667711768867497915, guid: 260966a050c487941be3d46cf9be2d86, type: 3}
   - {fileID: 4111119717673382282, guid: 9115a9e779dac1e4bba207c0a741a9c3, type: 3}
-  - {fileID: 7395086456670064389, guid: 6f992b4cf33aa9a44b5aad9575a6c9a6, type: 3}
   - {fileID: 3211043588585778292, guid: 5fdda41df240a294ab3a482017e5f7a6, type: 3}
   - {fileID: 1837513790136247341, guid: c28cf236c62ba5c4ca7812072ca8489a, type: 3}
   SelectedAbilityItem: {fileID: 0}
