@@ -56,8 +56,6 @@ namespace Pathfinding
         [HideInInspector] public PathRequestManager PathRequestManager;
         [HideInInspector] public TeamsManager TeamsManager;
 
-        public bool enable_dat;
-
         protected Vector2? _target;
         Vector2 _facingDirection  = Vector2.down; 
         public Vector2 FacingDirection => _facingDirection;
@@ -170,6 +168,16 @@ namespace Pathfinding
             }
         }
 
+        protected void ForceSendPathRequest()
+        {
+            Vector2? targetPosition = (Vector2)_target;
+            if (targetPosition == null)
+                return;
+            PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, null, null, UpdatePath);
+            _isPathRequestSent = true;
+            Debug.Log("Sent Request");
+        }
+
         void UpdatePath(Vector2[] newPath, bool isFoundPath, Node endNode)
         {
             _isPathRequestSent = false;
@@ -178,12 +186,12 @@ namespace Pathfinding
 
             if (!isFoundPath)
             {
-                if (enable_dat)
                 _isReachedDestination = true;
                 return;
             }
 
             _pathToTarget = newPath;
+            Debug.Log("Updated path");
 
             _followPathCoroutine = ResetartCoroutine(_followPathCoroutine);
 
@@ -228,7 +236,6 @@ namespace Pathfinding
                     }
                     _currentWaypoint = _pathToTarget[_pathIndex];
                 }
-                Debug.Log("am movin");
 
                 _isMoving = true;
                 transform.position = Vector2.MoveTowards(transform.position, (Vector2)_currentWaypoint, _appliedSpeed * Time.deltaTime);
@@ -427,6 +434,7 @@ namespace Pathfinding
                 yield return new WaitForSeconds(time);
                 _isSleeping = false;
                 _wakeCoroutine = null;
+                ForceSendPathRequest();
             }
         }
 
@@ -441,6 +449,7 @@ namespace Pathfinding
             if (_wakeCoroutine != null)
                 return;
             _isSleeping = false;
+            ForceSendPathRequest();
         }
 
         public void ImpulseFromPoint(Vector2 point)
