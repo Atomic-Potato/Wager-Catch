@@ -175,7 +175,6 @@ namespace Pathfinding
                 return;
             PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, null, null, UpdatePath);
             _isPathRequestSent = true;
-            Debug.Log("Sent Request");
         }
 
         void UpdatePath(Vector2[] newPath, bool isFoundPath, Node endNode)
@@ -191,7 +190,6 @@ namespace Pathfinding
             }
 
             _pathToTarget = newPath;
-            Debug.Log("Updated path");
 
             _followPathCoroutine = ResetartCoroutine(_followPathCoroutine);
 

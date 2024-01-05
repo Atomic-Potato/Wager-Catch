@@ -51,6 +51,7 @@ public class Player : UnitBase, IDangerousObject
         _isMoving = false;
         _collider.enabled = false;
         _rigidbody.velocity = Vector2.zero;
+        Destroy(_rigidbody);
     }
 
     public void DestroySelf()
