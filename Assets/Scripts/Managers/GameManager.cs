@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Pathfinding;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -67,6 +68,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] Transform _playerEntryPoint;
     public Transform PlayerEntryPoint => _playerEntryPoint;
     
+    [Space]
+    [SerializeField] LayerMask _explosionLayers;
 
     float? _matchStartTime;
     float _matchTimePassed;
@@ -136,11 +139,15 @@ public class GameManager : Singleton<GameManager>
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene("SampleScene");
+        if (Input.GetKeyDown(KeyCode.E))
+            ImpulseObjectsInPorximity();
 #endif
 
         if (CurrentGameState == GameState.InGame)
             UpdateGameTimer();
     }
+
+    
 
     public void DeductBalance(int amount)
     {
@@ -295,4 +302,27 @@ public class GameManager : Singleton<GameManager>
         _playerTeam = TagsManager.TeamTag.Catcher;
         SetGameState(GameState.InGame);
     }
+
+    #region Editor Functions
+    void ImpulseObjectsInPorximity()
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D[] hits =  Physics2D.CircleCastAll(mousePosition, 2, Vector2.zero, 50f, _explosionLayers);
+        foreach (RaycastHit2D hit in hits)
+        {
+            TeamPlayer teamPlayer = hit.collider.gameObject.GetComponent<TeamPlayer>();
+            if (teamPlayer != null)
+            {
+                if (teamPlayer is Runner && ((Runner)teamPlayer).IsInSafeArea)
+                    continue;
+                teamPlayer.ImpulseFromPoint(mousePosition);
+            }
+            else
+            {
+                UnitBase unit = hit.collider.gameObject.GetComponent<UnitBase>();
+                unit.ImpulseFromPoint(mousePosition);
+            }
+        }
+    }
+    #endregion
 }
