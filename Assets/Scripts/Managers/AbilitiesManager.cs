@@ -27,7 +27,7 @@ namespace Ability
                     if (isConsumed)
                     {
                         GameManager.Instance.DeductBalance(SelectedAbilityItem.Cost);
-                        // RemoveAbilitySelection();
+                        RemoveAbilitySelection();
                     }
                 }
             }

@@ -10077,7 +10077,7 @@ PrefabInstance:
     - target: {fileID: 5583167157789338412, guid: a3fe4a2d1f51b8a4fa98ac0c716f41e9,
         type: 3}
       propertyPath: _guardsToCache
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5583167157789338412, guid: a3fe4a2d1f51b8a4fa98ac0c716f41e9,
         type: 3}

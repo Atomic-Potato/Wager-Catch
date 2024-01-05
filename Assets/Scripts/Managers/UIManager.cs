@@ -134,6 +134,16 @@ public class UIManager : Singleton<UIManager>
     }
     #endregion
 
+    public void HideAbilitiesList()
+    {
+        _abilityItemsListParent.gameObject.SetActive(false);
+    }
+
+    public void ShowAbilitiesList()
+    {
+        _abilityItemsListParent.gameObject.SetActive(true);
+    }
+
     void UpdatePlayerTeamText()
     {
         _yourTeamText.color = GameManager.Instance.PlayerTeamColor;

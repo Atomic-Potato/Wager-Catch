@@ -14,6 +14,7 @@ namespace Ability
                 base.Spawn();
                 Vector2 spawnPoint = GameManager.Instance.PlayerSpawnPoint.position;
                 GameManager.Instance.PlayerInstance = Instantiate(_playerPrefab, spawnPoint, Quaternion.identity);
+                UIManager.Instance.HideAbilitiesList();
             }
             else
             {
