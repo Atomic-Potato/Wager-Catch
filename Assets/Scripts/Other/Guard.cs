@@ -54,6 +54,8 @@ public class Guard : TeamPlayer
             }
         }
 
+        // Debug.Log("State : " + CurrentState.ToString() + " | sleeping : " + IsSleeping + "\nTarget " + _target);
+
         if (CurrentState == State.Catching && GetDistanceToTarget() < 0.1f)
         {
             CurrentState = State.OnStandBy;

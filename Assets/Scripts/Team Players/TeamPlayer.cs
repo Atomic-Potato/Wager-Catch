@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Ability;
 using UnityEngine;
 
@@ -125,7 +126,7 @@ namespace Pathfinding
         {
 #if UNITY_EDITOR
             if (isRandomPathColor)
-                pathColor = new Color(Random.Range(.8f,1f), Random.Range(.4f,8f), Random.Range(0f,4f), 1f);
+                pathColor = new Color(UnityEngine.Random.Range(.8f,1f), UnityEngine.Random.Range(.4f,8f), UnityEngine.Random.Range(0f,4f), 1f);
 #endif
             RandomizeValues();
             _sleepEvent = new CustomUnityEvent();
@@ -145,7 +146,7 @@ namespace Pathfinding
         protected void Update()
         {
             UpdateFacingDirection();
-            CheckForCollisions();
+            // CheckForCollisions();
             CheckForSlowdownAreas();
             if (_isCanSprint)
                 Sprint();
@@ -211,6 +212,7 @@ namespace Pathfinding
 
                 if(_isStopFollowingPath)
                 {
+                    Debug.Log("Stopped following");
                     StopFollowingPath();
                     _startNodeCache = null;
                     yield break;
@@ -226,6 +228,7 @@ namespace Pathfinding
                     }
                     _currentWaypoint = _pathToTarget[_pathIndex];
                 }
+                Debug.Log("am movin");
 
                 _isMoving = true;
                 transform.position = Vector2.MoveTowards(transform.position, (Vector2)_currentWaypoint, _appliedSpeed * Time.deltaTime);
@@ -361,7 +364,7 @@ namespace Pathfinding
 
         void CheckForCollisions()
         {
-            if (_currentWaypoint != null)
+            if (_currentWaypoint != null && !_isSleeping)
             {
                 Vector2 difference = (Vector2)_currentWaypoint - (Vector2)transform.position;
                 Vector2 direction = difference.normalized;
@@ -456,7 +459,7 @@ namespace Pathfinding
                 Sleep();
                 _impulseCollider.enabled = true;
                 Vector2 direction = ((Vector2)transform.position - point).normalized;
-                float x = 0;
+                float x = 0.01f;
                 
                 do 
                 {
