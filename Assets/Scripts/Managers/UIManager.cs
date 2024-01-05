@@ -55,6 +55,8 @@ public class UIManager : Singleton<UIManager>
     {
         GameManager.Instance.BalanceChangeBroadcaster.AddListener(UpdateBalanceText);
         GameManager.Instance.MatchTimeBroadcaster.AddListener(UpdateGameTimer);
+        GameManager.Instance.PlayerSpawnBroadcaster.AddListener(HideAbilitiesList);
+        GameManager.Instance.PlayerDespawnBroadcaster.AddListener(ShowAbilitiesList);
         _runnersBetButton.onClick.AddListener(GameManager.Instance.BetOnRunners);
         _catchersBetButton.onClick.AddListener(GameManager.Instance.BetOnCatchers);
         UpdateBalanceText();
@@ -134,12 +136,12 @@ public class UIManager : Singleton<UIManager>
     }
     #endregion
 
-    public void HideAbilitiesList()
+    void HideAbilitiesList()
     {
         _abilityItemsListParent.gameObject.SetActive(false);
     }
 
-    public void ShowAbilitiesList()
+    void ShowAbilitiesList()
     {
         _abilityItemsListParent.gameObject.SetActive(true);
     }

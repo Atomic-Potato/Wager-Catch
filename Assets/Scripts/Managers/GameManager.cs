@@ -42,7 +42,8 @@ public class GameManager : Singleton<GameManager>
     TagsManager.TeamTag _playerTeam = TagsManager.TeamTag.NuteralPlayer;
     public TagsManager.Tag PlayerTeam => TagsManager.ConvertTeamTagToTag(_playerTeam);
     
-    [HideInInspector] public Player PlayerInstance;
+    Player _playerInstance;
+    [HideInInspector] public Player PlayerInstance => _playerInstance;
 
     public TagsManager.Tag OppositeTeam
     {
@@ -77,6 +78,8 @@ public class GameManager : Singleton<GameManager>
 
     [HideInInspector] public UnityEvent MatchTimeBroadcaster;
     [HideInInspector] public UnityEvent MatchEndBroadcaster;
+    [HideInInspector] public UnityEvent PlayerSpawnBroadcaster;
+    [HideInInspector] public UnityEvent PlayerDespawnBroadcaster;
     [HideInInspector] public CustomUnityEvent BalanceChangeBroadcaster;
     
     GameState _currentGameState;
@@ -120,6 +123,8 @@ public class GameManager : Singleton<GameManager>
         base.Awake();
         MatchTimeBroadcaster = new UnityEvent();
         MatchEndBroadcaster = new UnityEvent();
+        PlayerSpawnBroadcaster = new UnityEvent();
+        PlayerDespawnBroadcaster = new UnityEvent();
         BalanceChangeBroadcaster = new CustomUnityEvent();
         PlayerData data = DataSavingManager.LoadData();
         _balance = data.Balance < _minBalance ? _minBalance : data.Balance;
@@ -147,7 +152,17 @@ public class GameManager : Singleton<GameManager>
             UpdateGameTimer();
     }
 
-    
+    public void SetPlayerInstance(Player player)
+    {
+        _playerInstance  = player;
+        PlayerSpawnBroadcaster.Invoke();
+    }
+
+    public void RemovePlayerInstance()
+    {
+        _playerInstance  = null;
+        PlayerDespawnBroadcaster.Invoke();
+    }
 
     public void DeductBalance(int amount)
     {
