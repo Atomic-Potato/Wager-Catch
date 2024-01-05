@@ -9918,7 +9918,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _runnersCount
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
@@ -9934,7 +9934,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _catchersCount
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
@@ -10407,6 +10407,11 @@ PrefabInstance:
         type: 3}
       propertyPath: _matchLengthInSeconds
       value: 9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
+        type: 3}
+      propertyPath: _explosionLayers.m_Bits
+      value: 4608
       objectReference: {fileID: 0}
     - target: {fileID: 7852513696091412339, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}

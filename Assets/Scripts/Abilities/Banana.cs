@@ -69,6 +69,9 @@ namespace Ability
             if (_isHasSlipped)
                 return;
 
+            if (collider.gameObject.tag == TagsManager.Tag.Guard.ToString())
+                return;
+                
             if (1 << collider.gameObject.layer == _teamPlayerLayerMask)
             {
                 TeamPlayer player = collider.gameObject.GetComponent<TeamPlayer>();

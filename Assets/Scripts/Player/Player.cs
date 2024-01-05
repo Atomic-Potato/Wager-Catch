@@ -4,8 +4,6 @@ using UnityEngine;
 public class Player : UnitBase, IDangerousObject
 {
     [Space, Header("Player Settings")]
-    
-    [SerializeField] Rigidbody2D _rigidbody;
     [SerializeField] Collider2D _collider;
 
     bool _isActive = true;

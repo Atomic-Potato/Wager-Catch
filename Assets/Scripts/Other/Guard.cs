@@ -37,7 +37,6 @@ public class Guard : TeamPlayer
         if (CurrentState == State.Hunting && !_isPathRequestSent)
             SendPathRequest();
 
-
         if (CurrentState == State.Hunting)
         {
             // This is a weird bug with unity when destroying an object inheriting from an interface

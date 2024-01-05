@@ -17,7 +17,7 @@ namespace Pathfinding
         [SerializeField, Min(.01f)] float _impulseInitialForceDropOff = .2f; 
         [SerializeField] LayerMask _affectedObjectsLayers;
         [SerializeField] Collider2D _impulseCollider;
-        [SerializeField] Rigidbody2D _rigidbody;
+        [SerializeField] protected Rigidbody2D _rigidbody;
 
         [Space]
         [SerializeField] Vector2 _collisionCheckSize = Vector2.one;

@@ -15,6 +15,7 @@ public class TagsManager
         Catcher = 16,
         NuteralPlayer = 32,
         None = 64,
+        Guard = 128,
     }
 
     public static Tag TeamTags =>  Tag.NuteralPlayer | Tag.Catcher | Tag.Runner;

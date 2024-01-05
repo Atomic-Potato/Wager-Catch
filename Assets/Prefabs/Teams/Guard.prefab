@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6833790659743119555}
   m_Layer: 9
   m_Name: Guard
-  m_TagString: NuteralPlayer
+  m_TagString: Guard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   _collisionCheckOffset: {x: 0, y: 0}
   _collisionLayer:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 256
   _slowdownAreaLayer:
     serializedVersion: 2
     m_Bits: 2048
