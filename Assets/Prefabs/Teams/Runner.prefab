@@ -80,8 +80,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa258684ab173fe42a050ea2dce327cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedRange: {x: 0.5, y: 1.5}
-  _isCanSprint: 1
+  _speedRange: {x: 1.5, y: 1.5}
+  _isCanSprint: 0
   _sprintSpeedMultiplier: 2.5
   _sprintDurationRange: {x: 0.85, y: 2}
   _sprintRecoveryMultiplier: 1.25
@@ -113,9 +113,8 @@ MonoBehaviour:
   Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
-  enable_dat: 0
   randomTimeRangeToStartRunning: {x: 2, y: 2}
-  _catcherDetectionRange: 1.25
+  _catcherDetectionRange: 0
   _panikMarker: {fileID: 4208278969376603684}
   Catchers: []
 --- !u!61 &3146306151673408437
@@ -219,7 +218,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4208278969376603684}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -280,7 +279,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2527994459022775629
 RectTransform:
   m_ObjectHideFlags: 0

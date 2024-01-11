@@ -6838,7 +6838,7 @@ RectTransform:
   m_GameObject: {fileID: 1284925852}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 1777026689}
   m_Father: {fileID: 1203760528}
@@ -6847,7 +6847,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: -235, y: 0}
-  m_SizeDelta: {x: 50, y: 400}
+  m_SizeDelta: {x: 50, y: 290}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1284925854
 MonoBehaviour:
@@ -9918,7 +9918,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _runnersCount
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
@@ -9934,7 +9934,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _catchersCount
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}

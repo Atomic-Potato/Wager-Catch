@@ -109,7 +109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5634341872069599732
 RectTransform:
   m_ObjectHideFlags: 0
@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0406e5ae007941042a07bea6c7881639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedRange: {x: 0.5, y: 1.75}
+  _speedRange: {x: 1.75, y: 1.75}
   _isCanSprint: 0
   _sprintSpeedMultiplier: 1.75
   _sprintDurationRange: {x: 0.5, y: 4}
@@ -345,20 +345,20 @@ MonoBehaviour:
   isDrawPath: 1
   pathColor: {r: 1, g: 0, b: 0.0264287, a: 0.5}
   isRandomPathColor: 0
+  _isDrawDeathExplosionRadius: 1
   Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
-  enable_dat: 1
-  _timeToCatch: 1.15
+  _timeToCatch: 0.75
   _timeToRecoverCatch: 1
-  _catchAreaRadiusRange: {x: 0.25, y: 1}
+  _catchAreaRadiusRange: {x: 1.5, y: 1.5}
   _catchAreaOrigin: {fileID: 8101666772180373965}
   _catchToolSprite: {fileID: 8977168415014358857}
   _catchToolEndPoint: {fileID: 5285774475910635014}
   _catchEffect: {fileID: 847476468779818668, guid: 9a5d27ba8803a96428fdd1b763e7c84c,
     type: 3}
   _isDrawCatchArea: 1
-  _catchAreaDisplayedRadius: 0.75
+  _catchAreaDisplayedRadius: 1.5
   _catchAreaColor: {r: 1, g: 0, b: 0, a: 1}
   SpawnPoint: {fileID: 0}
 --- !u!61 &3044994074815680745

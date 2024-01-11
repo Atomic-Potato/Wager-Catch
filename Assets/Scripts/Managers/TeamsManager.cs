@@ -18,10 +18,12 @@ public class TeamsManager : Singleton<TeamsManager>
     [SerializeField] List<Transform> _catchersSpawnPoints;
     
     List<Catcher> _catchers = new List<Catcher>();
+    public List<Catcher> Catchers => _catchers;
     public int CatchersCount => _catchers.Count;
     float _catchersStrengthScale;
     public float CatchersStrengthScale => _catchersStrengthScale; 
     List<Runner> _runners = new List<Runner>();
+    public List<Runner> Runners => _runners;
     public int RunnersCount => _runners.Count;
     float _runnersStrengthScale;
     public float RunnersStrengthScale => _runnersStrengthScale;
@@ -34,6 +36,7 @@ public class TeamsManager : Singleton<TeamsManager>
     new void Awake()
     {
         base.Awake();
+        RunnersNotInSafeArea.Clear();
         TeamsCountBroadcaster = new CustomUnityEvent();
         LoadNewPlayers();
     }
@@ -54,9 +57,11 @@ public class TeamsManager : Singleton<TeamsManager>
         return stats;
     }
 
+    int _runnerCounter = 0;
     public void AddRunner(Vector2 position)
     {
         Runner runner = Instantiate(_runnerPrefab, position, Quaternion.identity, runnersParent);
+        runner.gameObject.name = "Runner " + _runnerCounter++;  
         runner.TeamsManager = this;
         runner.Grid = playersGrid;
         runner.PathRequestManager = pathRequestManager;
@@ -69,9 +74,11 @@ public class TeamsManager : Singleton<TeamsManager>
             AddRunner(GetRandomSafeNode().WorldPosition);
     }
 
+    int _catcherCounter = 0;
     public void AddCatcher(Vector2 position, Transform spawnPoint = null)
     {
         Catcher catcher = Instantiate(_catcherPrefab, position, Quaternion.identity, catchersParent);
+        catcher.gameObject.name = "Catcher " + _catcherCounter++;  
         catcher.TeamsManager = this;
         catcher.Grid = playersGrid;
         catcher.PathRequestManager = pathRequestManager;
