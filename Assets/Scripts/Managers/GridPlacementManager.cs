@@ -32,7 +32,7 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
         Vector2 mousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
         Node mouseNode = _placementGrid.GetNodeFromWorldPosition(mousePosition);
         _previewSpriteRenderer.color = !IsCanPlaceOnNode(mouseNode, _previewCollider) ? _invalidPlacementColor : Color.white; 
-        _previewSpriteRenderer.gameObject.transform.position = mouseNode.WorldPosition;
+        _previewSpriteRenderer.gameObject.transform.position = mousePosition;
     }
 
     public void SetPreviewSprite(Sprite sprite)
@@ -57,7 +57,7 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
         if (!IsCanPlaceOnNode(placementNode, placedObjectPrefab.GetComponent<BoxCollider2D>()))
             return false;
 
-        GameObject spawnedObject = Instantiate(placedObjectPrefab, placementNode.WorldPosition, Quaternion.identity);
+        GameObject spawnedObject = Instantiate(placedObjectPrefab, mousePosition, Quaternion.identity);
         BoxCollider2D collider = spawnedObject.GetComponent<BoxCollider2D>();
         PlacedObjects.Add(spawnedObject);
 
@@ -79,8 +79,10 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
     
     bool IsCanPlaceOnNode(Node node, BoxCollider2D toSpawnCollider)
     {
-        bool isAgentOnNode = Physics2D.OverlapBox(node.WorldPosition, toSpawnCollider.size, 0f, _invalidPlacementLayers) != null;
-        return !node.IsSafe && node.IsWalkable && node.IsEditable && !isAgentOnNode;
+        // i dont wanna do dat no more
+        // bool isAgentOnNode = Physics2D.OverlapBox(node.WorldPosition, toSpawnCollider.size, 0f, _invalidPlacementLayers) != null;
+        // return !node.IsSafe && node.IsWalkable && node.IsEditable && !isAgentOnNode;
+        return !node.IsSafe && node.IsWalkable;
     }
 
     /// <summary>
@@ -93,7 +95,7 @@ public class GridPlacementManager : Singleton<GridPlacementManager>
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Node placementNode = _placementGrid.GetNodeFromWorldPosition(mousePosition);
 
-        GameObject spawnedObject = Instantiate(placedObjectPrefab, placementNode.WorldPosition, Quaternion.identity);
+        GameObject spawnedObject = Instantiate(placedObjectPrefab, mousePosition, Quaternion.identity);
         BoxCollider2D collider = spawnedObject.GetComponent<BoxCollider2D>();
         PlacedObjects.Add(spawnedObject);
 
