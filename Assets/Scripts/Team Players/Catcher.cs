@@ -127,6 +127,7 @@ public class Catcher : TeamPlayer
         {
             PlayCatchEffect();
             _targetRunner.Die();
+            _isCatchingTarget = false;
         }
         _catchToolSprite.enabled = false;
 
@@ -164,7 +165,16 @@ public class Catcher : TeamPlayer
         }
 
         if (_targetRunner == null || _targetRunner.IsInSafeArea)
-            _target = SpawnPoint.position;
+        {
+            Runner newTarget = GetClosestAvailableNotInSafeAreaRunner();
+            if (newTarget == null)
+                _target = SpawnPoint.position;
+            else
+            {
+                _targetRunner = newTarget;
+                _target = _targetRunner.transform.position;
+            }
+        }
         else
             _target = _targetRunner.transform.position;
         
@@ -190,27 +200,7 @@ public class Catcher : TeamPlayer
             _isCatchingTarget = true;
         }
         
-        Runner GetClosestAvailableNotInSafeAreaRunner()
-        {
-            if (TeamsManager.RunnersNotInSafeArea.Count == 0)
-                return null;
-            
-            float? minDistance = null;
-            Runner closestRunner = null;
-            foreach (Runner runner in TeamsManager.Instance.RunnersNotInSafeArea)
-            {
-                if (runner.Catchers.Count != 0)
-                    continue;
-
-                float distance = Vector2.Distance(transform.position, runner.transform.position);
-                if (minDistance == null || distance < minDistance)
-                {
-                    minDistance = distance;
-                    closestRunner = runner;
-                }
-            }
-            return closestRunner;
-        }
+        
         Runner GetClosestAvailableInSafeAreaRunner()
         {
             float? minDistance = null;
@@ -266,6 +256,29 @@ public class Catcher : TeamPlayer
             return closestRunner;
         }
     }
+
+    Runner GetClosestAvailableNotInSafeAreaRunner()
+    {
+        if (TeamsManager.RunnersNotInSafeArea.Count == 0)
+            return null;
+        
+        float? minDistance = null;
+        Runner closestRunner = null;
+        foreach (Runner runner in TeamsManager.Instance.RunnersNotInSafeArea)
+        {
+            if (runner.Catchers.Count != 0)
+                continue;
+
+            float distance = Vector2.Distance(transform.position, runner.transform.position);
+            if (minDistance == null || distance < minDistance)
+            {
+                minDistance = distance;
+                closestRunner = runner;
+            }
+        }
+        return closestRunner;
+    }
+    
     #endregion
 
     public override void Die()
