@@ -321,7 +321,7 @@ MonoBehaviour:
   _sprintSpeedMultiplier: 1.75
   _sprintDurationRange: {x: 0.5, y: 4}
   _sprintRecoveryMultiplier: 2
-  _impulseForce: 50
+  _impulseForce: 75
   _impulsedSpeed: 1
   _impulseInitialForceDropOff: 0.15
   _deathExplosionRadius: 3.5
