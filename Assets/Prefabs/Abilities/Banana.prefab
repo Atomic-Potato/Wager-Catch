@@ -49,7 +49,7 @@ MonoBehaviour:
   _isEndlessDuration: 1
   IsCanBeUsedAnywhere: 0
   Item: {fileID: 0}
-  _playerSleepDuration: 0.25
+  _playerSleepDuration: 1.25
   _teamPlayerLayerMask:
     serializedVersion: 2
     m_Bits: 512
