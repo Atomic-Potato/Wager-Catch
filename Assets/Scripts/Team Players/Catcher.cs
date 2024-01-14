@@ -12,6 +12,7 @@ public class Catcher : TeamPlayer
     [SerializeField, Min(0f)] float _timeToRecoverCatch = 1.25f;
 
     [SerializeField, Min(0f)] Vector2 _catchAreaRadiusRange = new Vector2(.25f, 3f);
+    public Vector2 CatchAreaRadiusBounds => _catchAreaRadiusRange;
     float _catchAreaRadius = .75f;
     public float MaxCatchAreaRadius => _catchAreaRadiusRange.y;
     public float CatchAreaRadius => _catchAreaRadius;

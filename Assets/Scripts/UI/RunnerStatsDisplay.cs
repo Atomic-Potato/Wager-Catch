@@ -23,15 +23,15 @@ public class RunnerStatsDisplay : MonoBehaviour
 public class RunnerStats
 {
     public float Stamina;
-    public float MaxStamina;
+    public Vector2 StaminaBounds;
     public float Speed;
-    public float MaxSpeed;
+    public Vector2 SpeedBounds;
 
-    public RunnerStats(float stamina, float maxStamina, float speed, float maxSpeed)
+    public RunnerStats(float stamina, Vector2 staminaBounds, float speed, Vector2 speedBounds)
     {
         Stamina = stamina;
-        MaxStamina = maxStamina;
+        StaminaBounds = staminaBounds;
         Speed = speed;
-        MaxSpeed = maxSpeed;
+        SpeedBounds = speedBounds;
     }    
 }

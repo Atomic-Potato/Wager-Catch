@@ -23,15 +23,15 @@ public class CatcherStatsDisplay : MonoBehaviour
 public class CatcherStats
 {
     public float CatchRange;
-    public float MaxCatchRange;
+    public Vector2 CatchRangeBounds;
     public float Speed;
-    public float MaxSpeed;
+    public Vector2 SpeedBounds;
 
-    public CatcherStats(float catchRange, float maxCatchRange, float speed, float maxSpeed)
+    public CatcherStats(float catchRange, Vector2 catchRangeBounds, float speed, Vector2 speedRange)
     {
         CatchRange = catchRange;
-        MaxCatchRange = maxCatchRange;
+        CatchRangeBounds = catchRangeBounds;
         Speed = speed;
-        MaxSpeed = maxSpeed;
+        SpeedBounds = speedRange;
     }    
 }

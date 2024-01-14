@@ -45,7 +45,7 @@ public class TeamsManager : Singleton<TeamsManager>
     {
         List<RunnerStats> stats = new List<RunnerStats>();
         foreach (Runner runner in _runners)
-            stats.Add(new RunnerStats(runner.SprintDuration, runner.MaxSprintDuration, runner.Speed, runner.MaxSpeed));
+            stats.Add(new RunnerStats(runner.SprintDuration, runner.SprintDurationBounds, runner.Speed, runner.SpeedBounds));
         return stats;
     }
 
@@ -53,7 +53,7 @@ public class TeamsManager : Singleton<TeamsManager>
     {
         List<CatcherStats> stats = new List<CatcherStats>();
         foreach (Catcher catcher in _catchers)
-            stats.Add(new CatcherStats(catcher.CatchAreaRadius, catcher.MaxCatchAreaRadius, catcher.Speed, catcher.MaxSpeed));
+            stats.Add(new CatcherStats(catcher.CatchAreaRadius, catcher.CatchAreaRadiusBounds, catcher.Speed, catcher.SpeedBounds));
         return stats;
     }
 
@@ -125,7 +125,6 @@ public class TeamsManager : Singleton<TeamsManager>
             totalScore += speedScore + catchScore;
         }
 
-        Debug.Log(totalScore + "\n" + CatchersCount);
         return totalScore / CatchersCount;
     }
     #endregion

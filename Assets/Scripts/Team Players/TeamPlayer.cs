@@ -11,6 +11,7 @@ namespace Pathfinding
         [SerializeField, Min(0f)] Vector2 _speedRange = new Vector2(1f, 5f);
         float _speed = 1f;
         public float MaxSpeed => _speedRange.y;
+        public Vector2 SpeedBounds => _speedRange;
         public float Speed => _speed;
 
         [Space]
@@ -18,6 +19,7 @@ namespace Pathfinding
         public bool IsCanSprint => _isCanSprint;
         [SerializeField, Min(0f)] float _sprintSpeedMultiplier = 1.75f;
         [SerializeField, Min(0f)] Vector2 _sprintDurationRange = new Vector2(0.5f, 4f);
+        public Vector2 SprintDurationBounds => _sprintDurationRange;
         float _sprintDuration = 1.75f;
         public float MaxSprintDuration => _sprintDurationRange.y;
         public float SprintDuration => _sprintDuration;

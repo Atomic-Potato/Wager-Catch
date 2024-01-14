@@ -163,8 +163,9 @@ public class UIManager : Singleton<UIManager>
             foreach (RunnerStats runnerStats in teamsManager.GetRunnersStatsList())
             {
                 RunnerStatsDisplay runnerDisplayItem = Instantiate(_runnerStatsDisplayPrefab, _runnersList);
-                runnerDisplayItem.SetSpeedValue((runnerStats.Speed / runnerStats.MaxSpeed) * 100f);
-                runnerDisplayItem.SetStaminaValue((runnerStats.Stamina / runnerStats.MaxStamina) * 100f);
+                Debug.Log(runnerStats.Speed + "\n" + runnerStats.SpeedBounds.x);
+                runnerDisplayItem.SetSpeedValue(((runnerStats.Speed - runnerStats.SpeedBounds.x) / (runnerStats.SpeedBounds.y - runnerStats.SpeedBounds.x)) * 100f);
+                runnerDisplayItem.SetStaminaValue(((runnerStats.Stamina - runnerStats.StaminaBounds.x) / (runnerStats.StaminaBounds.y - runnerStats.StaminaBounds.x)) * 100f);
             }
         }
 
@@ -173,8 +174,8 @@ public class UIManager : Singleton<UIManager>
             foreach (CatcherStats catcherStats in teamsManager.GetCatchersStatsList())
             {
                 CatcherStatsDisplay runnerDisplayItem = Instantiate(_catcherStatsDisplayPrefab, _catchersList);
-                runnerDisplayItem.SetSpeedValue((catcherStats.Speed / catcherStats.MaxSpeed) * 100f);
-                runnerDisplayItem.SetCatchRangeValue((catcherStats.CatchRange / catcherStats.MaxCatchRange) * 100f);
+                runnerDisplayItem.SetSpeedValue(((catcherStats.Speed - catcherStats.SpeedBounds.x) / (catcherStats.SpeedBounds.y - catcherStats.SpeedBounds.x)) * 100f);
+                runnerDisplayItem.SetCatchRangeValue(((catcherStats.CatchRange - catcherStats.CatchRangeBounds.x) / (catcherStats.CatchRangeBounds.y - catcherStats.CatchRangeBounds.x)) * 100f);
             }
         }
     }
