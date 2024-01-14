@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Pathfinding;
+using TMPro;
 using UnityEngine;
 
 public class Runner : TeamPlayer
@@ -12,6 +12,7 @@ public class Runner : TeamPlayer
     [Space, Header("Panik")]
     [SerializeField, Min(0f)] float _catcherDetectionRange = 1.5f;
     [SerializeField] GameObject _panikMarker;
+    [SerializeField] TMP_Text _debuggingText;
 
     bool _isInSafeArea;
     public bool IsInSafeArea => _isInSafeArea;
@@ -32,7 +33,7 @@ public class Runner : TeamPlayer
         if (_isReachedDestination && !_isPathRequestSent && _delayNextRequestCoroutine == null)
             _delayNextRequestCoroutine = StartCoroutine(DelayNextPathRequest());
         
-        if (GetCatchersInProximity().Count > 0)
+        if (IsCatchersInProximity())
             Panik();
         else
             Kalm();
@@ -45,7 +46,6 @@ public class Runner : TeamPlayer
             _isInSafeArea = true;
             if (TeamsManager.RunnersNotInSafeArea.Contains(this))
                 TeamsManager.RunnersNotInSafeArea.Remove(this);
-            Catchers.Clear();
         }
     }
 
@@ -77,24 +77,21 @@ public class Runner : TeamPlayer
     {
         TeamsManager.RunnersNotInSafeArea.Remove(this);
         TeamsManager.RemoveRunner(this);
-        foreach(Catcher catcher in Catchers)
-            catcher.RemoveTarget();
-        Catchers.Clear();
         base.Die();
     }
 
-    List<RaycastHit2D> GetCatchersInProximity()
+    bool IsCatchersInProximity()
     {
-        List<RaycastHit2D> hits = Physics2D.CircleCastAll(transform.position, _catcherDetectionRange, Vector2.zero).ToList<RaycastHit2D>();
-        List<RaycastHit2D> catchers = new List<RaycastHit2D>();
+        if (Catchers.Count == 0)
+            return false;
 
-        foreach (RaycastHit2D hit in hits)
+        foreach (Catcher catcher in Catchers)
         {
-            if (hit.collider.gameObject.tag == TagsManager.Tag.Catcher.ToString())
-                catchers.Add(hit);
+            float distanceToCatcher = Vector2.Distance(transform.position, catcher.transform.position);
+            if (distanceToCatcher <= _catcherDetectionRange)
+                return true;
         }
-
-        return catchers;
+        return false;
     }
 
     void Panik()

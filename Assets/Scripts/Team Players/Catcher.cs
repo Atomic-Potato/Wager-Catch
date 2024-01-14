@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.IO;
 using Pathfinding;
 using UnityEngine;
@@ -167,17 +168,24 @@ public class Catcher : TeamPlayer
         if (_targetRunner == null || _targetRunner.IsInSafeArea)
         {
             Runner newTarget = GetClosestAvailableNotInSafeAreaRunner();
+
             if (newTarget == null)
                 _target = SpawnPoint.position;
             else
             {
+                _targetRunner.Catchers.Remove(this);
                 _targetRunner = newTarget;
+                _targetRunner.Catchers.Add(this);
+                
                 _target = _targetRunner.transform.position;
             }
         }
         else
             _target = _targetRunner.transform.position;
         
+        if (_targetRunner != null)
+            Debug.Log(_targetRunner.gameObject.name);
+
         if (!_isPathRequestSent)
             SendPathRequest();
     }
@@ -185,6 +193,9 @@ public class Catcher : TeamPlayer
     void FindRunnerTarget()
     {
         _isCatchingTarget = false;
+
+        if (_targetRunner != null)
+            _targetRunner.Catchers.Remove(this);
 
         _targetRunner = GetClosestAvailableNotInSafeAreaRunner();
         if (_targetRunner == null)

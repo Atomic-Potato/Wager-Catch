@@ -1181,7 +1181,7 @@ MonoBehaviour:
   safeAreaMask:
     serializedVersion: 2
     m_Bits: 1024
-  isDisplayGrid: 1
+  isDisplayGrid: 0
   gridColor: {r: 1, g: 1, b: 1, a: 0.5}
   walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
   unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
