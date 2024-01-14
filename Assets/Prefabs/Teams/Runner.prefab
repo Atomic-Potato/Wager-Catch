@@ -247,7 +247,7 @@ MonoBehaviour:
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
   randomTimeRangeToStartRunning: {x: 2, y: 2}
-  _catcherDetectionRange: 10
+  _catcherDetectionRange: 3
   _panikMarker: {fileID: 4208278969376603684}
   _debuggingText: {fileID: 3873671919276986417}
   Catchers: []

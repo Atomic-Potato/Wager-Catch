@@ -183,9 +183,6 @@ public class Catcher : TeamPlayer
         else
             _target = _targetRunner.transform.position;
         
-        if (_targetRunner != null)
-            Debug.Log(_targetRunner.gameObject.name);
-
         if (!_isPathRequestSent)
             SendPathRequest();
     }
