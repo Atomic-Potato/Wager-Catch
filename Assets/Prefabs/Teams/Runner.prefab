@@ -104,12 +104,12 @@ MonoBehaviour:
     m_Bits: 2048
   _deathEffect: {fileID: 2983881910522846901, guid: 4b237c93686724944b61e18535936aa0,
     type: 3}
-  _isDrawCollisionCheckSize: 1
+  _isDrawCollisionCheckSize: 0
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
   isDrawPath: 1
   pathColor: {r: 0, g: 0, b: 1, a: 0.5}
   isRandomPathColor: 0
-  _isDrawDeathExplosionRadius: 1
+  _isDrawDeathExplosionRadius: 0
   Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}

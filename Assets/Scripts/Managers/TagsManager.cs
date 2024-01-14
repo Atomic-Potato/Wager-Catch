@@ -16,6 +16,7 @@ public class TagsManager
         NuteralPlayer = 32,
         None = 64,
         Guard = 128,
+        Mouse = 256,
     }
 
     public static Tag TeamTags =>  Tag.NuteralPlayer | Tag.Catcher | Tag.Runner;

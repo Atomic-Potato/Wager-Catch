@@ -188,4 +188,17 @@ public class TeamsManager : Singleton<TeamsManager>
             _runners.Clear();
         }
     }
+
+    public void ForceUpdateAllPlayersPaths()
+    {
+        foreach (Runner runner in _runners)
+        {
+            runner.ForceSendPathRequest();
+        }
+
+        foreach (Catcher catcher in _catchers)
+        {
+            catcher.ForceSendPathRequest();
+        }
+    }
 }

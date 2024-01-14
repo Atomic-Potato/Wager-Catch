@@ -168,7 +168,7 @@ namespace Pathfinding
             }
         }
 
-        protected void ForceSendPathRequest()
+        public void ForceSendPathRequest()
         {
             Vector2? targetPosition = (Vector2)_target;
             if (targetPosition == null)

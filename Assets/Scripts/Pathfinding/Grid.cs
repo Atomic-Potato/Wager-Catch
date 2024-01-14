@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Pathfinding
 {
-    public class Grid : MonoBehaviour
+    public class Grid : Singleton<Grid>
     {
         #region Inspector Variables
         [Tooltip("The size of the gird. Its recommended if its a square area.")]

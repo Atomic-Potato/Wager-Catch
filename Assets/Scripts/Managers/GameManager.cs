@@ -145,7 +145,7 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene("SampleScene");
         if (Input.GetKeyDown(KeyCode.E))
-            ImpulseObjectsInPorximity();
+            ImpulseObjectsInPorximity(Camera.main.ScreenToWorldPoint(Input.mousePosition), _explosionLayers);
 #endif
 
         if (CurrentGameState == GameState.InGame)
@@ -319,10 +319,9 @@ public class GameManager : Singleton<GameManager>
     }
 
     #region Editor Functions
-    void ImpulseObjectsInPorximity()
+    public static void ImpulseObjectsInPorximity(Vector2 position, LayerMask affectedLayers)
     {
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D[] hits =  Physics2D.CircleCastAll(mousePosition, 2, Vector2.zero, 50f, _explosionLayers);
+        RaycastHit2D[] hits =  Physics2D.CircleCastAll(position, 2, Vector2.zero, 50f, affectedLayers);
         foreach (RaycastHit2D hit in hits)
         {
             TeamPlayer teamPlayer = hit.collider.gameObject.GetComponent<TeamPlayer>();
@@ -330,12 +329,12 @@ public class GameManager : Singleton<GameManager>
             {
                 if (teamPlayer is Runner && ((Runner)teamPlayer).IsInSafeArea)
                     continue;
-                teamPlayer.ImpulseFromPoint(mousePosition);
+                teamPlayer.ImpulseFromPoint(position);
             }
             else
             {
                 UnitBase unit = hit.collider.gameObject.GetComponent<UnitBase>();
-                unit.ImpulseFromPoint(mousePosition);
+                unit.ImpulseFromPoint(position);
             }
         }
     }
