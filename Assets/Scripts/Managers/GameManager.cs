@@ -201,8 +201,8 @@ public class GameManager : Singleton<GameManager>
     void CalculateTeamsBetLossScale()
     {
         TeamsManager teams = TeamsManager.Instance;
-        _catchersBetLossScale = teams.RunnersStrengthScale;
-        _runnersBetLossScale = teams.CatchersStrengthScale;
+        _catchersBetLossScale = -teams.RunnersStrengthScale;
+        _runnersBetLossScale = -teams.CatchersStrengthScale;
     }
 
     void UpdateGameTimer()
@@ -267,9 +267,9 @@ public class GameManager : Singleton<GameManager>
         {
             int remaining = _wager;
             if (_matchWinner == TagsManager.TeamTag.Runner)
-                remaining = (int)(remaining * _catchersBetLossScale);
+                remaining = (int)(remaining + remaining * _catchersBetLossScale);
             else if(_matchWinner == TagsManager.TeamTag.Catcher)
-                remaining = (int)(remaining * _runnersBetLossScale);
+                remaining = (int)(remaining + remaining * _runnersBetLossScale);
             _balance += remaining;
         }
     }

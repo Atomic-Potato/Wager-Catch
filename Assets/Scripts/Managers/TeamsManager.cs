@@ -104,8 +104,8 @@ public class TeamsManager : Singleton<TeamsManager>
         float totalScore = 0f;
         foreach (Runner runner in _runners)
         {
-            float speedScore = (runner.Speed / runner.MaxSpeed) * .5f;
-            float sprintScore = (runner.SprintDuration / runner.MaxSprintDuration) * .5f;
+            float speedScore = (runner.Speed - runner.SpeedBounds.x) / (runner.SpeedBounds.y - runner.SpeedBounds.x) * .5f;
+            float sprintScore = (runner.SprintDuration - runner.SprintDurationBounds.x) / (runner.SprintDurationBounds.y - runner.SprintDurationBounds.x) * .5f;
             totalScore += speedScore + sprintScore;
         }
 
@@ -120,8 +120,8 @@ public class TeamsManager : Singleton<TeamsManager>
         float totalScore = 0f;
         foreach (Catcher catcher in _catchers)
         {
-            float speedScore = (catcher.Speed / catcher.MaxSpeed) * .5f;
-            float catchScore = (catcher.CatchAreaRadius / catcher.MaxCatchAreaRadius) * .5f;
+            float speedScore = (catcher.Speed - catcher.SpeedBounds.x) / (catcher.SpeedBounds.y - catcher.SpeedBounds.x) * .5f;
+            float catchScore = (catcher.CatchAreaRadius - catcher.CatchAreaRadiusBounds.x) / (catcher.CatchAreaRadiusBounds.y - catcher.CatchAreaRadiusBounds.x) * .5f;
             totalScore += speedScore + catchScore;
         }
 
