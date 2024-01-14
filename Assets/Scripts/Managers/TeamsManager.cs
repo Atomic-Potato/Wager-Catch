@@ -95,6 +95,7 @@ public class TeamsManager : Singleton<TeamsManager>
         }
     }
 
+    #region Calculating Teams Strength
     float GetRunnersTeamStrengthScale()
     {
         if (RunnersCount == 0)
@@ -107,23 +108,27 @@ public class TeamsManager : Singleton<TeamsManager>
             float sprintScore = (runner.SprintDuration / runner.MaxSprintDuration) * .5f;
             totalScore += speedScore + sprintScore;
         }
+
         return totalScore / RunnersCount;
     }
 
     float GetCatchersTeamStrengthScale()
     {
-        if (RunnersCount == 0)
+        if (CatchersCount == 0)
             return 0;
         
         float totalScore = 0f;
         foreach (Catcher catcher in _catchers)
         {
             float speedScore = (catcher.Speed / catcher.MaxSpeed) * .5f;
-            float sprintScore = (catcher.CatchAreaRadius / catcher.MaxCatchAreaRadius) * .5f;
-            totalScore += speedScore + sprintScore;
+            float catchScore = (catcher.CatchAreaRadius / catcher.MaxCatchAreaRadius) * .5f;
+            totalScore += speedScore + catchScore;
         }
+
+        Debug.Log(totalScore + "\n" + CatchersCount);
         return totalScore / CatchersCount;
     }
+    #endregion
 
     public Node GetRandomSafeNode()
     {

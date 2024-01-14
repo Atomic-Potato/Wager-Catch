@@ -30,7 +30,6 @@ public class Guard : TeamPlayer
     new void Update()
     {
         base.Update();
-        Debug.Log(DangerousObjectsManager.Instance.SpawnedObjects.Count);
 
         if (_targetTransform != null)
             _target = _targetTransform.position;
