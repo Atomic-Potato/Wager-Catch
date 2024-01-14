@@ -79,7 +79,7 @@ namespace Ability
                 player.Sleep(_playerSleepDuration);
                 _isHasSlipped = true;
                 _sprite.enabled = false;
-                Destroy(gameObject);
+                DestroySelf();
             }
         }
     }
