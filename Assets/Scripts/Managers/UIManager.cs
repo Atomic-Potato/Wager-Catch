@@ -3,9 +3,12 @@ using UnityEngine;
 using System;
 using Ability;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.Events;
 
 public class UIManager : Singleton<UIManager>
 {
+    #region Global Variables
     [Space, Header("Team Selection UI")]
     [Space, SerializeField] GameObject _teamSelectionUIParent;
     [SerializeField] TMP_Text _teamSelectionUIBalanceText;
@@ -42,6 +45,12 @@ public class UIManager : Singleton<UIManager>
     [Space, Header("Match End Special UI")]
     [Space, SerializeField] GameObject _matchEndSpecialUIParent;
     [SerializeField] Button _matchEndSpecialButton;
+    [SerializeField] TMP_Text _matchEndSpecialProfitText;
+
+    [Space, Header("Reveal Image")]
+    [Space, SerializeField] Image _revealImage;
+    [SerializeField, Min(.1f)] float _revealSpeed;
+    [SerializeField, Min(0f)] float _revealDelay;
 
     [Space, Header("Other")]
     [SerializeField] UI _defaultScreen;
@@ -57,10 +66,16 @@ public class UIManager : Singleton<UIManager>
     UI _currentScreen;
     public UI CurrentScreen => _currentScreen;
 
+    Coroutine _revealCoroutine;
+    UnityEvent _revealEndBroadcaster;
+    #endregion
+
     new void Awake()
     {
         base.Awake();
         SetScreen(_defaultScreen);
+        _revealEndBroadcaster = new UnityEvent();
+        _revealEndBroadcaster.AddListener(ShowSpecialEndHiddenElements);
     }
 
     void Start()
@@ -122,6 +137,8 @@ public class UIManager : Singleton<UIManager>
     public void EnableCurrentScreen()
     {
         GetCurrentScreenParent().SetActive(true);
+        if (GameManager.Instance.IsSpecialEndMatchActive)
+            RevealScreen();
     }
 
     GameObject GetCurrentScreenParent()
@@ -157,16 +174,59 @@ public class UIManager : Singleton<UIManager>
     }
     #endregion
 
+    void RevealScreen()
+    {
+        if (_revealCoroutine != null)
+            StopCoroutine(_revealCoroutine);
+        _revealCoroutine = StartCoroutine(Reveal());
+
+        IEnumerator Reveal()
+        {
+            _revealImage.gameObject.SetActive(true);
+            Color alpha = _revealImage.color;
+            alpha.a = 1f;
+            _revealImage.color = alpha;
+
+            yield return new WaitForSecondsRealtime(_revealDelay);
+
+            float t = 0;
+            while (_revealImage.color.a > 0f)
+            {
+                float a = Mathf.Lerp(1f, 0f, t);
+                if (a < 1f)
+                {
+                    alpha.a = a;
+                    _revealImage.color = alpha;
+                }
+                t += Time.unscaledDeltaTime * _revealSpeed;
+                yield return null;
+            }
+            _revealImage.gameObject.SetActive(false);
+            _revealEndBroadcaster.Invoke();
+        }
+    }
+
+    #region Hide & Show
     void HideAbilitiesList()
     {
         _abilityItemsListParent.gameObject.SetActive(false);
     }
-
     void ShowAbilitiesList()
     {
         _abilityItemsListParent.gameObject.SetActive(true);
     }
+    
+    void ShowSpecialEndHiddenElements()
+    {
+        if (!_matchEndSpecialUIParent.activeSelf)
+            return;
+        _matchEndSpecialButton.gameObject.SetActive(true);
 
+        _matchEndSpecialProfitText.gameObject.SetActive(true);
+        _matchEndSpecialProfitText.text = GetResultingProfitText();
+        _matchEndSpecialProfitText.color = ColorsManager.Instance.Affordable;
+    }
+    #endregion
     void LoadPlayersStatsList()
     {
         TeamsManager teamsManager = TeamsManager.Instance;
@@ -213,6 +273,7 @@ public class UIManager : Singleton<UIManager>
             UpdateWin();
         else
             UpdateLoss();
+        _resultingProfitText.text = GetResultingProfitText();
 
         void SetTextsColors(Color color)
         {
@@ -223,19 +284,28 @@ public class UIManager : Singleton<UIManager>
         {
             SetTextsColors(ColorsManager.Instance.Affordable);
             _resultText.text = "WIN";
-            float winScale =  gameManager.PlayerTeam_TEAM_TAG == TagsManager.TeamTag.Runner ? gameManager.RunnersProfitPercentage : gameManager.CatchersProfitPercentage;
-            winScale /= 100;
-            Debug.Log("win : " + winScale);
-            _resultingProfitText.text = "+" + (int)(gameManager.Wager * winScale) + "$";
         }
         void UpdateLoss()
         {
             SetTextsColors(ColorsManager.Instance.Unaffordable);
             _resultText.text = "LOSS";
+        }
+    }
+
+    String GetResultingProfitText()
+    {
+        GameManager gameManager = GameManager.Instance;
+        if (GameManager.Instance.MatchWinner == GameManager.Instance.PlayerTeam_TEAM_TAG)
+        {
+            float winScale =  gameManager.PlayerTeam_TEAM_TAG == TagsManager.TeamTag.Runner ? gameManager.RunnersProfitPercentage : gameManager.CatchersProfitPercentage;
+            winScale /= 100;
+            return "+" + (int)(gameManager.Wager * winScale) + "$";
+        }
+        else
+        {
             float lossScale =  gameManager.PlayerTeam_TEAM_TAG == TagsManager.TeamTag.Runner ? gameManager.RunnersLossPercentage : gameManager.CatchersLossPercentage; 
             lossScale /= 100;
-            Debug.Log("loss: " + lossScale);
-            _resultingProfitText.text = (int)(gameManager.Wager * lossScale) + "$";
+            return (int)(gameManager.Wager * lossScale) + "$";
         }
     }
     

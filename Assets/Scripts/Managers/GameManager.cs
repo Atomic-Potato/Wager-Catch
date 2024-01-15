@@ -119,6 +119,9 @@ public class GameManager : Singleton<GameManager>
 
     int _profit;
     public int Profit => _profit;
+
+    bool _isSpecialEndMatchActive;
+    public bool IsSpecialEndMatchActive => _isSpecialEndMatchActive;
     #endregion
 
     new void Awake()
@@ -153,6 +156,11 @@ public class GameManager : Singleton<GameManager>
 
         if (CurrentGameState == GameState.InGame)
             UpdateGameTimer();
+    }
+
+    public void ActivateSpecialEnd()
+    {
+        _isSpecialEndMatchActive = true;
     }
 
     public static void StartNewMatch()
@@ -240,15 +248,21 @@ public class GameManager : Singleton<GameManager>
 
     void UpdateMatchWinnerUsingTeamCount()
     {
-        int runnersCount = TeamsManager.Instance.RunnersCount; 
-        int catchersCount = TeamsManager.Instance.CatchersCount;
+        if (_isSpecialEndMatchActive)
+            _matchWinner = _playerTeam;
+        else
+        {
+            int runnersCount = TeamsManager.Instance.RunnersCount; 
+            int catchersCount = TeamsManager.Instance.CatchersCount;
 
-        if (runnersCount == 0 && catchersCount == 0)
-            _matchWinner = TagsManager.TeamTag.NuteralPlayer;
-        else if (catchersCount == 0)
-            _matchWinner = TagsManager.TeamTag.Runner;
-        else if (runnersCount == 0)
-            _matchWinner = TagsManager.TeamTag.Catcher;
+            if (runnersCount == 0 && catchersCount == 0)
+                _matchWinner = TagsManager.TeamTag.NuteralPlayer;
+            else if (catchersCount == 0)
+                _matchWinner = TagsManager.TeamTag.Runner;
+            else if (runnersCount == 0)
+                _matchWinner = TagsManager.TeamTag.Catcher;
+        }
+
         
         if (_matchWinner != TagsManager.TeamTag.None)
                 EndMatch();
@@ -265,8 +279,9 @@ public class GameManager : Singleton<GameManager>
             AddWinningsToBalance();
         else
             AddRemainingWagedMoney();
-        
-        SetGameState(GameState.MatchEnd);
+
+        GameState endState = _isSpecialEndMatchActive ? GameState.MatchEndSpecial : GameState.MatchEnd;         
+        SetGameState(endState);
 
         void AddWinningsToBalance()
         {
