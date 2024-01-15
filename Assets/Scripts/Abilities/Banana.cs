@@ -70,7 +70,7 @@ namespace Ability
                 return;
 
             if (collider.gameObject.tag == TagsManager.Tag.Guard.ToString() 
-                || collider.gameObject.tag == GameManager.Instance.PlayerTeam.ToString())
+                || collider.gameObject.tag == GameManager.Instance.PlayerTeam_TAG.ToString())
                 return;
                 
             if (1 << collider.gameObject.layer == _teamPlayerLayerMask)

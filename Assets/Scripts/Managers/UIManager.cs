@@ -33,6 +33,16 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] RectTransform _abilityItemsListParent;
     [SerializeField] TMP_Text _yourTeamText;
 
+    [Space, Header("Match End UI")]
+    [Space, SerializeField] GameObject _matchEndUIParent;
+    [SerializeField] Button _matchEndButton;
+    [SerializeField] TMP_Text _resultText;
+    [SerializeField] TMP_Text _resultingProfitText;
+
+    [Space, Header("Match End Special UI")]
+    [Space, SerializeField] GameObject _matchEndSpecialUIParent;
+    [SerializeField] Button _matchEndSpecialButton;
+
     [Space, Header("Other")]
     [SerializeField] UI _defaultScreen;
 
@@ -40,6 +50,8 @@ public class UIManager : Singleton<UIManager>
     {
         TeamSelection,
         InGame,
+        GameEnd,
+        GameEndSpecial,
     }
 
     UI _currentScreen;
@@ -59,6 +71,8 @@ public class UIManager : Singleton<UIManager>
         GameManager.Instance.PlayerDespawnBroadcaster.AddListener(ShowAbilitiesList);
         _runnersBetButton.onClick.AddListener(GameManager.Instance.BetOnRunners);
         _catchersBetButton.onClick.AddListener(GameManager.Instance.BetOnCatchers);
+        _matchEndSpecialButton.onClick.AddListener(GameManager.StartNewMatch);
+        _matchEndButton.onClick.AddListener(GameManager.StartNewMatch);
         UpdateBalanceText();
         LoadAbilityItems();
         LoadPlayersStatsList();
@@ -94,6 +108,9 @@ public class UIManager : Singleton<UIManager>
                 UpdatePlayerTeamText();
                 UpdateBalanceText();
                 break;
+            case UI.GameEnd:
+                UpdateEndScreenText();
+                break;
         }
     }
 
@@ -115,6 +132,10 @@ public class UIManager : Singleton<UIManager>
                 return _teamSelectionUIParent;
             case UI.InGame:
                 return _inGameUIParent;
+            case UI.GameEnd:
+                return _matchEndUIParent;
+            case UI.GameEndSpecial:
+                return _matchEndSpecialUIParent;
             default:
                 return null;
         }
@@ -146,12 +167,6 @@ public class UIManager : Singleton<UIManager>
         _abilityItemsListParent.gameObject.SetActive(true);
     }
 
-    void UpdatePlayerTeamText()
-    {
-        _yourTeamText.color = GameManager.Instance.PlayerTeamColor;
-        _yourTeamText.text = GameManager.Instance.PlayerTeam.ToString();
-    }
-
     void LoadPlayersStatsList()
     {
         TeamsManager teamsManager = TeamsManager.Instance;
@@ -163,7 +178,6 @@ public class UIManager : Singleton<UIManager>
             foreach (RunnerStats runnerStats in teamsManager.GetRunnersStatsList())
             {
                 RunnerStatsDisplay runnerDisplayItem = Instantiate(_runnerStatsDisplayPrefab, _runnersList);
-                Debug.Log(runnerStats.Speed + "\n" + runnerStats.SpeedBounds.x);
                 runnerDisplayItem.SetSpeedValue(((runnerStats.Speed - runnerStats.SpeedBounds.x) / (runnerStats.SpeedBounds.y - runnerStats.SpeedBounds.x)) * 100f);
                 runnerDisplayItem.SetStaminaValue(((runnerStats.Stamina - runnerStats.StaminaBounds.x) / (runnerStats.StaminaBounds.y - runnerStats.StaminaBounds.x)) * 100f);
             }
@@ -179,7 +193,52 @@ public class UIManager : Singleton<UIManager>
             }
         }
     }
+    void LoadAbilityItems()
+    {
+        foreach (AbilityItem item in AbilitiesManager.Instance.AbilityItems)
+            Instantiate(item.gameObject, _abilityItemsListParent);
+    }
 
+    #region UI Updates
+    void UpdatePlayerTeamText()
+    {
+        _yourTeamText.color = GameManager.Instance.PlayerTeamColor;
+        _yourTeamText.text = GameManager.Instance.PlayerTeam_TAG.ToString();
+    }
+
+    void UpdateEndScreenText()
+    {
+        GameManager gameManager = GameManager.Instance;
+        if (GameManager.Instance.MatchWinner == GameManager.Instance.PlayerTeam_TEAM_TAG)
+            UpdateWin();
+        else
+            UpdateLoss();
+
+        void SetTextsColors(Color color)
+        {
+            _resultText.color = color;
+            _resultingProfitText.color = color;
+        }
+        void UpdateWin()
+        {
+            SetTextsColors(ColorsManager.Instance.Affordable);
+            _resultText.text = "WIN";
+            float winScale =  gameManager.PlayerTeam_TEAM_TAG == TagsManager.TeamTag.Runner ? gameManager.RunnersProfitPercentage : gameManager.CatchersProfitPercentage;
+            winScale /= 100;
+            Debug.Log("win : " + winScale);
+            _resultingProfitText.text = "+" + (int)(gameManager.Wager * winScale) + "$";
+        }
+        void UpdateLoss()
+        {
+            SetTextsColors(ColorsManager.Instance.Unaffordable);
+            _resultText.text = "LOSS";
+            float lossScale =  gameManager.PlayerTeam_TEAM_TAG == TagsManager.TeamTag.Runner ? gameManager.RunnersLossPercentage : gameManager.CatchersLossPercentage; 
+            lossScale /= 100;
+            Debug.Log("loss: " + lossScale);
+            _resultingProfitText.text = (int)(gameManager.Wager * lossScale) + "$";
+        }
+    }
+    
     void UpdateGameTimer()
     {
         TimeSpan timeSpan = TimeSpan.FromSeconds(GameManager.Instance.MatchTimeLeftInSeconds);
@@ -197,12 +256,6 @@ public class UIManager : Singleton<UIManager>
             
     }
 
-    void LoadAbilityItems()
-    {
-        foreach (AbilityItem item in AbilitiesManager.Instance.AbilityItems)
-            Instantiate(item.gameObject, _abilityItemsListParent);
-    }
-
     void UpdateBalanceText()
     {
         int balance = GameManager.Instance.Balance;
@@ -216,9 +269,10 @@ public class UIManager : Singleton<UIManager>
         GameManager gameManager = GameManager.Instance;
         _teamSelectionUIBalanceText.text = "Balance:\n" + ConvertIntToShortMoney(gameManager.Balance);
         _wagerText.text = "Wager:\n0% 0$";
-        _runnersWinText.text = "WIN: " + gameManager.RunnersProfitPercentage + "%";
+        _runnersWinText.text = "WIN: +" + gameManager.RunnersProfitPercentage + "%";
         _runnersLossText.text = "LOSS: " + gameManager.RunnersLossPercentage + "%";
-        _catchersWinText.text = "WIN: " + gameManager.CatchersProfitPercentage + "%";
+        _catchersWinText.text = "WIN: +" + gameManager.CatchersProfitPercentage + "%";
         _catchersLossText.text = "LOSS: " + gameManager.CatchersLossPercentage + "%";
     }
+    #endregion
 }

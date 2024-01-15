@@ -7,7 +7,7 @@ namespace Ability
         {
             base.Spawn();
 
-            switch(GameManager.Instance.PlayerTeam)
+            switch(GameManager.Instance.PlayerTeam_TAG)
             {
                 case TagsManager.Tag.Runner:
                     TeamsManager.Instance.AddRunner(transform.position);

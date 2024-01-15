@@ -14,7 +14,7 @@ public class DynamicIcon : MonoBehaviour
     void Start()
     {
         Sprite icon; 
-        TagsManager.Tag team = _isUseOppositeTeamIcon ? GameManager.Instance.OppositeTeam : GameManager.Instance.PlayerTeam;
+        TagsManager.Tag team = _isUseOppositeTeamIcon ? GameManager.Instance.OppositeTeam : GameManager.Instance.PlayerTeam_TAG;
         switch (team)
         {
             case TagsManager.Tag.Catcher:

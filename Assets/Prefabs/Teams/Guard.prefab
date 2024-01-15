@@ -81,7 +81,6 @@ MonoBehaviour:
   Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
-  enable_dat: 1
   _distanceToCatchTarget: 1
   _caughtObjectHoldingPosition: {fileID: 3629998371522151062}
   CurrentState: 0
@@ -610,7 +609,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1.1458334}
+  m_Size: {x: 1, y: 1.125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

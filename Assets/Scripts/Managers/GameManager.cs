@@ -27,7 +27,7 @@ public class GameManager : Singleton<GameManager>
     {
         get
         {
-            switch (PlayerTeam)
+            switch (PlayerTeam_TAG)
             {
                 case TagsManager.Tag.Runner:
                     return RunnersColor;
@@ -40,7 +40,8 @@ public class GameManager : Singleton<GameManager>
     }
 
     TagsManager.TeamTag _playerTeam = TagsManager.TeamTag.NuteralPlayer;
-    public TagsManager.Tag PlayerTeam => TagsManager.ConvertTeamTagToTag(_playerTeam);
+    public TagsManager.Tag PlayerTeam_TAG => TagsManager.ConvertTeamTagToTag(_playerTeam);
+    public TagsManager.TeamTag PlayerTeam_TEAM_TAG => _playerTeam;
     
     Player _playerInstance;
     [HideInInspector] public Player PlayerInstance => _playerInstance;
@@ -49,7 +50,7 @@ public class GameManager : Singleton<GameManager>
     {
         get
         {
-            switch (PlayerTeam)
+            switch (PlayerTeam_TAG)
             {
                 case TagsManager.Tag.Runner:
                     return TagsManager.Tag.Catcher;
@@ -88,6 +89,8 @@ public class GameManager : Singleton<GameManager>
     {
         InTeamSelection,
         InGame,
+        MatchEnd,
+        MatchEndSpecial,
     }
 
     MatchState _currentMatchState = MatchState.Paused;
@@ -152,6 +155,12 @@ public class GameManager : Singleton<GameManager>
             UpdateGameTimer();
     }
 
+    public static void StartNewMatch()
+    {
+        DataSavingManager.Save();
+        SceneManager.LoadScene("SampleScene");
+    }
+
     public void SetPlayerInstance(Player player)
     {
         _playerInstance  = player;
@@ -170,8 +179,6 @@ public class GameManager : Singleton<GameManager>
         _profit -= amount;
         if (_balance < 0)
             _balance = 0;
-        if (_profit < 0)
-            _profit = 0;
         BalanceChangeBroadcaster.Invoke();
     }
 
@@ -187,6 +194,14 @@ public class GameManager : Singleton<GameManager>
             case GameState.InGame:
                 StartMatch();
                 UIManager.Instance.SetScreen(UIManager.UI.InGame);
+                break;
+            case GameState.MatchEnd:
+                Time.timeScale = 0f;
+                UIManager.Instance.SetScreen(UIManager.UI.GameEnd);
+                break;
+            case GameState.MatchEndSpecial:
+                Time.timeScale = 0f;
+                UIManager.Instance.SetScreen(UIManager.UI.GameEndSpecial);
                 break;
         }
     }
@@ -250,26 +265,25 @@ public class GameManager : Singleton<GameManager>
             AddWinningsToBalance();
         else
             AddRemainingWagedMoney();
-        DataSavingManager.Save();
-        SceneManager.LoadScene("SampleScene");
+        
+        SetGameState(GameState.MatchEnd);
 
         void AddWinningsToBalance()
         {
             int winnings = _wager;
             if (_matchWinner == TagsManager.TeamTag.Runner)
-                winnings = (int)(winnings * _runnersBetProfitScale);
+                winnings = (int)(winnings + winnings * _runnersBetProfitScale);
             else if(_matchWinner == TagsManager.TeamTag.Catcher)
-                winnings = (int)(winnings * _catchersBetProfitScale);
+                winnings = (int)(winnings + winnings * _catchersBetProfitScale);
             _balance += winnings;
         }
-
         void AddRemainingWagedMoney()
         {
             int remaining = _wager;
             if (_matchWinner == TagsManager.TeamTag.Runner)
-                remaining = (int)(remaining + remaining * _catchersBetLossScale);
+                remaining = (int)(remaining * _catchersBetLossScale);
             else if(_matchWinner == TagsManager.TeamTag.Catcher)
-                remaining = (int)(remaining + remaining * _runnersBetLossScale);
+                remaining = (int)(remaining * _runnersBetLossScale);
             _balance += remaining;
         }
     }
@@ -283,7 +297,7 @@ public class GameManager : Singleton<GameManager>
         _balance -= _wager;
 
         
-        _profit = (int)((float)_wager - (float)_wager * GetProfitScale());
+        _profit = (int)(_wager * GetProfitScale());
 
         if (_matchStartTime == null)
             _matchStartTime = Time.time;
@@ -295,9 +309,9 @@ public class GameManager : Singleton<GameManager>
                 case TagsManager.TeamTag.Runner:
                     return _runnersBetProfitScale;
                 case TagsManager.TeamTag.Catcher:
-                    return -_catchersBetProfitScale;
+                    return _catchersBetProfitScale;
                 default:
-                    return 1f;
+                    return 0f;
             }
         }
     }
