@@ -12,6 +12,8 @@ public class GameManager : Singleton<GameManager>
     [SerializeField, Min(0f)] int _minBalance = 150;
     int _balance = 150;
     public int Balance => _balance;
+    [SerializeField, Min(0f)] int _winningBonus = 50;
+    public int WinningBonus => _winningBonus;
 
     [Space, Header("BETTING")]
     [SerializeField, Min(0)] float MaxProfitMultiplier = 5; 
@@ -124,6 +126,7 @@ public class GameManager : Singleton<GameManager>
     public bool IsSpecialEndMatchActive => _isSpecialEndMatchActive;
     #endregion
 
+    #region Execution
     new void Awake()
     {
         base.Awake();
@@ -157,6 +160,7 @@ public class GameManager : Singleton<GameManager>
         if (CurrentGameState == GameState.InGame)
             UpdateGameTimer();
     }
+    #endregion
 
     public void ActivateSpecialEnd()
     {
@@ -290,6 +294,7 @@ public class GameManager : Singleton<GameManager>
                 winnings = (int)(winnings + winnings * _runnersBetProfitScale);
             else if(_matchWinner == TagsManager.TeamTag.Catcher)
                 winnings = (int)(winnings + winnings * _catchersBetProfitScale);
+            winnings += _winningBonus;
             _balance += winnings;
         }
         void AddRemainingWagedMoney()

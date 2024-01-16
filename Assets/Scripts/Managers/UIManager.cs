@@ -43,6 +43,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] Button _matchEndButton;
     [SerializeField] TMP_Text _resultText;
     [SerializeField] TMP_Text _resultingProfitText;
+    [SerializeField] TMP_Text _winningBonusText;
 
     [Space, Header("Match End Special UI")]
     [Space, SerializeField] GameObject _matchEndSpecialUIParent;
@@ -313,16 +314,19 @@ public class UIManager : Singleton<UIManager>
         {
             _resultText.color = color;
             _resultingProfitText.color = color;
+            _winningBonusText.color = color;
         }
         void UpdateWin()
         {
             SetTextsColors(ColorsManager.Instance.Affordable);
             _resultText.text = "WIN";
+            _winningBonusText.text = "bonus: +" + gameManager.WinningBonus + "$"; 
         }
         void UpdateLoss()
         {
             SetTextsColors(ColorsManager.Instance.Unaffordable);
             _resultText.text = "LOSS";
+            _winningBonusText.text = "";
         }
     }
 

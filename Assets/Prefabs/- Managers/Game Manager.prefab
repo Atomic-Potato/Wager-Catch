@@ -43,12 +43,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a96fb08dc2fda94f9687fdb655f9a90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingGameState: 1
+  _startingGameState: 0
+  _minBalance: 0
+  _winningBonus: 50
+  MaxProfitMultiplier: 2
+  _runnersColor: {r: 0, g: 1, b: 1, a: 1}
+  _catchersColor: {r: 1, g: 0.6894004, b: 0, a: 1}
+  _nuteralColor: {r: 1, g: 1, b: 1, a: 1}
   _matchLengthInSeconds: 85
+  _playerSpawnPoint: {fileID: 0}
+  _playerEntryPoint: {fileID: 0}
+  _explosionLayers:
+    serializedVersion: 2
+    m_Bits: 4608
   MatchTimeBroadcaster:
     m_PersistentCalls:
       m_Calls: []
   MatchEndBroadcaster:
     m_PersistentCalls:
       m_Calls: []
-  CurrentGameState: 0
+  PlayerSpawnBroadcaster:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayerDespawnBroadcaster:
+    m_PersistentCalls:
+      m_Calls: []
