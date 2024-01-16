@@ -33,6 +33,7 @@ public class Doorway : MonoBehaviour
     {
         _canvas.worldCamera = Camera.main;
         _obstacle.SetActive(false);
+        _priceText.text = _price + "$";
     }
     
     void OnMouseOver()
