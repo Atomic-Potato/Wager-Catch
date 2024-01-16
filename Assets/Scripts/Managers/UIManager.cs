@@ -52,6 +52,10 @@ public class UIManager : Singleton<UIManager>
     [SerializeField, Min(.1f)] float _revealSpeed;
     [SerializeField, Min(0f)] float _revealDelay;
 
+    [Space, Header("Controls")]
+    [SerializeField] GameObject _abilityControls;
+    [SerializeField] GameObject _playerControls;
+
     [Space, Header("Other")]
     [SerializeField] UI _defaultScreen;
 
@@ -82,9 +86,13 @@ public class UIManager : Singleton<UIManager>
     {
         GameManager.Instance.BalanceChangeBroadcaster.AddListener(UpdateBalanceText);
         GameManager.Instance.MatchTimeBroadcaster.AddListener(UpdateGameTimer);
+        GameManager.Instance.PlayerSpawnBroadcaster.AddListener(ShowControls);
         GameManager.Instance.PlayerDespawnBroadcaster.AddListener(ShowAbilitiesList);
+        GameManager.Instance.PlayerDespawnBroadcaster.AddListener(HideControls);
         AbilitiesManager.Instance.AddAbilitySelectionBroadCasterListener(HideAbilitiesList);
+        AbilitiesManager.Instance.AddAbilitySelectionBroadCasterListener(ShowControls);
         AbilitiesManager.Instance.AddAbilityRemovedBroadcasterListener(ShowAbilitiesList);
+        AbilitiesManager.Instance.AddAbilityRemovedBroadcasterListener(HideControls);
         _runnersBetButton.onClick.AddListener(GameManager.Instance.BetOnRunners);
         _catchersBetButton.onClick.AddListener(GameManager.Instance.BetOnCatchers);
         _matchEndSpecialButton.onClick.AddListener(GameManager.StartNewMatch);
@@ -208,6 +216,22 @@ public class UIManager : Singleton<UIManager>
     }
 
     #region Hide & Show
+    void ShowControls()
+    {
+        if (GameManager.Instance.PlayerInstance != null)
+        {
+            _playerControls.SetActive(true);
+            return;
+        }
+        _abilityControls.SetActive(true);
+    }
+
+    void HideControls()
+    {
+        if (GameManager.Instance.PlayerInstance == null)
+            _playerControls.SetActive(false);
+        _abilityControls.SetActive(false);
+    }
     void HideAbilitiesList()
     {
         _abilityItemsListParent.gameObject.SetActive(false);
