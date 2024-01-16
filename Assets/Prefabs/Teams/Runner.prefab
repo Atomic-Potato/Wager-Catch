@@ -213,11 +213,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa258684ab173fe42a050ea2dce327cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedRange: {x: 1.25, y: 1.85}
+  _speedRange: {x: 1.5, y: 2.75}
   _isCanSprint: 1
-  _sprintSpeedMultiplier: 2.5
+  _sprintSpeedMultiplier: 2
   _sprintDurationRange: {x: 0.85, y: 2}
-  _sprintRecoveryMultiplier: 1.25
+  _sprintRecoveryMultiplier: 0.75
   _impulseForce: 75
   _impulsedSpeed: 1
   _impulseInitialForceDropOff: 0.15
@@ -239,14 +239,14 @@ MonoBehaviour:
     type: 3}
   _isDrawCollisionCheckSize: 0
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
-  isDrawPath: 1
+  isDrawPath: 0
   pathColor: {r: 0, g: 0, b: 1, a: 0.5}
   isRandomPathColor: 0
   _isDrawDeathExplosionRadius: 0
   Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
-  randomTimeRangeToStartRunning: {x: 2, y: 2}
+  randomTimeRangeToStartRunning: {x: 0.5, y: 2}
   _catcherDetectionRange: 3
   _panikMarker: {fileID: 4208278969376603684}
   _debuggingText: {fileID: 3873671919276986417}

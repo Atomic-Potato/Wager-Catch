@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0406e5ae007941042a07bea6c7881639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedRange: {x: 1, y: 1.75}
+  _speedRange: {x: 2, y: 3}
   _isCanSprint: 0
   _sprintSpeedMultiplier: 1.75
   _sprintDurationRange: {x: 0.5, y: 4}
@@ -340,16 +340,16 @@ MonoBehaviour:
     m_Bits: 2048
   _deathEffect: {fileID: 2983881910522846901, guid: 4b237c93686724944b61e18535936aa0,
     type: 3}
-  _isDrawCollisionCheckSize: 1
+  _isDrawCollisionCheckSize: 0
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
-  isDrawPath: 1
+  isDrawPath: 0
   pathColor: {r: 1, g: 0, b: 0.0264287, a: 0.5}
   isRandomPathColor: 0
-  _isDrawDeathExplosionRadius: 1
+  _isDrawDeathExplosionRadius: 0
   Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
-  _timeToCatch: 0.75
+  _timeToCatch: 1.5
   _timeToRecoverCatch: 1
   _catchAreaRadiusRange: {x: 0.5, y: 1}
   _catchAreaOrigin: {fileID: 8101666772180373965}

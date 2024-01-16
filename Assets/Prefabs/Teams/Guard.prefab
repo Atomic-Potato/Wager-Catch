@@ -74,10 +74,10 @@ MonoBehaviour:
   _deathEffect: {fileID: 0}
   _isDrawCollisionCheckSize: 0
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
-  isDrawPath: 1
+  isDrawPath: 0
   pathColor: {r: 0, g: 0, b: 1, a: 0.5}
-  isRandomPathColor: 1
-  _isDrawDeathExplosionRadius: 1
+  isRandomPathColor: 0
+  _isDrawDeathExplosionRadius: 0
   Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
