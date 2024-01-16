@@ -28,7 +28,7 @@ namespace Ability
         [SerializeField] GameObject _iconInactive;
         
         int _usesLeft;
-    
+
         public int NumberOfUses => _numberOfUses; 
         public AbilityBase Ability  => _abilityPrefab.GetComponent<AbilityBase>();
         public UnityEngine.GameObject Prefab => _abilityPrefab;
@@ -37,7 +37,7 @@ namespace Ability
         public bool IsCanBeConsumed => (IsUnlimited || _usesLeft > 0) && _cost <= GameManager.Instance.Balance;
         #endregion
 
-        void OnEnable()
+        void Awake()
         {
             _usesLeft = _numberOfUses;
             Ability.Item = this;
@@ -70,7 +70,7 @@ namespace Ability
         /// <returns>If the ability was activated</returns>
         public bool Consume()
         {
-            if (_numberOfUses <= 0 && !IsUnlimited)
+            if (_usesLeft <= 0 && !IsUnlimited)
                 return false;
 
             bool isActived = ActivateAbility();

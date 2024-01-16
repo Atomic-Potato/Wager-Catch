@@ -83,7 +83,6 @@ namespace Ability
         void SpawnSpecialAbility()
         {
             float res = UnityEngine.Random.Range(0f, 1f);
-            Debug.Log(res);
             if (res <= _specialAbilitySpawnChance)
                 UIManager.Instance.ShowSpecialAbility();
         }
