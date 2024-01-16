@@ -25,6 +25,8 @@ public class Guard : TeamPlayer
         _manger = manager;
         PathRequestManager = pathRequestManager;
         Grid = grid;
+
+        _spawnPoint.position = Grid.GetNodeFromWorldPosition((Vector2)_spawnPoint.position).WorldPosition;
     }
 
     new void Update()
@@ -53,8 +55,6 @@ public class Guard : TeamPlayer
                 ReturnToSpawn();
             }
         }
-
-        // Debug.Log("State : " + CurrentState.ToString() + " | sleeping : " + IsSleeping + "\nTarget " + _target);
 
         if (CurrentState == State.Catching && GetDistanceToTarget() < 0.1f)
         {
@@ -92,6 +92,8 @@ public class Guard : TeamPlayer
 
     float GetDistanceToTarget()
     {
+        if (_target == null)
+            return 0f;
         return Vector2.Distance(transform.position, (Vector2)_target);
     }
 

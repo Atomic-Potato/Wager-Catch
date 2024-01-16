@@ -1164,7 +1164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldSize: {x: 20, y: 20}
+  worldSize: {x: 33, y: 27.2}
   nodeRadius: 0.15
   unwalkableMask:
     serializedVersion: 2
@@ -1172,7 +1172,7 @@ MonoBehaviour:
   safeAreaMask:
     serializedVersion: 2
     m_Bits: 1024
-  isDisplayGrid: 0
+  isDisplayGrid: 1
   gridColor: {r: 1, g: 1, b: 1, a: 0.5}
   walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
   unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
@@ -14934,7 +14934,7 @@ PrefabInstance:
     - target: {fileID: 5583167157789338412, guid: a3fe4a2d1f51b8a4fa98ac0c716f41e9,
         type: 3}
       propertyPath: _guardsToCache
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5583167157789338412, guid: a3fe4a2d1f51b8a4fa98ac0c716f41e9,
         type: 3}

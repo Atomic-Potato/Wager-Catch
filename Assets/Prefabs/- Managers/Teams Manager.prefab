@@ -43,22 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca1a17787bf364418af69126bdd6a89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _catcherPrefab: {fileID: 4207024369822522638, guid: 3b11a36722f65fd4483e54181376fb54,
-    type: 3}
-  _runnerPrefab: {fileID: 4207024369822522638, guid: 1916b85894298234eb8abb6811a7ea52,
-    type: 3}
+  _catcherPrefab: {fileID: 0}
+  _runnerPrefab: {fileID: 0}
   playersGrid: {fileID: 0}
   pathRequestManager: {fileID: 0}
   catchersParent: {fileID: 0}
   runnersParent: {fileID: 0}
-  catchersSpawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  runnersCount: 1
-  _catchers: []
-  _runners: []
+  _runnersCount: 4
+  _catchersCount: 2
+  _catchersSpawnPoints: []
   RunnersNotInSafeArea: []
-  TeamsCountBroadcaster:
-    m_PersistentCalls:
-      m_Calls: []
