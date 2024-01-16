@@ -82,8 +82,9 @@ public class UIManager : Singleton<UIManager>
     {
         GameManager.Instance.BalanceChangeBroadcaster.AddListener(UpdateBalanceText);
         GameManager.Instance.MatchTimeBroadcaster.AddListener(UpdateGameTimer);
-        GameManager.Instance.PlayerSpawnBroadcaster.AddListener(HideAbilitiesList);
         GameManager.Instance.PlayerDespawnBroadcaster.AddListener(ShowAbilitiesList);
+        AbilitiesManager.Instance.AddAbilitySelectionBroadCasterListener(HideAbilitiesList);
+        AbilitiesManager.Instance.AddAbilityRemovedBroadcasterListener(ShowAbilitiesList);
         _runnersBetButton.onClick.AddListener(GameManager.Instance.BetOnRunners);
         _catchersBetButton.onClick.AddListener(GameManager.Instance.BetOnCatchers);
         _matchEndSpecialButton.onClick.AddListener(GameManager.StartNewMatch);
@@ -213,6 +214,8 @@ public class UIManager : Singleton<UIManager>
     }
     void ShowAbilitiesList()
     {
+        if (GameManager.Instance.PlayerInstance != null)
+            return;
         _abilityItemsListParent.gameObject.SetActive(true);
     }
     
@@ -269,7 +272,7 @@ public class UIManager : Singleton<UIManager>
     void UpdateEndScreenText()
     {
         GameManager gameManager = GameManager.Instance;
-        if (GameManager.Instance.MatchWinner == GameManager.Instance.PlayerTeam_TEAM_TAG)
+        if (gameManager.MatchWinner == gameManager.PlayerTeam_TEAM_TAG)
             UpdateWin();
         else
             UpdateLoss();

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Ability
 {
@@ -9,34 +10,71 @@ namespace Ability
         [SerializeField] List<AbilityItem> _abilityItems = new List<AbilityItem>();
         public List<AbilityItem> AbilityItems => _abilityItems;
         
-        [HideInInspector] public AbilityItem SelectedAbilityItem;
+        AbilityItem _selectedAbilityItem;
+        UnityEvent _abilitySelectionBroadcaster;
+        UnityEvent _abilityRemovedBroadcaster;
 
+        #region Execution
         new void Awake()
         {
             base.Awake();
             _abilityItems = _abilityItems.OrderBy(item => item.Cost).ToList();
+            _abilitySelectionBroadcaster = new UnityEvent();
+            _abilityRemovedBroadcaster = new UnityEvent();
         }
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0) && SelectedAbilityItem != null)
+            if (_selectedAbilityItem != null)
             {
-                if (SelectedAbilityItem.IsCanBeConsumed)
+                if (Input.GetMouseButtonDown(1))
                 {
-                    bool isConsumed = SelectedAbilityItem.Consume();
-                    if (isConsumed)
+                    RemoveAbilitySelection();
+                }
+                else 
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (_selectedAbilityItem.IsCanBeConsumed)
                     {
-                        GameManager.Instance.DeductBalance(SelectedAbilityItem.Cost);
-                        RemoveAbilitySelection();
+                        bool isConsumed = _selectedAbilityItem.Consume();
+                        if (isConsumed)
+                        {
+                            GameManager.Instance.DeductBalance(_selectedAbilityItem.Cost);
+                            RemoveAbilitySelection();
+                        }
                     }
                 }
             }
         }
+        #endregion
+
+        public void AddAbilitySelectionBroadCasterListener(UnityAction call)
+        {
+            if (call == null)
+                return;
+            _abilitySelectionBroadcaster.AddListener(call);
+        }
+
+        public void AddAbilityRemovedBroadcasterListener(UnityAction call)
+        {
+            if (call == null)
+                return;
+            _abilityRemovedBroadcaster.AddListener(call);
+        }
+
+        public void SelectAbilityItem(AbilityItem abilityItem)
+        {
+            if (abilityItem == null)
+                return;
+            _selectedAbilityItem = abilityItem;
+            _abilitySelectionBroadcaster.Invoke();
+        }
 
         void RemoveAbilitySelection()
         {
-            SelectedAbilityItem = null;
+            _selectedAbilityItem = null;
             GridPlacementManager.Instance.RemovePreviewSprite();
+            _abilityRemovedBroadcaster.Invoke();
         }
     }
 
