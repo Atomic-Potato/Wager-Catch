@@ -7,6 +7,8 @@ namespace Ability
 {
     public class AbilitiesManager : Singleton<AbilitiesManager>
     {
+        [SerializeField, Range(0,1)] float _specialAbilitySpawnChance = .1f;
+
         [SerializeField] List<AbilityItem> _abilityItems = new List<AbilityItem>();
         public List<AbilityItem> AbilityItems => _abilityItems;
         
@@ -21,6 +23,7 @@ namespace Ability
             _abilityItems = _abilityItems.OrderBy(item => item.Cost).ToList();
             _abilitySelectionBroadcaster = new UnityEvent();
             _abilityRemovedBroadcaster = new UnityEvent();
+            SpawnSpecialAbility();
         }
 
         void Update()
@@ -75,6 +78,14 @@ namespace Ability
             _selectedAbilityItem = null;
             GridPlacementManager.Instance.RemovePreviewSprite();
             _abilityRemovedBroadcaster.Invoke();
+        }
+
+        void SpawnSpecialAbility()
+        {
+            float res = UnityEngine.Random.Range(0f, 1f);
+            Debug.Log(res);
+            if (res <= _specialAbilitySpawnChance)
+                UIManager.Instance.ShowSpecialAbility();
         }
     }
 

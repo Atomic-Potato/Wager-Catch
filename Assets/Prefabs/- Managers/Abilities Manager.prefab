@@ -43,11 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53be39acc04d5b74184e3b21660e3cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _specialAbilitySpawnChance: 0.15
   _abilityItems:
   - {fileID: 3735176727535822906, guid: 6e422014d813eaf43b0f5456121d501a, type: 3}
-  - {fileID: 5667711768867497915, guid: 260966a050c487941be3d46cf9be2d86, type: 3}
+  - {fileID: 6061025060568748334, guid: b69b8049ca8cd3844bdc7621c83db5ce, type: 3}
   - {fileID: 4111119717673382282, guid: 9115a9e779dac1e4bba207c0a741a9c3, type: 3}
   - {fileID: 3211043588585778292, guid: 5fdda41df240a294ab3a482017e5f7a6, type: 3}
   - {fileID: 1837513790136247341, guid: c28cf236c62ba5c4ca7812072ca8489a, type: 3}
-  - {fileID: 6061025060568748334, guid: b69b8049ca8cd3844bdc7621c83db5ce, type: 3}
-  SelectedAbilityItem: {fileID: 0}

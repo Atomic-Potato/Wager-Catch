@@ -16,7 +16,7 @@ public class GameManager : Singleton<GameManager>
     [Space, Header("BETTING")]
     [SerializeField, Min(0)] float MaxProfitMultiplier = 5; 
 
-    [Space]
+    [Space, Header("COLORS")]
     [SerializeField] Color _runnersColor = new Color(0f, 1f, 0f, 1f);
     public Color RunnersColor => _runnersColor;
     [SerializeField] Color _catchersColor = new Color(1f, 0f, 0f, 1f);

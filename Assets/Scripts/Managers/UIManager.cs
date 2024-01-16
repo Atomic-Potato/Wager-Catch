@@ -33,7 +33,9 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] TMP_Text _gameTimerText;
     [SerializeField] TMP_Text _balanceText;
     [SerializeField] TMP_Text _profitText;
+    [SerializeField] GameObject _abilitiesParent;
     [SerializeField] RectTransform _abilityItemsListParent;
+    [SerializeField] GameObject _specialAbility;
     [SerializeField] TMP_Text _yourTeamText;
 
     [Space, Header("Match End UI")]
@@ -216,6 +218,11 @@ public class UIManager : Singleton<UIManager>
     }
 
     #region Hide & Show
+    public void ShowSpecialAbility()
+    {
+        _specialAbility.SetActive(true);
+    }
+
     void ShowControls()
     {
         if (GameManager.Instance.PlayerInstance != null)
@@ -234,13 +241,13 @@ public class UIManager : Singleton<UIManager>
     }
     void HideAbilitiesList()
     {
-        _abilityItemsListParent.gameObject.SetActive(false);
+        _abilitiesParent.gameObject.SetActive(false);
     }
     void ShowAbilitiesList()
     {
         if (GameManager.Instance.PlayerInstance != null)
             return;
-        _abilityItemsListParent.gameObject.SetActive(true);
+        _abilitiesParent.gameObject.SetActive(true);
     }
     
     void ShowSpecialEndHiddenElements()
