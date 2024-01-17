@@ -326,11 +326,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 2
+  _speedRange: {x: 1, y: 5}
   _isCanSprint: 0
   _sprintSpeedMultiplier: 1.75
-  _sprintDuration: 1.75
+  _sprintDurationRange: {x: 0.5, y: 4}
   _sprintRecoveryMultiplier: 2
+  _impulseForce: 1
+  _impulsedSpeed: 1
+  _impulseInitialForceDropOff: 0.2
+  _deathExplosionRadius: 3.5
+  _affectedObjectsLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  _impulseCollider: {fileID: 0}
+  _rigidbody: {fileID: 0}
   _collisionCheckSize: {x: 0, y: 0}
   _collisionCheckOffset: {x: 0, y: 0}
   _collisionLayer:
@@ -339,12 +348,14 @@ MonoBehaviour:
   _slowdownAreaLayer:
     serializedVersion: 2
     m_Bits: 2048
+  _deathEffect: {fileID: 0}
   _isDrawCollisionCheckSize: 0
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
   isDrawPath: 0
   pathColor: {r: 1, g: 1, b: 1, a: 1}
   isRandomPathColor: 0
-  grid: {fileID: 0}
+  _isDrawDeathExplosionRadius: 1
+  Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
 --- !u!61 &1966106172449178397
@@ -455,7 +466,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6797506817921077087}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 1.06, z: 0}
+  m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5374470096601600781}

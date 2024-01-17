@@ -232,7 +232,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &30491002
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,7 +419,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1001 &79862469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10324,7 +10324,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &496427623
 GameObject:
   m_ObjectHideFlags: 0
@@ -10480,7 +10480,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &518494488
 GameObject:
   m_ObjectHideFlags: 0
@@ -14266,7 +14266,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1001 &1096635989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14423,7 +14423,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &1110774996
 GameObject:
   m_ObjectHideFlags: 0
@@ -14505,7 +14505,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &1115775148
 GameObject:
   m_ObjectHideFlags: 0
@@ -14734,7 +14734,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &1203760527
 GameObject:
   m_ObjectHideFlags: 0
@@ -16077,7 +16077,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &1443246805
 GameObject:
   m_ObjectHideFlags: 0
@@ -17252,7 +17252,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &1610335395
 GameObject:
   m_ObjectHideFlags: 0
@@ -18556,7 +18556,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &1920488084
 GameObject:
   m_ObjectHideFlags: 0
@@ -18858,7 +18858,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &1962532569
 GameObject:
   m_ObjectHideFlags: 0
@@ -19844,6 +19844,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 245099426}
     m_Modifications:
+    - target: {fileID: 450287015059330870, guid: 96361c14aa7ef1a43bfb578217fb6ce9,
+        type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 450287015161291140, guid: 96361c14aa7ef1a43bfb578217fb6ce9,
         type: 3}
       propertyPath: m_Name
@@ -19903,6 +19908,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 450287015301113782, guid: 96361c14aa7ef1a43bfb578217fb6ce9,
+        type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 450287016455289366, guid: 96361c14aa7ef1a43bfb578217fb6ce9,
+        type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 450287016534047244, guid: 96361c14aa7ef1a43bfb578217fb6ce9,
+        type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96361c14aa7ef1a43bfb578217fb6ce9, type: 3}
