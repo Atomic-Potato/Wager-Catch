@@ -47,7 +47,7 @@ public class Doorway : MonoBehaviour
             return;
 
         ShowPrice();
-        if (Input.GetMouseButton(0) && !_obstacle.activeSelf)
+        if (Input.GetMouseButton(0) && !_obstacle.activeSelf && GameManager.Instance.Balance <= _price)
             StartCoroutine(ActivateObstacle());
     }
 
