@@ -124,7 +124,7 @@ public class Catcher : TeamPlayer
         EnableCatchingTool();
         yield return new WaitForSeconds(_timeToCatch);
 
-        if (_isTargetWithinCatchRange)
+        if (_isTargetWithinCatchRange && !_isSleeping)
         {
             CatchTarget();
             AddCatchBonusToBalance();
