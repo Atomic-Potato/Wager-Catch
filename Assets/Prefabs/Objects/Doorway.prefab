@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab0c822d6a11c4143bb81afe7a36768c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _price: 6
+  _price: 2
   _activationTime: 2
   _impulseRadius: 0.5
   _impulsedLayers:

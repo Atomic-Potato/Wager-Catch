@@ -12,4 +12,9 @@ public class ColorsManager : Singleton<ColorsManager>
     {
         return price <=  GameManager.Instance.Balance ? Instance.Affordable : Instance.Unaffordable;
     }
+
+    public static Color GetMoneyColor(int amount)
+    {
+        return amount <= 0 ? Instance.Unaffordable : Instance.Affordable;
+    }
 }

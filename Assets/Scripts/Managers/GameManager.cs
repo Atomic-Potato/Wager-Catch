@@ -207,6 +207,7 @@ public class GameManager : Singleton<GameManager>
     public void AddBalance(int amount)
     {
         _balance += amount;
+        _profit += amount;
         BalanceChangeBroadcaster.Invoke();
     }
 

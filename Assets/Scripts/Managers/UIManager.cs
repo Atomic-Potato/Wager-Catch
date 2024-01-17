@@ -369,6 +369,7 @@ public class UIManager : Singleton<UIManager>
         int balance = GameManager.Instance.Balance;
         int profit = GameManager.Instance.Profit;
         _balanceText.text = ConvertIntToShortMoney(balance);
+        _profitText.color = ColorsManager.GetMoneyColor(profit);
         _profitText.text = "PROFIT: " + ConvertIntToShortMoney(profit);
     }
 
