@@ -12,10 +12,16 @@ public class GameManager : Singleton<GameManager>
     [SerializeField, Min(0f)] int _minBalance = 150;
     int _balance = 150;
     public int Balance => _balance;
+    [Space]
     [SerializeField, Min(0f)] int _winningBonus = 12;
     public int WinningBonus => _winningBonus;
     [SerializeField, Min(0f)] int _losingBonus = 6;
     public int LosingBonus => _losingBonus;
+    [Space]
+    [SerializeField] int _catchingBonus = 2;
+    public int CatchingBonus => _catchingBonus;
+    [SerializeField] int _escapingBonus = 1;
+    public int EscapingBonus => _escapingBonus;
 
     [Space, Header("BETTING")]
     [SerializeField, Min(0)] float MaxProfitMultiplier = 5; 
@@ -193,6 +199,12 @@ public class GameManager : Singleton<GameManager>
         _profit -= amount;
         if (_balance < 0)
             _balance = 0;
+        BalanceChangeBroadcaster.Invoke();
+    }
+
+    public void AddBalance(int amount)
+    {
+        _balance += amount;
         BalanceChangeBroadcaster.Invoke();
     }
 

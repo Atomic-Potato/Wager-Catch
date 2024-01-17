@@ -121,17 +121,15 @@ public class Catcher : TeamPlayer
 
     IEnumerator Catch()
     {
-        _catchToolSprite.enabled = true;
-        SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.GunCock, true);
+        EnableCatchingTool();
         yield return new WaitForSeconds(_timeToCatch);
 
         if (_isTargetWithinCatchRange)
         {
-            PlayCatchEffect();
-            _targetRunner.Die();
-            _isCatchingTarget = false;
+            CatchTarget();
+            AddCatchBonusToBalance();
         }
-        _catchToolSprite.enabled = false;
+        DisableCatchingTool();
 
         yield return new WaitForSeconds(_timeToRecoverCatch);
         _catchCoroutine = null;
@@ -146,6 +144,27 @@ public class Catcher : TeamPlayer
             Instantiate(_catchEffect, _catchToolEndPoint.position, rotation);
 
             SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.GunBoom, true);
+        }
+        void CatchTarget()
+        {
+            PlayCatchEffect();
+            _targetRunner.Die();
+            _isCatchingTarget = false;
+        }
+        void AddCatchBonusToBalance()
+        {
+            GameManager gameManager = GameManager.Instance;
+            if (gameManager.PlayerTeam_TEAM_TAG == TagsManager.TeamTag.Catcher)
+                gameManager.AddBalance(gameManager.CatchingBonus);
+        }
+        void EnableCatchingTool()
+        {
+            _catchToolSprite.enabled = true;
+            SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.GunCock, true);
+        }
+        void DisableCatchingTool()
+        {
+            _catchToolSprite.enabled = false;
         }
     }
 
