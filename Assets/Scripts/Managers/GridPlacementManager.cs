@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using Pathfinding;
 using System.Collections.Generic;
-using UnityEditor.U2D.Sprites;
 public class GridPlacementManager : Singleton<GridPlacementManager>
 {
     [SerializeField] Pathfinding.Grid _placementGrid;

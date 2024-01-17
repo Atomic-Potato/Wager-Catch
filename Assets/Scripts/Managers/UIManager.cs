@@ -80,13 +80,13 @@ public class UIManager : Singleton<UIManager>
     new void Awake()
     {
         base.Awake();
-        SetScreen(_defaultScreen);
         _revealEndBroadcaster = new UnityEvent();
         _revealEndBroadcaster.AddListener(ShowSpecialEndHiddenElements);
     }
 
     void Start()
     {
+        SetScreen(_defaultScreen);
         GameManager.Instance.BalanceChangeBroadcaster.AddListener(UpdateBalanceText);
         GameManager.Instance.MatchTimeBroadcaster.AddListener(UpdateGameTimer);
         GameManager.Instance.PlayerSpawnBroadcaster.AddListener(ShowControls);

@@ -65,8 +65,9 @@ namespace Pathfinding
             }
         }
 
-        void Awake()
+        new void Awake()
         {
+            base.Awake();
             _nodeDiameter = nodeRadius * 2f;
             _nodesCountX = Mathf.RoundToInt(worldSize.x/_nodeDiameter);
             _nodesCountY = Mathf.RoundToInt(worldSize.y/_nodeDiameter);

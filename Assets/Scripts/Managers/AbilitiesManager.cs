@@ -23,6 +23,10 @@ namespace Ability
             _abilityItems = _abilityItems.OrderBy(item => item.Cost).ToList();
             _abilitySelectionBroadcaster = new UnityEvent();
             _abilityRemovedBroadcaster = new UnityEvent();
+        }
+
+        void Start()
+        {
             SpawnSpecialAbility();
         }
 
