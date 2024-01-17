@@ -83,11 +83,13 @@ public class Doorway : MonoBehaviour
         GameManager.ImpulseObjectsInPorximity(transform.position, _impulsedLayers);
         UpdateGrid();
         TeamsManager.Instance.ForceUpdateAllPlayersPaths();
+        GuardsManager.Instance.ForceUpdateAllGuardsPaths();
         
         yield return new WaitForSeconds(_activationTime);
 
         _obstacle.SetActive(false);
         UpdateGrid();
+        GuardsManager.Instance.ForceUpdateAllGuardsPaths();
 
         void UpdateGrid()
         {

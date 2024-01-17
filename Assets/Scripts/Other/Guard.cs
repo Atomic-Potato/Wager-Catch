@@ -29,6 +29,14 @@ public class Guard : TeamPlayer
         _spawnPoint.position = Grid.GetNodeFromWorldPosition((Vector2)_spawnPoint.position).WorldPosition;
     }
 
+    public void ForceUpdatePath()
+    {
+        if (_target == null)
+            return;
+        Debug.Log("Sent path request");
+        ForceSendPathRequest();
+    }
+
     new void Update()
     {
         base.Update();

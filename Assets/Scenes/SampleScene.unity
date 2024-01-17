@@ -20050,7 +20050,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _runnersCount
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
@@ -20066,7 +20066,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _catchersCount
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
@@ -20209,7 +20209,7 @@ PrefabInstance:
     - target: {fileID: 5583167157789338412, guid: a3fe4a2d1f51b8a4fa98ac0c716f41e9,
         type: 3}
       propertyPath: _guardsToCache
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5583167157789338412, guid: a3fe4a2d1f51b8a4fa98ac0c716f41e9,
         type: 3}
@@ -20528,7 +20528,7 @@ PrefabInstance:
     - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}
       propertyPath: _matchLengthInSeconds
-      value: 35
+      value: 9999
       objectReference: {fileID: 0}
     - target: {fileID: 7852513696091412339, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}

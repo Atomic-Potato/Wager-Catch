@@ -68,4 +68,10 @@ public class GuardsManager : Singleton<GuardsManager>
                 _availableGuards.Add(g);
         }
     }
+
+    public void ForceUpdateAllGuardsPaths()
+    {
+        foreach (Guard guard in _guards)
+            guard.ForceUpdatePath();
+    }
 }

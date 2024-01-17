@@ -44,14 +44,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startingGameState: 0
+  _startingBalance: 6
   _minBalance: 0
   _winningBonus: 12
   _losingBonus: 6
+  _catchingBonus: 2
+  _escapingBonus: 1
   MaxProfitMultiplier: 2
   _runnersColor: {r: 0, g: 1, b: 1, a: 1}
   _catchersColor: {r: 1, g: 0.6894004, b: 0, a: 1}
   _nuteralColor: {r: 1, g: 1, b: 1, a: 1}
-  _matchLengthInSeconds: 85
+  _matchLengthInSeconds: 35
   _playerSpawnPoint: {fileID: 0}
   _playerEntryPoint: {fileID: 0}
   _explosionLayers:
