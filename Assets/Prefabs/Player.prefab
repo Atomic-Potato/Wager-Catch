@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 975efb6528d68324eb888b2536d5b40c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 4
+  _speed: 6
   _impulseForce: 50
   _impulsedSpeed: 1
   _deathExplosionRadius: 0
@@ -90,6 +90,7 @@ MonoBehaviour:
   _runnerStunTime: 1
   _catcherStunTime: 3
   _stunRange: 2
+  _stunDelay: 0.8
   _stunRangeOrigin: {fileID: 2552508171493242701}
   _stunEffect: {fileID: 3021128966029848650, guid: ae769e0975a6c764296ebaed0ed2fada,
     type: 3}

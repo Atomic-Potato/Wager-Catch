@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bf442f539aad94409c6bc6f33a12d41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedRange: {x: 3.5, y: 3.5}
+  _speedRange: {x: 4, y: 4}
   _isCanSprint: 0
   _sprintSpeedMultiplier: 1.75
   _sprintDurationRange: {x: 0.5, y: 4}

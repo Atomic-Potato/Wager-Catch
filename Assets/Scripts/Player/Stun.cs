@@ -1,4 +1,6 @@
-﻿using Pathfinding;
+﻿using System.Collections;
+using System.Runtime.CompilerServices;
+using Pathfinding;
 using UnityEngine;
 
 public class Stun : MonoBehaviour
@@ -9,6 +11,7 @@ public class Stun : MonoBehaviour
 
     [Space]
     [SerializeField, Min(0f)] float _stunRange = 1f;
+    [SerializeField, Min(0f)] float _stunDelay = .8f;
     [SerializeField] Transform _stunRangeOrigin;
 
     [Space]
@@ -46,18 +49,34 @@ public class Stun : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse1))
+        if (Input.GetKey(KeyCode.Mouse0))
+            StunPlayers();
+    }
+
+    Coroutine _stunCoroutine;
+    void StunPlayers()
+    {
+        if (_stunCoroutine == null)
+            _stunCoroutine = StartCoroutine(Stun());
+        IEnumerator Stun()
         {
             ShowStunEffect();
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(_stunOrigin, _stunRange, Vector2.zero); 
-            foreach (RaycastHit2D hit in hits)
+            StunNearbyOppositeTeamPlayers();
+            yield return new WaitForSeconds(_stunDelay);
+            _stunCoroutine = null;
+        }
+    }
+
+    void StunNearbyOppositeTeamPlayers()
+    {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(_stunOrigin, _stunRange, Vector2.zero); 
+        foreach (RaycastHit2D hit in hits)
+        {
+            string tag = hit.collider.gameObject.tag;
+            if (tag == GameManager.Instance.OppositeTeam.ToString())
             {
-                string tag = hit.collider.gameObject.tag;
-                if (tag == GameManager.Instance.OppositeTeam.ToString())
-                {
-                    TeamPlayer player = hit.collider.gameObject.GetComponent<TeamPlayer>();
-                    player.Sleep(_stunDuration);
-                }
+                TeamPlayer player = hit.collider.gameObject.GetComponent<TeamPlayer>();
+                player.Sleep(_stunDuration);
             }
         }
     }
