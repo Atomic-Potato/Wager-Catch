@@ -11730,7 +11730,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4286382181
-  m_fontColor: {r: 0.3961257, g: 0, b: 0.49019608, a: 1}
+  m_fontColor: {r: 0.69010043, g: 0.378471, b: 0.764151, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -14726,7 +14726,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1203760528
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18161,9 +18161,9 @@ RectTransform:
   m_Father: {fileID: 1284925853}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25, y: -2.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1779022543 stripped
@@ -20050,7 +20050,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _runnersCount
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
@@ -20066,7 +20066,7 @@ PrefabInstance:
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
       propertyPath: _catchersCount
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 551383120854239038, guid: 6cf752f93f88ecb4bad43a59571c033d,
         type: 3}
@@ -20206,11 +20206,6 @@ PrefabInstance:
       propertyPath: _guardsParent
       value: 
       objectReference: {fileID: 1496349801}
-    - target: {fileID: 5583167157789338412, guid: a3fe4a2d1f51b8a4fa98ac0c716f41e9,
-        type: 3}
-      propertyPath: _guardsToCache
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5583167157789338412, guid: a3fe4a2d1f51b8a4fa98ac0c716f41e9,
         type: 3}
       propertyPath: _pathRequestManager
@@ -20512,11 +20507,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}
-      propertyPath: _startingBalance
-      value: 69
-      objectReference: {fileID: 0}
-    - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
-        type: 3}
       propertyPath: _playerEntryPoint
       value: 
       objectReference: {fileID: 931191405}
@@ -20525,11 +20515,6 @@ PrefabInstance:
       propertyPath: _playerSpawnPoint
       value: 
       objectReference: {fileID: 1467999695}
-    - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
-        type: 3}
-      propertyPath: _matchLengthInSeconds
-      value: 9999
-      objectReference: {fileID: 0}
     - target: {fileID: 7852513696091412339, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}
       propertyPath: m_RootOrder

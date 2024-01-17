@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bd1a74603967fc4dae23e596bd9e4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _guardsToCache: 27
+  _guardsToCache: 4
   _guardsParent: {fileID: 0}
   _guardPrefab: {fileID: 930543697329195117, guid: 659653fda61b5544697700de3e8e6276,
     type: 3}
@@ -76,3 +76,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _playerGrid: {fileID: 0}

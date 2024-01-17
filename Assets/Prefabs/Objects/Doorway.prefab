@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _price: 6
   _activationTime: 2
-  _impulseRadius: 0.75
+  _impulseRadius: 0.5
   _impulsedLayers:
     serializedVersion: 2
     m_Bits: 4608

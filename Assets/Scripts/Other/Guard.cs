@@ -33,7 +33,6 @@ public class Guard : TeamPlayer
     {
         if (_target == null)
             return;
-        Debug.Log("Sent path request");
         ForceSendPathRequest();
     }
 
