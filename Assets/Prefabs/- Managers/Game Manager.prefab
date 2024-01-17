@@ -45,7 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startingGameState: 0
   _minBalance: 0
-  _winningBonus: 50
+  _winningBonus: 12
+  _losingBonus: 6
   MaxProfitMultiplier: 2
   _runnersColor: {r: 0, g: 1, b: 1, a: 1}
   _catchersColor: {r: 1, g: 0.6894004, b: 0, a: 1}

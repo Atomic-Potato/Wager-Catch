@@ -12500,7 +12500,7 @@ MonoBehaviour:
   _matchEndButton: {fileID: 686742511}
   _resultText: {fileID: 1031801611}
   _resultingProfitText: {fileID: 382901109}
-  _winningBonusText: {fileID: 1012793636}
+  _bonusText: {fileID: 1012793636}
   _matchEndSpecialUIParent: {fileID: 927121664}
   _matchEndSpecialButton: {fileID: 586556938}
   _matchEndSpecialProfitText: {fileID: 1742623957}
