@@ -44,6 +44,18 @@ public class Runner : TeamPlayer
         if (collider.gameObject.tag == TagsManager.Tag.SafeArea.ToString())
         {
             _isInSafeArea = true;
+            RemoveRunnerFromTheField();
+            AddEscapeBonusToBalance();
+        }
+
+        void AddEscapeBonusToBalance()
+        {
+            GameManager gameManager = GameManager.Instance;
+            if (gameManager.PlayerTeam_TEAM_TAG == TagsManager.TeamTag.Runner)
+                gameManager.AddBalance(gameManager.EscapingBonus);
+        }
+        void RemoveRunnerFromTheField()
+        {
             if (TeamsManager.RunnersNotInSafeArea.Contains(this))
                 TeamsManager.RunnersNotInSafeArea.Remove(this);
         }
