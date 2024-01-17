@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using Pathfinding;
 using TMPro;
 using UnityEngine;
+using Ability;
 
 [RequireComponent (typeof (Collider2D))]
 public class Doorway : MonoBehaviour
@@ -19,6 +18,7 @@ public class Doorway : MonoBehaviour
     [SerializeField] Canvas _canvas;
 
     bool _isInGame => GameManager.Instance.CurrentGameState == GameManager.GameState.InGame;
+    bool _isActive = true;
 
     void OnDrawGizmos()
     {
@@ -31,6 +31,11 @@ public class Doorway : MonoBehaviour
 
     void Awake()
     {
+        GameManager.Instance.PlayerSpawnBroadcaster.AddListener(Deactivate);
+        GameManager.Instance.PlayerDespawnBroadcaster.AddListener(Activate);
+        AbilitiesManager.Instance.AddAbilitySelectionBroadCasterListener(Deactivate);
+        AbilitiesManager.Instance.AddAbilityRemovedBroadcasterListener(Activate);
+
         _canvas.worldCamera = Camera.main;
         _obstacle.SetActive(false);
         _priceText.text = _price + "$";
@@ -38,7 +43,7 @@ public class Doorway : MonoBehaviour
     
     void OnMouseOver()
     {
-        if (!_isInGame)
+        if (!_isInGame || !_isActive)
             return;
 
         ShowPrice();
@@ -88,5 +93,17 @@ public class Doorway : MonoBehaviour
         {
             Pathfinding.Grid.Instance.UpdateGridSection(bounds.min, bounds.max, false, true);
         }
+    }
+
+    void Activate()
+    {
+        if (GameManager.Instance.PlayerInstance != null)
+            return;
+        _isActive = true;
+    }
+
+    void Deactivate()
+    {
+        _isActive = false;
     }
 }
