@@ -8,10 +8,12 @@ public class GameManager : Singleton<GameManager>
     #region Global Variables
     [SerializeField] GameState _startingGameState = GameState.InGame;
     
-    [Space, Header("MONEY")]
-    [SerializeField, Min(0f)] int _minBalance = 150;
     int _balance = 150;
     public int Balance => _balance;
+    [Space, Header("MONEY")]
+    [SerializeField, Min(0f)] int _startingBalance = 6;
+    public int StartingBalance => _startingBalance; 
+    [SerializeField, Min(0f)] int _minBalance = 0;
     [Space]
     [SerializeField, Min(0f)] int _winningBonus = 12;
     public int WinningBonus => _winningBonus;

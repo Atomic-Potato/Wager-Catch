@@ -18,8 +18,7 @@ public class DataSavingManager : Singleton<DataSavingManager>
 
     public void CreateSaveFile()
     {
-        PlayerData data = new PlayerData();
-
+        PlayerData data = new PlayerData(GameManager.Instance.StartingBalance);
         string json = JsonUtility.ToJson(data);
         string path = Path.Combine(Application.persistentDataPath, _playerDataFileName);
         File.WriteAllText(path, json);
@@ -27,9 +26,7 @@ public class DataSavingManager : Singleton<DataSavingManager>
 
     public static void Save()
     {
-        PlayerData data = new PlayerData();
-        data.Balance = GameManager.Instance.Balance;
-
+        PlayerData data = new PlayerData(GameManager.Instance.Balance);
         string json = JsonUtility.ToJson(data);
         string path = Path.Combine(Application.persistentDataPath, _playerDataFileName);
         File.WriteAllText(path, json);
@@ -48,4 +45,10 @@ public class DataSavingManager : Singleton<DataSavingManager>
 public class PlayerData
 {
     public int Balance;
+
+    private PlayerData(){}
+    public PlayerData(int balance)
+    {
+        Balance = balance;
+    }
 }
