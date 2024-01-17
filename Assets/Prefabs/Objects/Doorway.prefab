@@ -234,7 +234,7 @@ MonoBehaviour:
   _impulsedLayers:
     serializedVersion: 2
     m_Bits: 4608
-  _isDrawImpulseRadiusGizmos: 1
+  _isDrawImpulseRadiusGizmos: 0
   _obstacle: {fileID: 7315349018049918192}
   _obstacleCollider: {fileID: 7315349018049918194}
   _priceText: {fileID: 7315349017883046297}
