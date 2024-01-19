@@ -16,6 +16,8 @@ namespace Ability
         UnityEvent _abilitySelectionBroadcaster;
         UnityEvent _abilityRemovedBroadcaster;
 
+        public bool IsAbilitySelected => _selectedAbilityItem != null;
+
         #region Execution
         new void Awake()
         {
