@@ -216,6 +216,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shooting Effect
       objectReference: {fileID: 0}
+    - target: {fileID: 847476468779818668, guid: 9a5d27ba8803a96428fdd1b763e7c84c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 847476468779818671, guid: 9a5d27ba8803a96428fdd1b763e7c84c,
         type: 3}
       propertyPath: m_RootOrder
@@ -340,8 +345,82 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stun Effect
       objectReference: {fileID: 0}
+    - target: {fileID: 3021128966029848650, guid: ae769e0975a6c764296ebaed0ed2fada,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae769e0975a6c764296ebaed0ed2fada, type: 3}
+--- !u!1001 &6999134101908941363
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6999134100077438477, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_Name
+      value: Running Trail Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999134100077438578, guid: 07afea0606ba5514cb93b40a3bb71ef3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 07afea0606ba5514cb93b40a3bb71ef3, type: 3}
 --- !u!1001 &7012574657039963880
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -353,6 +432,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Death Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2983881910522846901, guid: 4b237c93686724944b61e18535936aa0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7012574657458953436, guid: 4b237c93686724944b61e18535936aa0,
         type: 3}
