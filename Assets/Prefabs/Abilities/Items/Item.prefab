@@ -703,3 +703,9 @@ MonoBehaviour:
   _expensiveColor: {r: 1, g: 0, b: 0, a: 1}
   _iconActive: {fileID: 2921458025712969836}
   _iconInactive: {fileID: 3519185362003729482}
+  AbilitySelectedBroadcaster:
+    m_PersistentCalls:
+      m_Calls: []
+  AbilityDeselectedBrodcaster:
+    m_PersistentCalls:
+      m_Calls: []

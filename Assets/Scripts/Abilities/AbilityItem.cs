@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Ability
@@ -35,16 +36,16 @@ namespace Ability
         public bool IsUnlimited => _numberOfUses < 0;
         public bool IsActive => IsUnlimited || _usesLeft > 0;
         public bool IsCanBeConsumed => (IsUnlimited || _usesLeft > 0) && _cost <= GameManager.Instance.Balance;
+        bool _isSelected;
+        public bool IsSelected => _isSelected;
+        [HideInInspector] public UnityEvent AbilitySelectedBroadcaster;
+        [HideInInspector] public UnityEvent AbilityDeselectedBrodcaster;
         #endregion
 
         void Awake()
         {
             _usesLeft = _numberOfUses;
             Ability.Item = this;
-
-            _costText.text =  _cost >= 1000 ? (_cost/1000).ToString()+"K$" : _cost+ "$";
-            UpdateCostColor();
-            GameManager.Instance.BalanceChangeBroadcaster.AddListener(UpdateCostColor);
 
             if (!IsCanBeConsumed)
                 DecativateIcon();
@@ -53,15 +54,35 @@ namespace Ability
                 _usesText.text = "∞";
             else
                 _usesText.text = _usesLeft.ToString();
+
+            AbilitySelectedBroadcaster = new UnityEvent();
+            AbilityDeselectedBrodcaster = new UnityEvent();
+        }
+
+        void Start()
+        {
+            _costText.text =  _cost >= 1000 ? (_cost/1000).ToString()+"K$" : _cost+ "$";
+            UpdateCostColor();
+            GameManager.Instance.BalanceChangeBroadcaster.AddListener(UpdateCostColor);
+
+            AbilitiesManager.Instance.AddAbilityRemovedBroadcasterListener(SetAbilityAsNotSelected);
         }
 
         public void Select()
         {
             if (IsCanBeConsumed)
             {
+                _isSelected = true;
                 AbilitiesManager.Instance.SelectAbilityItem(this);
                 GridPlacementManager.Instance.SetPreviewSprite(_iconActive.GetComponent<Image>().sprite);
+                AbilitySelectedBroadcaster.Invoke();
             }
+        }
+
+        void SetAbilityAsNotSelected()
+        {
+            _isSelected = false;
+            AbilityDeselectedBrodcaster.Invoke();
         }
 
         /// <summary>
