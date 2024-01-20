@@ -24,7 +24,7 @@ public class GuardsManager : Singleton<GuardsManager>
 
     public void LoadNewGuards()
     {
-        DestroyAllGuards();
+        DestroyAllGuards(); 
         CreateGuards();
 
         void DestroyAllGuards()
