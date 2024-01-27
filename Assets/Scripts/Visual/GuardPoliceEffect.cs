@@ -12,6 +12,14 @@ public class GuardPoliceEffect : MonoBehaviour
     [SerializeField] Guard _guard;
     [SerializeField] SpriteRenderer _characterSpriteRenderer;
     [SerializeField] SpriteRenderer _lightSpriteRenderer;
+    [SerializeField] AudioSource _sirenAudio;
+
+    void Awake()
+    {
+        _sirenAudio.Play();
+        _sirenAudio.Pause();
+    }
+
     void Update()
     {
         if (_guard.CurrentState != Guard.State.OnStandBy)
@@ -28,6 +36,7 @@ public class GuardPoliceEffect : MonoBehaviour
         
         IEnumerator WeeWoo()
         {
+            _sirenAudio.UnPause();
             while (true)
             {
                 SetColors(_colorA);
@@ -48,6 +57,7 @@ public class GuardPoliceEffect : MonoBehaviour
     {
         if (_weeWooCoroutine != null)
         {
+            _sirenAudio.Pause();
             StopCoroutine(_weeWooCoroutine);
             _weeWooCoroutine = null;
         }

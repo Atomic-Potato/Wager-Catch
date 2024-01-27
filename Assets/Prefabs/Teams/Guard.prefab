@@ -871,7 +871,7 @@ MonoBehaviour:
   _guard: {fileID: 930543697329195117}
   _characterSpriteRenderer: {fileID: 4374123951106396668}
   _lightSpriteRenderer: {fileID: 6450462526351415741}
-  _activeSound: {fileID: 4375726172933392216}
+  _sirenAudio: {fileID: 4375726172933392216}
 --- !u!1001 &5440662229175498213
 PrefabInstance:
   m_ObjectHideFlags: 0
