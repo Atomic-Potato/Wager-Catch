@@ -22,6 +22,7 @@ namespace Ability
         {
             base.Spawn();
             ImpulseObjectsInPorximity();
+            SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.Explosion, true);
         }
 
         void ImpulseObjectsInPorximity()

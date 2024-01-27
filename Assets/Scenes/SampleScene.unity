@@ -14645,6 +14645,9 @@ MonoBehaviour:
   _grassTouch:
     _clip: {fileID: 8300000, guid: d995d21ab0c36584f8cf09409be87c34, type: 3}
     _volume: 0.5
+  _explosion:
+    _clip: {fileID: 0}
+    _volume: 1
   _screamClips:
     _clips:
     - {fileID: 8300000, guid: 458dd4f3662368d46a86eccf0c54a658, type: 3}
@@ -20572,11 +20575,6 @@ PrefabInstance:
       propertyPath: _playerSpawnPoint
       value: 
       objectReference: {fileID: 1467999695}
-    - target: {fileID: 7852513696091412338, guid: 0e6a94842bb26f642b4d875282632e24,
-        type: 3}
-      propertyPath: _matchLengthInSeconds
-      value: 99999
-      objectReference: {fileID: 0}
     - target: {fileID: 7852513696091412339, guid: 0e6a94842bb26f642b4d875282632e24,
         type: 3}
       propertyPath: m_RootOrder
