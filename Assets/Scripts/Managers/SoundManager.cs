@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SoundManager : Singleton<SoundManager>
 {
@@ -15,6 +16,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] SoundClip _characterDeathClip;
     [SerializeField] SoundClip _grassTouch;
     [SerializeField] SoundClip _explosion;
+    [SerializeField] SoundClip _nuke;
     [SerializeField] RandomSoundClip _screamClips;
 
     public enum Sound
@@ -25,6 +27,7 @@ public class SoundManager : Singleton<SoundManager>
         Scream,
         Grass,
         Explosion,
+        Nuke,
     }
 
     public float PlaySoundAtPosition(Vector2 position, Sound sound, bool isRandomPitch = false)
@@ -37,7 +40,7 @@ public class SoundManager : Singleton<SoundManager>
 
         GameObject CreateSoundObject()
         {
-            GameObject parent = new GameObject("Death Sound");
+            GameObject parent = new GameObject("Sound: " + sound.ToString());
             parent.transform.position = position;
             return parent;
         }
@@ -69,6 +72,8 @@ public class SoundManager : Singleton<SoundManager>
                 return _grassTouch;
             case Sound.Explosion:
                 return _explosion;
+            case Sound.Nuke:
+                return _nuke;
             default:
                 return null;
         }

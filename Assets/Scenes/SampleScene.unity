@@ -14804,7 +14804,10 @@ MonoBehaviour:
     _clip: {fileID: 8300000, guid: d995d21ab0c36584f8cf09409be87c34, type: 3}
     _volume: 0.5
   _explosion:
-    _clip: {fileID: 0}
+    _clip: {fileID: 8300000, guid: a8726442a9a21ee429a8126ed5da4d92, type: 3}
+    _volume: 1
+  _nuke:
+    _clip: {fileID: 8300000, guid: 394f55c8337514b49a139838700a91ef, type: 3}
     _volume: 1
   _screamClips:
     _clips:
