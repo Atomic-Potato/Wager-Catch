@@ -23,3 +23,13 @@
    <img src="https://github.com/Atomic-Potato/Wager-Catch/assets/55362397/a1a6b77a-4444-4993-819e-f6af745ff199" width="350" height="280">
    <img src="https://github.com/Atomic-Potato/Wager-Catch/assets/55362397/9f0b4e6a-23a6-4f00-b5ba-0c635e993495" width="350" height="280">
   </div>
+
+# Credits
+A game by **Atomic Potato Games**
+
+- Character art: **[@AxulArt](https://axulart.itch.io)**
+- World art: **[Cup Nooble](https://cupnooble.itch.io)**
+- Explosion effects: **[@Ansimuz](https://ansimuz.itch.io)**
+- Guns art: **[Vlad Penn](https://vladpenn.itch.io)**
+- Other SFX: **[@Paul368](https://freesound.org/people/Paul368/)**
+- Other UI: **[@greenpixels](https://greenpixels.itch.io)**
