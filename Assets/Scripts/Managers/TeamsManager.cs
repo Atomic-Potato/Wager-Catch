@@ -205,4 +205,20 @@ public class TeamsManager : Singleton<TeamsManager>
             catcher.ForceSendPathRequest();
         }
     }
+
+    public void GentlemenNowWePanik()
+    {
+        foreach (Runner runner in _runners)
+            runner.Panik();
+        foreach (Catcher catcher in _catchers)
+            catcher.Panik();
+    }
+
+    public void AllIsFineChaps()
+    {
+        foreach (Runner runner in _runners)
+            runner.Kalm();
+        foreach (Catcher catcher in _catchers)
+            catcher.Kalm();
+    }
 }

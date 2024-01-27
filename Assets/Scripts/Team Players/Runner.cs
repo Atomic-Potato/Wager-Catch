@@ -11,14 +11,12 @@ public class Runner : TeamPlayer
 
     [Space, Header("Panik")]
     [SerializeField, Min(0f)] float _catcherDetectionRange = 1.5f;
-    [SerializeField] GameObject _panikMarker;
     [SerializeField] TMP_Text _debuggingText;
 
     bool _isInSafeArea;
     public bool IsInSafeArea => _isInSafeArea;
     public List<Catcher> Catchers = new List<Catcher>(); 
     Coroutine _delayNextRequestCoroutine;
-    Coroutine _screamCoroutine;
 
     void Start()
     {
@@ -105,39 +103,4 @@ public class Runner : TeamPlayer
         }
         return false;
     }
-
-    void Panik()
-    {
-        PlayScreamSound();
-        DisplayPanikIndicator();
-
-        void DisplayPanikIndicator()
-        {
-            _panikMarker.SetActive(true);
-        }
-
-        void PlayScreamSound()
-        {
-            if (_screamCoroutine == null)
-                _screamCoroutine = StartCoroutine(Scream());
-
-            IEnumerator Scream()
-            {
-                float length = SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.Scream);
-                yield return new WaitForSeconds(length);
-                _screamCoroutine = null;
-            }
-        }
-    }
-
-    void Kalm()
-    {
-        HidePanikIndicator();
-
-        void HidePanikIndicator()
-        {
-            _panikMarker.SetActive(false);
-        }
-    }
-
 }

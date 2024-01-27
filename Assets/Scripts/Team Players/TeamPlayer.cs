@@ -45,6 +45,8 @@ namespace Pathfinding
         
         [Space]
         [SerializeField] GameObject _deathEffect;
+        [SerializeField] GameObject _panikMarker;
+
 
         [Space, Header("Gizmos")]
         [SerializeField] bool _isDrawCollisionCheckSize;
@@ -509,6 +511,41 @@ namespace Pathfinding
                         unit.ImpulseFromPoint(transform.position);
                     }
                 }
+            }
+        }
+
+        Coroutine _screamCoroutine;
+        public void Panik()
+        {
+            PlayScreamSound();
+            DisplayPanikIndicator();
+
+            void DisplayPanikIndicator()
+            {
+                _panikMarker.SetActive(true);
+            }
+
+            void PlayScreamSound()
+            {
+                if (_screamCoroutine == null)
+                    _screamCoroutine = StartCoroutine(Scream());
+
+                IEnumerator Scream()
+                {
+                    float length = SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.Scream);
+                    yield return new WaitForSeconds(length);
+                    _screamCoroutine = null;
+                }
+            }
+        }
+
+        public void Kalm()
+        {
+            HidePanikIndicator();
+
+            void HidePanikIndicator()
+            {
+                _panikMarker.SetActive(false);
             }
         }
     }

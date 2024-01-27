@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NukeEffects : MonoBehaviour
 {
@@ -9,6 +7,12 @@ public class NukeEffects : MonoBehaviour
     void Update()
     {
         SetLightToMousePosition();
+        TeamsManager.Instance.GentlemenNowWePanik();
+    }
+
+    void OnDisable()
+    {
+        TeamsManager.Instance.AllIsFineChaps();
     }
 
     void SetLightToMousePosition()
