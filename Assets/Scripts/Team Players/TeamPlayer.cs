@@ -49,6 +49,7 @@ namespace Pathfinding
 
 
         [Space, Header("Gizmos")]
+        [SerializeField] protected bool _isGizmosEnabled = true;
         [SerializeField] bool _isDrawCollisionCheckSize;
         [SerializeField] Color _collisionCheckCollor = Color.red;
         [SerializeField] bool isDrawPath;

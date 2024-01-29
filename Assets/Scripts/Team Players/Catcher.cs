@@ -8,6 +8,9 @@ public class Catcher : TeamPlayer
 {
     #region Global Variables
     [Space, Header("Catcher Properties")]
+    [Space, SerializeField, Min(0)] int _health = 2;
+    public int Health => _health;
+
     [SerializeField, Min(0f)] float _timeToCatch = 0.5f;
     [SerializeField, Min(0f)] float _timeToRecoverCatch = 1.25f;
 
@@ -25,6 +28,10 @@ public class Catcher : TeamPlayer
     [SerializeField] Transform _catchToolEndPoint;
     [SerializeField] GameObject _catchEffect;
 
+    [Space, Header("Bonking")]
+    [SerializeField, Min(0f)] float _bonkedTime = 2f;
+    public float BonkedTime => _bonkedTime;
+
     [Space, Header("Catcher Gizmos")]
     [SerializeField] bool _isDrawCatchArea;
     [SerializeField] float _catchAreaDisplayedRadius = .75f;
@@ -32,7 +39,9 @@ public class Catcher : TeamPlayer
 
     [HideInInspector] public Transform SpawnPoint;
     Runner _targetRunner;
+    public Runner TargetRunner => _targetRunner;
     bool _isCatchingTarget;
+    public bool IsCatchingTarget => _isCatchingTarget;
     Coroutine _catchCoroutine;
     #endregion
 
@@ -188,7 +197,6 @@ public class Catcher : TeamPlayer
         if (_targetRunner == null || _targetRunner.IsInSafeArea)
         {
             Runner newTarget = GetClosestAvailableNotInSafeAreaRunner();
-
             if (newTarget == null)
                 _target = SpawnPoint.position;
             else
@@ -202,7 +210,7 @@ public class Catcher : TeamPlayer
         }
         else
             _target = _targetRunner.transform.position;
-        
+
         if (!_isPathRequestSent)
             SendPathRequest();
     }
@@ -308,6 +316,21 @@ public class Catcher : TeamPlayer
     }
     
     #endregion
+    public void BonkSelf()
+    {
+        DeductHealthPoint();
+        if (_health <= 0)
+            return;
+
+        Sleep(_bonkedTime);
+    }
+
+    public void DeductHealthPoint()
+    {
+        _health--;
+        if (_health <= 0)
+            Die();
+    }
 
     public override void Die()
     {

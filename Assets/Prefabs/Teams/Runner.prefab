@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa258684ab173fe42a050ea2dce327cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedRange: {x: 1.5, y: 2.75}
+  _speedRange: {x: 10, y: 10}
   _isCanSprint: 1
   _sprintSpeedMultiplier: 2
   _sprintDurationRange: {x: 0.85, y: 2}
@@ -237,6 +237,8 @@ MonoBehaviour:
     m_Bits: 2048
   _deathEffect: {fileID: 2983881910522846901, guid: 4b237c93686724944b61e18535936aa0,
     type: 3}
+  _panikMarker: {fileID: 4208278969376603684}
+  _isGizmosEnabled: 1
   _isDrawCollisionCheckSize: 0
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
   isDrawPath: 0
@@ -246,10 +248,11 @@ MonoBehaviour:
   Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
-  randomTimeRangeToStartRunning: {x: 0.5, y: 2}
+  randomTimeRangeToStartRunning: {x: 0.5, y: 0.5}
   _catcherDetectionRange: 3
-  _panikMarker: {fileID: 4208278969376603684}
-  _debuggingText: {fileID: 3873671919276986417}
+  _bonkingRange: 0.75
+  _defaultObjective: 1
+  _isDrawBonkingRange: 0
   Catchers: []
 --- !u!61 &3146306151673408437
 BoxCollider2D:

@@ -1,36 +1,66 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Pathfinding;
-using TMPro;
 using UnityEngine;
 
 public class Runner : TeamPlayer
 {
+    #region Global Variables
     [Space, Header("Runner Properites")]
     [SerializeField, Min(0f)] Vector2 randomTimeRangeToStartRunning = new Vector2(.25f, 1f);
 
     [Space, Header("Panik")]
     [SerializeField, Min(0f)] float _catcherDetectionRange = 1.5f;
-    [SerializeField] TMP_Text _debuggingText;
+
+    [Space,Header ("Bonking")]
+    [SerializeField, Min(0f)] float _bonkingRange = .75f;
+    public float BonkingRange => _bonkingRange;
+    Catcher _catcherToBonk;
+    public Catcher CatcherToBonk => _catcherToBonk;
+
+    
+    [Space, Header("Objective")]
+    [SerializeField] Objective _defaultObjective = Objective.Hide;
+    Objective _currentObjective;
+    public Objective CurrentObjective => _currentObjective;
+    public enum Objective
+    {
+        Bonk,
+        Hide,
+    }
+    int _objectivesCount => Enum.GetValues(typeof(Objective)).Length;
+    
+    [Space, Header("Debugging")]
+    [SerializeField] bool _isDrawBonkingRange;
 
     bool _isInSafeArea;
     public bool IsInSafeArea => _isInSafeArea;
     public List<Catcher> Catchers = new List<Catcher>(); 
-    Coroutine _delayNextRequestCoroutine;
+    #endregion
+
+    new void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        if (!_isGizmosEnabled)
+            return;
+        if (_isDrawBonkingRange)
+            Gizmos.DrawWireSphere(transform.position, _bonkingRange);
+    }
 
     void Start()
     {
         TeamsManager.RunnersNotInSafeArea.Add(this);
-        RequestPathToNewSafeArea();
+        SetNewObjective();
     }
 
     new void Update()
     {
         base.Update();
 
-        if (_isReachedDestination && !_isPathRequestSent && _delayNextRequestCoroutine == null)
-            _delayNextRequestCoroutine = StartCoroutine(DelayNextPathRequest());
-        
+        ExecuteCurrentObjective();
+
         if (IsCatchersInProximity())
             Panik();
         else
@@ -69,18 +99,11 @@ public class Runner : TeamPlayer
         }
     }
 
-    IEnumerator DelayNextPathRequest()
-    {
-        float delayTime = _isCollided ? 0f : Random.Range(randomTimeRangeToStartRunning.x, randomTimeRangeToStartRunning.y);
-        yield return new WaitForSeconds(delayTime);
-        RequestPathToNewSafeArea();
-        _delayNextRequestCoroutine = null;
-    }
 
-    void RequestPathToNewSafeArea()
+    void RequestPathToTarget()
     {
-        _target = TeamsManager.GetRandomSafeNode()?.WorldPosition;
-        SendPathRequest();
+        if (!_isPathRequestSent)
+            SendPathRequest();
     }
 
     public override void Die()
@@ -103,4 +126,154 @@ public class Runner : TeamPlayer
         }
         return false;
     }
+
+    #region Objectives
+    void ExecuteCurrentObjective()
+    {
+        switch (_currentObjective)
+        {
+            case Objective.Bonk:
+                ExecuteBonking();
+                break;
+            case Objective.Hide:
+                ExecuteHiding();
+                break;
+            default:
+                return;
+        }
+    }
+
+    Coroutine _delayNewObjectiveCoroutine;
+    void SetNewObjective(bool isDelayed = false)
+    {
+        Objective objective = GetRandomObjective();
+        if (!isDelayed)
+            StartObjective(objective);
+        else
+        {
+            _delayNewObjectiveCoroutine = StartCoroutine(DelayNewObjective());
+        }
+
+        IEnumerator DelayNewObjective()
+        {
+            float delayTime = _isCollided ? 0f : UnityEngine.Random.Range(randomTimeRangeToStartRunning.x, randomTimeRangeToStartRunning.y);
+            yield return new WaitForSeconds(delayTime);
+            StartObjective(objective);
+            _delayNewObjectiveCoroutine = null;
+        }
+    }
+
+
+
+    Objective GetRandomObjective()
+    {
+        return Objective.Bonk;
+        int _objective = UnityEngine.Random.Range(0, _objectivesCount);
+        return (Objective)_objective;
+    }
+    
+    void StartObjective(Objective objective)
+    {
+        bool isObjectiveStarted;
+        _currentObjective = objective;
+        switch (objective)
+        {
+            case Objective.Bonk:
+                isObjectiveStarted = StartBonking(); 
+                break;
+            case Objective.Hide:
+                isObjectiveStarted = StartHiding();
+                break;
+            default:
+                isObjectiveStarted = false;
+                break;
+        }
+
+        if (!isObjectiveStarted)
+        {
+            _currentObjective = _defaultObjective;
+            StartObjective(_defaultObjective);
+        }
+
+    }
+    #region Bonking 
+    bool StartBonking()
+    {
+        _catcherToBonk = GetRandomAvaliableCatcher();
+        if (_catcherToBonk == null)
+            return false;
+        _target = _catcherToBonk.transform.position;
+        RequestPathToTarget();
+        return true;
+
+        Catcher GetRandomAvaliableCatcher()
+        {
+            if (TeamsManager.Catchers.Count == 0)
+                return null;
+            foreach (Catcher catcher in TeamsManager.Instance.Catchers)
+            {
+                if (catcher.TargetRunner != this && !catcher.IsSleeping)
+                    return catcher;
+            }
+            return null;        
+        }
+    }
+    void ExecuteBonking()
+    {
+        if (_catcherToBonk == null || _catcherToBonk.TargetRunner == this)
+        {
+            StartObjective(Objective.Hide);
+            return;
+        }
+
+        RequestPathToTarget();
+
+        if (IsWithinBonkingRange())
+        {
+            // TODO: Remove these functions and execute them in the bonking animation
+            BonkCatcher();
+            FinishBonking();
+        }
+
+        bool IsWithinBonkingRange()
+        {
+            float distanceToCatcher = Vector2.Distance(transform.position, _catcherToBonk.transform.position);
+            return distanceToCatcher <= _bonkingRange;
+        }
+
+    }
+
+    // This function is to be executed from the bonking animation
+    public void BonkCatcher()
+    {
+        if (_catcherToBonk == null)
+            return;
+        _catcherToBonk.BonkSelf();
+    }
+
+    // This function is to be executeed at the end of the bonking animation
+    public void FinishBonking()
+    {
+        StartObjective(Objective.Hide);
+    }
+    #endregion
+    
+    #region Hiding
+    bool StartHiding()
+    {
+        _target = TeamsManager.GetRandomSafeNode()?.WorldPosition;
+        RequestPathToTarget();
+        return true;
+    }
+
+    void ExecuteHiding()
+    {
+        if (_isReachedDestination)
+        {
+            Debug.Log("Reached destination");
+            SetNewObjective(true);
+        }
+    }
+    #endregion
+    #endregion
 }
