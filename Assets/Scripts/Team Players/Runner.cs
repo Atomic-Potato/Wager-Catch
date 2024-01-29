@@ -105,7 +105,9 @@ public class Runner : TeamPlayer
     void RequestPathToTarget()
     {
         if (!_isPathRequestSent)
+        {
             SendPathRequest();
+        }
     }
 
     public override void Die()
@@ -135,15 +137,12 @@ public class Runner : TeamPlayer
         switch (_currentObjective)
         {
             case Objective.Bonk:
-                Debug.Log("Bonking");
                 ExecuteBonking();
                 break;
             case Objective.Hide:
-                Debug.Log("Hiding");
                 ExecuteHiding();
                 break;
             default:
-                Debug.Log("Nothing");
                 return;
         }
     }
@@ -169,11 +168,8 @@ public class Runner : TeamPlayer
         }
     }
 
-
-
     Objective GetRandomObjective()
     {
-        return Objective.Bonk;
         int _objective = UnityEngine.Random.Range(0, _objectivesCount);
         return (Objective)_objective;
     }
@@ -232,7 +228,9 @@ public class Runner : TeamPlayer
             return;
         }
 
+        _target = _catcherToBonk.transform.position;
         RequestPathToTarget();
+        // ForceSendPathRequest();
 
         if (IsWithinBonkingRange())
         {

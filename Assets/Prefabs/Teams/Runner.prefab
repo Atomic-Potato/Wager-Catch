@@ -248,7 +248,7 @@ MonoBehaviour:
   Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
-  randomTimeRangeToStartRunning: {x: 0.5, y: 0.5}
+  randomTimeRangeToStartRunning: {x: 0, y: 0}
   _catcherDetectionRange: 3
   _bonkingRange: 0.75
   _defaultObjective: 2
