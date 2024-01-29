@@ -27,6 +27,7 @@ public class Runner : TeamPlayer
     public Objective CurrentObjective => _currentObjective;
     public enum Objective
     {
+        None,
         Bonk,
         Hide,
     }
@@ -99,6 +100,7 @@ public class Runner : TeamPlayer
         }
     }
 
+    
 
     void RequestPathToTarget()
     {
@@ -146,12 +148,14 @@ public class Runner : TeamPlayer
     Coroutine _delayNewObjectiveCoroutine;
     void SetNewObjective(bool isDelayed = false)
     {
+        Debug.Log("Setting new objective");
         Objective objective = GetRandomObjective();
         if (!isDelayed)
             StartObjective(objective);
         else
         {
-            _delayNewObjectiveCoroutine = StartCoroutine(DelayNewObjective());
+            if(_delayNewObjectiveCoroutine == null)
+                _delayNewObjectiveCoroutine = StartCoroutine(DelayNewObjective());
         }
 
         IEnumerator DelayNewObjective()
@@ -167,7 +171,7 @@ public class Runner : TeamPlayer
 
     Objective GetRandomObjective()
     {
-        return Objective.Bonk;
+        return Objective.Hide;
         int _objective = UnityEngine.Random.Range(0, _objectivesCount);
         return (Objective)_objective;
     }
@@ -220,6 +224,7 @@ public class Runner : TeamPlayer
     }
     void ExecuteBonking()
     {
+        Debug.Log(_catcherToBonk.TargetRunner == this);
         if (_catcherToBonk == null || _catcherToBonk.TargetRunner == this)
         {
             StartObjective(Objective.Hide);
@@ -254,6 +259,7 @@ public class Runner : TeamPlayer
     // This function is to be executeed at the end of the bonking animation
     public void FinishBonking()
     {
+        _currentObjective = Objective.None;
         StartObjective(Objective.Hide);
     }
     #endregion
@@ -270,9 +276,14 @@ public class Runner : TeamPlayer
     {
         if (_isReachedDestination)
         {
-            Debug.Log("Reached destination");
+            FinishHiding();
             SetNewObjective(true);
         }
+    }
+
+    void FinishHiding()
+    {
+        _currentObjective = Objective.None;
     }
     #endregion
     #endregion
