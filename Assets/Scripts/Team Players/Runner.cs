@@ -22,7 +22,7 @@ public class Runner : TeamPlayer
 
     
     [Space, Header("Objective")]
-    [SerializeField] Objective _defaultObjective = Objective.Hide;
+    [SerializeField] Objective _defaultObjective = Objective.Hide; // Best kept at Hide, else it may make a stack overflow exception when starting objective
     Objective _currentObjective;
     public Objective CurrentObjective => _currentObjective;
     public enum Objective
@@ -135,12 +135,15 @@ public class Runner : TeamPlayer
         switch (_currentObjective)
         {
             case Objective.Bonk:
+                Debug.Log("Bonking");
                 ExecuteBonking();
                 break;
             case Objective.Hide:
+                Debug.Log("Hiding");
                 ExecuteHiding();
                 break;
             default:
+                Debug.Log("Nothing");
                 return;
         }
     }
@@ -148,7 +151,6 @@ public class Runner : TeamPlayer
     Coroutine _delayNewObjectiveCoroutine;
     void SetNewObjective(bool isDelayed = false)
     {
-        Debug.Log("Setting new objective");
         Objective objective = GetRandomObjective();
         if (!isDelayed)
             StartObjective(objective);
@@ -171,7 +173,7 @@ public class Runner : TeamPlayer
 
     Objective GetRandomObjective()
     {
-        return Objective.Hide;
+        return Objective.Bonk;
         int _objective = UnityEngine.Random.Range(0, _objectivesCount);
         return (Objective)_objective;
     }
@@ -224,10 +226,9 @@ public class Runner : TeamPlayer
     }
     void ExecuteBonking()
     {
-        Debug.Log(_catcherToBonk.TargetRunner == this);
         if (_catcherToBonk == null || _catcherToBonk.TargetRunner == this)
         {
-            StartObjective(Objective.Hide);
+            FinishBonking();
             return;
         }
 
@@ -268,7 +269,7 @@ public class Runner : TeamPlayer
     bool StartHiding()
     {
         _target = TeamsManager.GetRandomSafeNode()?.WorldPosition;
-        RequestPathToTarget();
+        ForceSendPathRequest();
         return true;
     }
 

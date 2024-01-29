@@ -251,7 +251,7 @@ MonoBehaviour:
   randomTimeRangeToStartRunning: {x: 0.5, y: 0.5}
   _catcherDetectionRange: 3
   _bonkingRange: 0.75
-  _defaultObjective: 1
+  _defaultObjective: 2
   _isDrawBonkingRange: 0
   Catchers: []
 --- !u!61 &3146306151673408437
