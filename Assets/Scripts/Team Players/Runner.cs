@@ -112,6 +112,7 @@ public class Runner : TeamPlayer
 
     public override void Die()
     {
+        EndBonk();
         TeamsManager.RunnersNotInSafeArea.Remove(this);
         TeamsManager.RemoveRunner(this);
         base.Die();
@@ -124,7 +125,7 @@ public class Runner : TeamPlayer
 
         foreach (Catcher catcher in Catchers)
         {
-            float distanceToCatcher = Vector2.Distance(transform.position, catcher.transform.position);
+            float distanceToCatcher = Vector2.Distance((Vector2)transform.position, (Vector2)catcher.transform.position);
             if (distanceToCatcher <= _catcherDetectionRange)
                 return true;
         }
@@ -170,7 +171,7 @@ public class Runner : TeamPlayer
 
     Objective GetRandomObjective()
     {
-        return Objective.Bonk;
+        // return Objective.Bonk;
         int _objective = UnityEngine.Random.Range(0, _objectivesCount);
         return (Objective)_objective;
     }
@@ -205,6 +206,7 @@ public class Runner : TeamPlayer
         _catcherToBonk = GetRandomAvaliableCatcher();
         if (_catcherToBonk == null)
             return false;
+        _catcherToBonk.BonkingRunner = this;
         _target = _catcherToBonk.transform.position;
         RequestPathToTarget();
         return true;
@@ -215,14 +217,14 @@ public class Runner : TeamPlayer
                 return null;
             foreach (Catcher catcher in TeamsManager.Instance.Catchers)
             {
-                if (catcher.TargetRunner != this && !catcher.IsSleeping)
+                if (catcher.TargetRunner != this && catcher.BonkingRunner == null && !catcher.IsSleeping)
                     return catcher;
             }
             return null;        
         }
     }
 
-    bool _isBonking = true;
+    bool _isBonking;
     public bool IsBonking => _isBonking;
     void ExecuteBonking()
     {
@@ -250,23 +252,25 @@ public class Runner : TeamPlayer
     }
 
     // This function is to be executed from the bonking animation
-    public new void Bonk()
+    public override void Bonk()
     {
         base.Bonk();
-        Debug.Log("Null Bonker");
         if (_catcherToBonk == null)
             return;
-        Debug.Log("Bonked");
         _catcherToBonk.BonkSelf();
     }
 
     // This function is to be executeed at the end of the bonking animation
-    public new void EndBonk()
+    public override void EndBonk()
     {
+        if (_catcherToBonk == null)
+            return;
+
         base.Bonk();
 
         _isBonking = false;
         _currentObjective = Objective.None;
+        _catcherToBonk.BonkingRunner = null;
         StartObjective(Objective.Hide);
         BonkEndBroadcaster.Invoke();
     }

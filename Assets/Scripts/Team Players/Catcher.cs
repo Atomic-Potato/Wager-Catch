@@ -40,6 +40,7 @@ public class Catcher : TeamPlayer
     [HideInInspector] public Transform SpawnPoint;
     Runner _targetRunner;
     public Runner TargetRunner => _targetRunner;
+    public Runner BonkingRunner;
     bool _isCatchingTarget;
     public bool IsCatchingTarget => _isCatchingTarget;
     Coroutine _catchCoroutine;

@@ -524,8 +524,8 @@ namespace Pathfinding
         
         #region Bonking
         // these should be abstract, but u cant make them here ig
-        public void Bonk(){}
-        public void EndBonk(){}
+        public virtual void Bonk(){}
+        public virtual void EndBonk(){}
         #endregion
         
         #region Panik

@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa258684ab173fe42a050ea2dce327cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedRange: {x: 2.25, y: 2.25}
+  _speedRange: {x: 5, y: 5}
   _isCanSprint: 1
   _sprintSpeedMultiplier: 2
   _sprintDurationRange: {x: 0.85, y: 2}
@@ -257,9 +257,9 @@ MonoBehaviour:
       m_Calls: []
   randomTimeRangeToStartRunning: {x: 0, y: 0}
   _catcherDetectionRange: 3
-  _bonkingRange: 0.75
+  _bonkingRange: 2
   _defaultObjective: 2
-  _isDrawBonkingRange: 0
+  _isDrawBonkingRange: 1
   Catchers: []
 --- !u!61 &3146306151673408437
 BoxCollider2D:

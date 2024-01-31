@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BonkerAnimationManager : MonoBehaviour
 {
-    [SerializeField] Runner _teamPlayer;
+    [SerializeField] TeamPlayer _teamPlayer;
     [SerializeField] GameObject _bonkerParent;
     [SerializeField] SpriteRenderer _bonkerSprite;
     [SerializeField] AnimationClip _bonkClip;
@@ -54,7 +54,6 @@ public class BonkerAnimationManager : MonoBehaviour
     #region Events
     void Bonk()
     {
-        Debug.Log("Bonk event");
         _teamPlayer.Bonk();
     }
 
