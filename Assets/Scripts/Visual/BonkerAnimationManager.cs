@@ -55,11 +55,17 @@ public class BonkerAnimationManager : MonoBehaviour
     void Bonk()
     {
         _teamPlayer.Bonk();
+        SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.Bonk);
     }
 
     void EndBonk()
     {
         _teamPlayer.EndBonk();
+    }
+
+    void PlayStretchSound()
+    {
+        SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.Stretch, true);
     }
     #endregion
 }

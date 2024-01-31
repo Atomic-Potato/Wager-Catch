@@ -17,6 +17,8 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] SoundClip _grassTouch;
     [SerializeField] SoundClip _explosion;
     [SerializeField] SoundClip _nuke;
+    [SerializeField] SoundClip _bonk;
+    [SerializeField] SoundClip _stretch;
     [SerializeField] RandomSoundClip _screamClips;
 
     public enum Sound
@@ -28,6 +30,35 @@ public class SoundManager : Singleton<SoundManager>
         Grass,
         Explosion,
         Nuke,
+        Bonk,
+        Stretch,
+    }
+
+    ISoundEffectClip GetSoundEffectClip(Sound sound)
+    {
+        switch (sound)
+        {
+            case Sound.Death:
+                return _characterDeathClip;
+            case Sound.GunCock:
+                return _gunCock;
+            case Sound.GunBoom:
+                return _gunBoom;
+            case Sound.Scream:
+                return _screamClips;
+            case Sound.Grass:
+                return _grassTouch;
+            case Sound.Explosion:
+                return _explosion;
+            case Sound.Nuke:
+                return _nuke;
+            case Sound.Bonk:
+                return _bonk;
+            case Sound.Stretch:
+                return _stretch;
+            default:
+                return null;
+        }
     }
 
     public float PlaySoundAtPosition(Vector2 position, Sound sound, bool isRandomPitch = false)
@@ -53,29 +84,6 @@ public class SoundManager : Singleton<SoundManager>
             if (isRandomPitch)
                 source.pitch = UnityEngine.Random.Range(_randomPitchRange.x, _randomPitchRange.y);
             return source;
-        }
-    }
-
-    ISoundEffectClip GetSoundEffectClip(Sound sound)
-    {
-        switch (sound)
-        {
-            case Sound.Death:
-                return _characterDeathClip;
-            case Sound.GunCock:
-                return _gunCock;
-            case Sound.GunBoom:
-                return _gunBoom;
-            case Sound.Scream:
-                return _screamClips;
-            case Sound.Grass:
-                return _grassTouch;
-            case Sound.Explosion:
-                return _explosion;
-            case Sound.Nuke:
-                return _nuke;
-            default:
-                return null;
         }
     }
 }

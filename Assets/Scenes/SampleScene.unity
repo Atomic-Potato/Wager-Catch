@@ -14809,6 +14809,12 @@ MonoBehaviour:
   _nuke:
     _clip: {fileID: 8300000, guid: 394f55c8337514b49a139838700a91ef, type: 3}
     _volume: 1
+  _bonk:
+    _clip: {fileID: 8300000, guid: 2d39ce0636202a8469b6ef46f2a89b8d, type: 3}
+    _volume: 0.075
+  _stretch:
+    _clip: {fileID: 8300000, guid: e33492f118d016748a704d2aee2e6285, type: 3}
+    _volume: 0.1
   _screamClips:
     _clips:
     - {fileID: 8300000, guid: 458dd4f3662368d46a86eccf0c54a658, type: 3}
