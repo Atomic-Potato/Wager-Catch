@@ -2,6 +2,7 @@
 using System.Collections;
 using Ability;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Pathfinding
 {
@@ -95,6 +96,9 @@ namespace Pathfinding
 
         CustomUnityEvent _sleepEvent;
         public CustomUnityEvent SleepEvent => _sleepEvent;
+
+        [HideInInspector] public UnityEvent BonkStartBroadcaster;
+        [HideInInspector] public UnityEvent BonkEndBroadcaster;
         #endregion
 
         protected void OnDrawGizmos()
@@ -138,6 +142,9 @@ namespace Pathfinding
 
             if (_impulseCollider.enabled)
                 _impulseCollider.enabled = false;
+
+            BonkStartBroadcaster = new UnityEvent();
+            BonkEndBroadcaster = new UnityEvent();
 
             void RandomizeValues()
             {
@@ -514,7 +521,14 @@ namespace Pathfinding
                 }
             }
         }
-
+        
+        #region Bonking
+        // these should be abstract, but u cant make them here ig
+        public void Bonk(){}
+        public void EndBonk(){}
+        #endregion
+        
+        #region Panik
         Coroutine _screamCoroutine;
         public void Panik()
         {
@@ -549,5 +563,6 @@ namespace Pathfinding
                 _panikMarker.SetActive(false);
             }
         }
+        #endregion
     }
 }

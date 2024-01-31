@@ -170,6 +170,7 @@ public class Runner : TeamPlayer
 
     Objective GetRandomObjective()
     {
+        return Objective.Bonk;
         int _objective = UnityEngine.Random.Range(0, _objectivesCount);
         return (Objective)_objective;
     }
@@ -220,23 +221,24 @@ public class Runner : TeamPlayer
             return null;        
         }
     }
+
+    bool _isBonking = true;
+    public bool IsBonking => _isBonking;
     void ExecuteBonking()
     {
         if (_catcherToBonk == null || _catcherToBonk.TargetRunner == this)
         {
-            FinishBonking();
+            EndBonk();
             return;
         }
 
         _target = _catcherToBonk.transform.position;
         RequestPathToTarget();
-        // ForceSendPathRequest();
 
-        if (IsWithinBonkingRange())
+        if (IsWithinBonkingRange() && !_isBonking)
         {
-            // TODO: Remove these functions and execute them in the bonking animation
-            BonkCatcher();
-            FinishBonking();
+            _isBonking = true;
+            BonkStartBroadcaster.Invoke();
         }
 
         bool IsWithinBonkingRange()
@@ -248,18 +250,25 @@ public class Runner : TeamPlayer
     }
 
     // This function is to be executed from the bonking animation
-    public void BonkCatcher()
+    public new void Bonk()
     {
+        base.Bonk();
+        Debug.Log("Null Bonker");
         if (_catcherToBonk == null)
             return;
+        Debug.Log("Bonked");
         _catcherToBonk.BonkSelf();
     }
 
     // This function is to be executeed at the end of the bonking animation
-    public void FinishBonking()
+    public new void EndBonk()
     {
+        base.Bonk();
+
+        _isBonking = false;
         _currentObjective = Objective.None;
         StartObjective(Objective.Hide);
+        BonkEndBroadcaster.Invoke();
     }
     #endregion
     
