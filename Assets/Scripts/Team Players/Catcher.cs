@@ -82,9 +82,11 @@ public class Catcher : TeamPlayer
     {
         base.Update();
         Pathfind();
-        if (_catchCoroutine == null && _isTargetWithinCatchRange)
+        if (_catchCoroutine == null && !_isSleeping && _isTargetWithinCatchRange)
             _catchCoroutine = StartCoroutine(Catch());
         CorrectGunPointSide();
+        if (_isSleeping)
+            _catchToolSprite.enabled = false;
     }
 
     void CorrectGunPointSide()
