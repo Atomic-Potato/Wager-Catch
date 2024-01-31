@@ -1,47 +1,44 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Pathfinding;
 using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
-    #region Inspector
-    [SerializeField] Animator animator;
+    #region Global Variables
+    [SerializeField] protected Animator animator;
 
     [Space]
     [Header("Animation Clips")]
     [Tooltip("If no condition is met, then this clip will be played.")]
-    [SerializeField] AnimationClip defaultClip;
+    [SerializeField] protected AnimationClip defaultClip;
     [Space, Header("Idle")]
-    [SerializeField] AnimationClip clipIdle_N;
-    [SerializeField] AnimationClip clipIdle_NE;
-    [SerializeField] AnimationClip clipIdle_S;
-    [SerializeField] AnimationClip clipIdle_SE;
-    [SerializeField] AnimationClip clipIdle_E;
+    [SerializeField] protected AnimationClip clipIdle_N;
+    [SerializeField] protected AnimationClip clipIdle_NE;
+    [SerializeField] protected AnimationClip clipIdle_S;
+    [SerializeField] protected AnimationClip clipIdle_SE;
+    [SerializeField] protected AnimationClip clipIdle_E;
     [Space, Header("Walk")]
-    [SerializeField] AnimationClip clipWalk_N;
-    [SerializeField] AnimationClip clipWalk_NE;
-    [SerializeField] AnimationClip clipWalk_S;
-    [SerializeField] AnimationClip clipWalk_SE;
-    [SerializeField] AnimationClip clipWalk_E;
+    [SerializeField] protected AnimationClip clipWalk_N;
+    [SerializeField] protected AnimationClip clipWalk_NE;
+    [SerializeField] protected AnimationClip clipWalk_S;
+    [SerializeField] protected AnimationClip clipWalk_SE;
+    [SerializeField] protected AnimationClip clipWalk_E;
 
     [Space, Header("Other")]
-    [SerializeField] TeamPlayer player;
-    [SerializeField] Transform spriteParent;
-    #endregion
+    [SerializeField] protected TeamPlayer player;
+    [SerializeField] protected Transform spriteParent;
 
-    #region Global Variables
     AnimationClip _clipCurrent;
     public AnimationClip CurrentClip => _clipCurrent;
     Coroutine _waitForAnimationCache;
     #endregion
 
-    void Awake()
+    protected void Awake()
     {
         SetAnimationState(defaultClip);
     }
 
-    void Update()
+    protected void Update()
     {
         #region Animation States Handling
         if (player.IsMoving)
@@ -80,7 +77,7 @@ public class AnimationManager : MonoBehaviour
     /// If current is forced to be played till end
     /// then this will overide it and replace it with a new clip
     /// </param>
-    void SetAnimationState(AnimationClip clip, bool endCurrent = false, float length = -1f)
+    protected void SetAnimationState(AnimationClip clip, bool endCurrent = false, float length = -1f)
     {
         if (clip == _clipCurrent)
         {
@@ -119,7 +116,7 @@ public class AnimationManager : MonoBehaviour
     }
 
     #region States Conditions
-    AnimationClip GetWalkingAnimationClip()
+    protected AnimationClip GetWalkingAnimationClip()
     {
         if (IsFacingNorth)
             return clipWalk_N;
@@ -134,7 +131,7 @@ public class AnimationManager : MonoBehaviour
         return clipWalk_S;
     }
 
-    AnimationClip GetIdleAnimationClip()
+    protected AnimationClip GetIdleAnimationClip()
     {
         if (IsFacingNorth)
             return clipIdle_N;
@@ -149,14 +146,14 @@ public class AnimationManager : MonoBehaviour
         return clipIdle_S;
     }
 
-    bool IsFacingNorth => player.FacingDirection.y > 0f && Mathf.Approximately(player.FacingDirection.x, 0f);
-    bool IsFacingNorthEast => player.FacingDirection.y > 0f && player.FacingDirection.x > 0f; 
-    bool IsFacingNorthWest => player.FacingDirection.y > 0f && player.FacingDirection.x < 0f; 
-    bool IsFacingSouth => player.FacingDirection.y < 0f && Mathf.Approximately(player.FacingDirection.x, 0f); 
-    bool IsFacingSouthEast => player.FacingDirection.y < 0f && player.FacingDirection.x > 0f; 
-    bool IsFacingSouthWest => player.FacingDirection.y < 0f && player.FacingDirection.x < 0f; 
-    bool IsFacingEast => Mathf.Approximately(player.FacingDirection.y, 0f) && player.FacingDirection.x > 0f; 
-    bool IsFacingWest => Mathf.Approximately(player.FacingDirection.y, 0f) && player.FacingDirection.x < 0f; 
+    protected bool IsFacingNorth => player.FacingDirection.y > 0f && Mathf.Approximately(player.FacingDirection.x, 0f);
+    protected bool IsFacingNorthEast => player.FacingDirection.y > 0f && player.FacingDirection.x > 0f; 
+    protected bool IsFacingNorthWest => player.FacingDirection.y > 0f && player.FacingDirection.x < 0f; 
+    protected bool IsFacingSouth => player.FacingDirection.y < 0f && Mathf.Approximately(player.FacingDirection.x, 0f); 
+    protected bool IsFacingSouthEast => player.FacingDirection.y < 0f && player.FacingDirection.x > 0f; 
+    protected bool IsFacingSouthWest => player.FacingDirection.y < 0f && player.FacingDirection.x < 0f; 
+    protected bool IsFacingEast => Mathf.Approximately(player.FacingDirection.y, 0f) && player.FacingDirection.x > 0f; 
+    protected bool IsFacingWest => Mathf.Approximately(player.FacingDirection.y, 0f) && player.FacingDirection.x < 0f; 
     #endregion
 
     #region Events

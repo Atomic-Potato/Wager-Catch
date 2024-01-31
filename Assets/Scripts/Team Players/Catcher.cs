@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using Pathfinding;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Catcher : TeamPlayer
 {
@@ -41,14 +42,19 @@ public class Catcher : TeamPlayer
     Runner _targetRunner;
     public Runner TargetRunner => _targetRunner;
     public Runner BonkingRunner;
+    public bool IsBonkerOnMyAss => BonkingRunner != null;
     bool _isCatchingTarget;
     public bool IsCatchingTarget => _isCatchingTarget;
     Coroutine _catchCoroutine;
+
+    [HideInInspector] public UnityEvent BonkedBroadcaster;
     #endregion
 
     new void Awake()
     {
         base.Awake();
+
+        BonkEndBroadcaster = new UnityEvent();
 
         if (_catchToolSprite.enabled)
             _catchToolSprite.enabled = false;
@@ -319,6 +325,7 @@ public class Catcher : TeamPlayer
     #endregion
     public void BonkSelf()
     {
+        BonkedBroadcaster.Invoke();
         DeductHealthPoint();
         if (_health <= 0)
             return;

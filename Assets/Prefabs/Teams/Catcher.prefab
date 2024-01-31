@@ -423,6 +423,7 @@ MonoBehaviour:
   _deathEffect: {fileID: 2983881910522846901, guid: 4b237c93686724944b61e18535936aa0,
     type: 3}
   _panikMarker: {fileID: 1183833912681237169}
+  _isGizmosEnabled: 1
   _isDrawCollisionCheckSize: 0
   _collisionCheckCollor: {r: 1, g: 0, b: 0, a: 1}
   isDrawPath: 0
@@ -432,6 +433,13 @@ MonoBehaviour:
   Grid: {fileID: 0}
   PathRequestManager: {fileID: 0}
   TeamsManager: {fileID: 0}
+  BonkStartBroadcaster:
+    m_PersistentCalls:
+      m_Calls: []
+  BonkEndBroadcaster:
+    m_PersistentCalls:
+      m_Calls: []
+  _health: 10
   _timeToCatch: 1.5
   _timeToRecoverCatch: 1
   _catchAreaRadiusRange: {x: 0.5, y: 1}
@@ -440,10 +448,15 @@ MonoBehaviour:
   _catchToolEndPoint: {fileID: 5285774475910635014}
   _catchEffect: {fileID: 847476468779818668, guid: 9a5d27ba8803a96428fdd1b763e7c84c,
     type: 3}
+  _bonkedTime: 2
   _isDrawCatchArea: 1
   _catchAreaDisplayedRadius: 1
   _catchAreaColor: {r: 1, g: 0, b: 0, a: 1}
   SpawnPoint: {fileID: 0}
+  BonkingRunner: {fileID: 0}
+  BonkedBroadcaster:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &3044994074815680745
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -674,7 +687,7 @@ GameObject:
   - component: {fileID: 8078134235699673580}
   - component: {fileID: 8782618052490560502}
   - component: {fileID: 738498387646497950}
-  - component: {fileID: 6002139474269684326}
+  - component: {fileID: 8453909096333707589}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -767,7 +780,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!114 &6002139474269684326
+--- !u!114 &8453909096333707589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -776,7 +789,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6797506817921077087}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c30f6176ae6f5e947ab579ac3cc8245c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1290a15e6fcae8e42bdbfca1d77d6207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8782618052490560502}
@@ -793,6 +806,7 @@ MonoBehaviour:
   clipWalk_E: {fileID: 7400000, guid: 80c90d09782ecaf4792f8b969fce69d8, type: 2}
   player: {fileID: 2041393261797506488}
   spriteParent: {fileID: 5374470096601600781}
+  _clip_Bonked: {fileID: 7400000, guid: 4e26087477b7fed479c38147db666dc2, type: 2}
 --- !u!1 &8768022621478702730
 GameObject:
   m_ObjectHideFlags: 0
