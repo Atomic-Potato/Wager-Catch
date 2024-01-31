@@ -171,7 +171,6 @@ public class Runner : TeamPlayer
 
     Objective GetRandomObjective()
     {
-        // return Objective.Bonk;
         int _objective = UnityEngine.Random.Range(0, _objectivesCount);
         return (Objective)_objective;
     }
