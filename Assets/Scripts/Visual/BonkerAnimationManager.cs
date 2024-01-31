@@ -22,18 +22,16 @@ public class BonkerAnimationManager : MonoBehaviour
         _teamPlayer.BonkEndBroadcaster.AddListener(EndBonkingAnimation);
     }
 
+    // NOTE: no need to flip the sprite if the object is a child of the "Sprite Parent" 
+    // as that one is already flipping based on direction
     void Update()
     {
         if (_isBonking)
-            PositionBonker();
+            SetBonkerSpriteLayer();
     }
-
-    void PositionBonker()
+    
+    void SetBonkerSpriteLayer()
     {
-        _bonkerParent.transform.localScale = new Vector3 (
-            (int)_teamPlayer.FacingDirection.x != 0 ? _teamPlayer.FacingDirection.x : 1f,
-            1f,
-            1f);
         _bonkerSprite.sortingOrder = _teamPlayer.FacingDirection.y > 0 ? 9 : 11;
     }
 
