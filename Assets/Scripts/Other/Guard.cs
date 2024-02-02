@@ -31,6 +31,7 @@ public class Guard : TeamPlayer
 
     public void ForceUpdatePath()
     {
+        Debug.Log("Forcing path update for guard");
         if (_target == null)
             return;
         ForceSendPathRequest();
