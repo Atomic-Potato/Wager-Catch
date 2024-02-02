@@ -4573,7 +4573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a366c36ff219c654692246545f3046a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeScaleMultiplier: 4
+  _timeScaleMultiplier: 3
   _button: {fileID: 408098907}
 --- !u!1001 &412983117
 PrefabInstance:

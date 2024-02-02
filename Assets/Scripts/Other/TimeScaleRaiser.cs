@@ -10,10 +10,6 @@ public class TimeScaleRaiser : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     float _originalTimeScale;
     
 
-    void FastForwardTime()
-    {
-        
-    }
 
     void RestoreTime()
     {
@@ -21,12 +17,20 @@ public class TimeScaleRaiser : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _originalTimeScale = Time.timeScale;
-        Time.timeScale *= _timeScaleMultiplier;
+        if (Input.GetMouseButton(1))
+            return;
+        SpeedUpTime();
+        void SpeedUpTime()
+        {
+            _originalTimeScale = Time.timeScale;
+            Time.timeScale *= _timeScaleMultiplier;
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (Input.GetMouseButtonUp(1))
+            return;
         Time.timeScale = _originalTimeScale;
     }
 }
