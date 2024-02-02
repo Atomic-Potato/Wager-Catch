@@ -243,19 +243,20 @@ public class Runner : TeamPlayer
             BonkStartBroadcaster.Invoke();
         }
 
-        bool IsWithinBonkingRange()
-        {
-            float distanceToCatcher = Vector2.Distance(transform.position, _catcherToBonk.transform.position);
-            return distanceToCatcher <= _bonkingRange;
-        }
 
+    }
+    
+    bool IsWithinBonkingRange()
+    {
+        float distanceToCatcher = Vector2.Distance(transform.position, _catcherToBonk.transform.position);
+        return distanceToCatcher <= _bonkingRange;
     }
 
     // This function is to be executed from the bonking animation
     public override void Bonk()
     {
         base.Bonk();
-        if (_catcherToBonk == null)
+        if (_catcherToBonk == null || !IsWithinBonkingRange())
             return;
         _catcherToBonk.BonkSelf();
     }

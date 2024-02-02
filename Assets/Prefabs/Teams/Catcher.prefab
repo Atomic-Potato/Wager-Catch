@@ -439,7 +439,7 @@ MonoBehaviour:
   BonkEndBroadcaster:
     m_PersistentCalls:
       m_Calls: []
-  _health: 10
+  _health: 2
   _timeToCatch: 1.5
   _timeToRecoverCatch: 1
   _catchAreaRadiusRange: {x: 0.5, y: 1}
