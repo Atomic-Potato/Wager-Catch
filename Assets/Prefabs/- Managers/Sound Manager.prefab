@@ -1,0 +1,89 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3686636529669223795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3686636529669223794}
+  - component: {fileID: 3686636529669223793}
+  m_Layer: 0
+  m_Name: Sound Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3686636529669223794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686636529669223795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3686636529669223793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3686636529669223795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ffbb1abb46ef9944843190762251565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _randomPitchRange: {x: 0.5, y: 1}
+  _gunCock:
+    _clip: {fileID: 8300000, guid: 1aa07380788c67445a45f925de201634, type: 3}
+    _volume: 0.75
+  _gunBoom:
+    _clip: {fileID: 8300000, guid: f1a0e54e90e89c64b816aeec2faad18d, type: 3}
+    _volume: 0.5
+  _characterDeathClip:
+    _clip: {fileID: 8300000, guid: 6457ec77133409141b24265c91a1d1c9, type: 3}
+    _volume: 1
+  _grassTouch:
+    _clip: {fileID: 8300000, guid: d995d21ab0c36584f8cf09409be87c34, type: 3}
+    _volume: 0.5
+  _explosion:
+    _clip: {fileID: 8300000, guid: a8726442a9a21ee429a8126ed5da4d92, type: 3}
+    _volume: 1
+  _nuke:
+    _clip: {fileID: 8300000, guid: 394f55c8337514b49a139838700a91ef, type: 3}
+    _volume: 1
+  _bonk:
+    _clip: {fileID: 8300000, guid: 2d39ce0636202a8469b6ef46f2a89b8d, type: 3}
+    _volume: 0.075
+  _stretch:
+    _clip: {fileID: 8300000, guid: e33492f118d016748a704d2aee2e6285, type: 3}
+    _volume: 0.1
+  _screamClips:
+    _clips:
+    - {fileID: 8300000, guid: 458dd4f3662368d46a86eccf0c54a658, type: 3}
+    - {fileID: 8300000, guid: f301ae4fa99a95b428af51b6305d345f, type: 3}
+    - {fileID: 8300000, guid: f8ab37d8f8c8e19498d21b80540921d9, type: 3}
+    - {fileID: 8300000, guid: c67653dd9cb97fc41b931f3216964483, type: 3}
+    - {fileID: 8300000, guid: a3c1321bb85531045b66d269de4ab085, type: 3}
+    - {fileID: 8300000, guid: 61b577ca3c64f434eb7c6b502c7b4535, type: 3}
+    - {fileID: 8300000, guid: 9541ac4c787d8664ca0c3a1913f831d0, type: 3}
+    - {fileID: 8300000, guid: b2fddaf5626dd7a43a5e7ec185e6634a, type: 3}
+    - {fileID: 8300000, guid: 97f747f7dc0acb3459608a9d73d6f422, type: 3}
+    - {fileID: 8300000, guid: 7649e0579a0c94a41a8e24da87fdd823, type: 3}
+    _volume: 0
+  _click1:
+    _clip: {fileID: 8300000, guid: b09ffea800e8c35449eba1dbd5da8378, type: 3}
+    _volume: 1
+  _click2:
+    _clip: {fileID: 8300000, guid: 6243aba5221295f4e9b9b34e8b74268c, type: 3}
+    _volume: 1

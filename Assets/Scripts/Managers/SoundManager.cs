@@ -21,6 +21,10 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] SoundClip _stretch;
     [SerializeField] RandomSoundClip _screamClips;
 
+    [Space, Header("UI")]
+    [SerializeField] SoundClip _click1;
+    [SerializeField] SoundClip _click2;
+
     public enum Sound
     {
         Death,
@@ -32,6 +36,8 @@ public class SoundManager : Singleton<SoundManager>
         Nuke,
         Bonk,
         Stretch,
+        Click_1,
+        Click_2,
     }
 
     ISoundEffectClip GetSoundEffectClip(Sound sound)
@@ -56,6 +62,10 @@ public class SoundManager : Singleton<SoundManager>
                 return _bonk;
             case Sound.Stretch:
                 return _stretch;
+            case Sound.Click_1:
+                return _click1;
+            case Sound.Click_2:
+                return _click2;
             default:
                 return null;
         }
@@ -65,8 +75,10 @@ public class SoundManager : Singleton<SoundManager>
     {
         GameObject audioParent = CreateSoundObject();
         AudioSource sauce = CreateDaSauce();
+        if (sound == Sound.Click_1)
+            Debug.Log(sauce.pitch);
         sauce.Play();
-        Destroy(audioParent, sauce.clip.length);
+        DestroyManager.Instance.Destroy(audioParent, sauce.clip.length, true);
         return sauce.clip.length;
 
         GameObject CreateSoundObject()
@@ -83,6 +95,7 @@ public class SoundManager : Singleton<SoundManager>
             source.volume = sfxClip.GetVolume();
             if (isRandomPitch)
                 source.pitch = UnityEngine.Random.Range(_randomPitchRange.x, _randomPitchRange.y);
+            // source.pitch *= Time.timeScale;
             return source;
         }
     }

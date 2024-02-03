@@ -24,6 +24,7 @@ public class TimeScaleManipulator : Singleton<TimeScaleManipulator>
             throw new System.Exception("Cannot set negative time scale");
 
         Time.timeScale *= scaleMultiplier;
+        Debug.Log(Time.timeScale);
         if (scaleMultiplier > 1f)
             TimeScaleIncreasedBrodcaster.Invoke();
         else
