@@ -213,11 +213,12 @@ public class GameManager : Singleton<GameManager>
 
     void SetGameState(GameState state)
     {
+        TimeScaleManipulator timeManipulator = TimeScaleManipulator.Instance;
         _currentGameState = state;
         switch (state)
         {
             case GameState.InTeamSelection:
-                Time.timeScale = 0f;
+                timeManipulator.PauseTime();
                 UIManager.Instance.SetScreen(UIManager.UI.TeamSelection);
                 break;
             case GameState.InGame:
@@ -225,11 +226,11 @@ public class GameManager : Singleton<GameManager>
                 UIManager.Instance.SetScreen(UIManager.UI.InGame);
                 break;
             case GameState.MatchEnd:
-                Time.timeScale = 0f;
+                timeManipulator.PauseTime();
                 UIManager.Instance.SetScreen(UIManager.UI.GameEnd);
                 break;
             case GameState.MatchEndSpecial:
-                Time.timeScale = 0f;
+                timeManipulator.PauseTime();
                 UIManager.Instance.SetScreen(UIManager.UI.GameEndSpecial);
                 break;
         }
@@ -329,7 +330,7 @@ public class GameManager : Singleton<GameManager>
     void StartMatch()
     {
         _currentMatchState = MatchState.Playing;
-        Time.timeScale = 1f;
+        TimeScaleManipulator.Instance.RestoreTime();
 
         _wager = UIManager.Instance.SelectedWager;
         _balance -= _wager;

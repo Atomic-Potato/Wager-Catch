@@ -32,6 +32,7 @@ public class VHSEffect : MonoBehaviour
         TimeScaleManipulator.Instance.TimeScaleIncreasedBrodcaster.AddListener(EnableEffect);
         TimeScaleManipulator.Instance.TimeScaleDecreasedBrodcaster.AddListener(DisableEffect);
         TimeScaleManipulator.Instance.TimeScaleRestoredBroadcaster.AddListener(DisableEffect);
+        TimeScaleManipulator.Instance.TimeScalePausedBroadcaster.AddListener(DisableEffect);
     }
 
 	void OnRenderImage(RenderTexture source, RenderTexture destination)

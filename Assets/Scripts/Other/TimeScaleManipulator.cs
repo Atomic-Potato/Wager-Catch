@@ -3,9 +3,10 @@ using UnityEngine.Events;
 
 public class TimeScaleManipulator : Singleton<TimeScaleManipulator>
 {
-    [HideInInspector] public UnityEvent TimeScaleIncreasedBrodcaster;
-    [HideInInspector] public UnityEvent TimeScaleDecreasedBrodcaster;
-    [HideInInspector] public UnityEvent TimeScaleRestoredBroadcaster;
+    public UnityEvent TimeScaleIncreasedBrodcaster;
+    public UnityEvent TimeScaleDecreasedBrodcaster;
+    public UnityEvent TimeScaleRestoredBroadcaster;
+    public UnityEvent TimeScalePausedBroadcaster;
     
     new void Awake()
     {
@@ -14,15 +15,25 @@ public class TimeScaleManipulator : Singleton<TimeScaleManipulator>
         TimeScaleDecreasedBrodcaster = new UnityEvent();
         TimeScaleIncreasedBrodcaster = new UnityEvent();
         TimeScaleRestoredBroadcaster = new UnityEvent();
+        TimeScalePausedBroadcaster = new UnityEvent();
     }
 
-    public void SpeedUpTime(float scaleMultiplier)
+    public void ChangeScale(float scaleMultiplier)
     {
+        if (scaleMultiplier < 0f)
+            throw new System.Exception("Cannot set negative time scale");
+
         Time.timeScale *= scaleMultiplier;
         if (scaleMultiplier > 1f)
             TimeScaleIncreasedBrodcaster.Invoke();
         else
             TimeScaleDecreasedBrodcaster.Invoke();
+    }
+
+    public void PauseTime()
+    {
+        Time.timeScale = 0f;
+        TimeScalePausedBroadcaster.Invoke();
     }
 
     public void RestoreTime()

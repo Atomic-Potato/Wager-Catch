@@ -9,7 +9,7 @@ public class TimeSpeedUp : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if (Input.GetMouseButton(1))
             return;
-        TimeScaleManipulator.Instance.SpeedUpTime(_timeScaleMultiplier);
+        TimeScaleManipulator.Instance.ChangeScale(_timeScaleMultiplier);
     }
 
     public void OnPointerUp(PointerEventData eventData)
