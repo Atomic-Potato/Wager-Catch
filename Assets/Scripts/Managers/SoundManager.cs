@@ -71,7 +71,7 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    public float PlaySoundAtPosition(Vector2 position, Sound sound, bool isRandomPitch = false)
+    public float PlaySoundAtPosition(Vector2 position, Sound sound, bool isRandomPitch = false, bool isAffectedByTimeScale = true)
     {
         GameObject audioParent = CreateSoundObject();
         AudioSource sauce = CreateDaSauce();
@@ -95,7 +95,8 @@ public class SoundManager : Singleton<SoundManager>
             source.volume = sfxClip.GetVolume();
             if (isRandomPitch)
                 source.pitch = UnityEngine.Random.Range(_randomPitchRange.x, _randomPitchRange.y);
-            // source.pitch *= Time.timeScale;
+            if (isAffectedByTimeScale)
+                source.pitch *= Time.timeScale;
             return source;
         }
     }
