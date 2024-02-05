@@ -17,6 +17,12 @@ public class CursorManager : Singleton<CursorManager>
         None, Pointing, Grab, Grabbing, Crosshair,
     }
 
+    [Space, SerializeField] CursorLocation _cursorLocation = CursorLocation.InMenu;
+    public enum CursorLocation
+    {
+        InMatch, InMenu
+    }
+
     new void Awake()
     {
         base.Awake();
@@ -25,16 +31,22 @@ public class CursorManager : Singleton<CursorManager>
 
     void Start()
     {
-        GameManager.Instance.PlayerSpawnBroadcaster.AddListener(HideCursor);
-        GameManager.Instance.PlayerDespawnBroadcaster.AddListener(ShowCursor);
+        if (_cursorLocation == CursorLocation.InMatch)
+        {
+            GameManager.Instance.PlayerSpawnBroadcaster.AddListener(HideCursor);
+            GameManager.Instance.PlayerDespawnBroadcaster.AddListener(ShowCursor);
+        }
     }
 
     void Update()
     {
-        if (AbilitiesManager.Instance.IsAbilitySelected)
-            SetCursor(_grabbing, new Vector2(_grabbing.width/2f, _grabbing.height/2f), CursorType.Grabbing);
-        else
-            SetCursor(_pointing, new Vector2(_pointing.width/2f, 0f), CursorType.Pointing);
+        if (_cursorLocation == CursorLocation.InMatch)
+        {
+            if (AbilitiesManager.Instance.IsAbilitySelected)
+                SetCursor(_grabbing, new Vector2(_grabbing.width/2f, _grabbing.height/2f), CursorType.Grabbing);
+            else
+                SetCursor(_pointing, new Vector2(_pointing.width/2f, 0f), CursorType.Pointing);
+        }
     }
 
     void SetCursor(Texture2D texture, Vector2 hotSpot, CursorType cursor)
