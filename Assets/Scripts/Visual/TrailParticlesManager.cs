@@ -7,7 +7,7 @@ public class TrailParticlesManager : MonoBehaviour
 {
     [SerializeField] ParticleSystem _trailEffect;
     [SerializeField] TeamPlayer _teamPlayer;
-    [SerializeField] Player _player;
+    [SerializeField] UnitBase _player;
 
     ParticleSystem.MinMaxCurve _originalRateOverTime;
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GuardPoliceEffect : MonoBehaviour
@@ -14,18 +13,31 @@ public class GuardPoliceEffect : MonoBehaviour
     [SerializeField] SpriteRenderer _lightSpriteRenderer;
     [SerializeField] AudioSource _sirenAudio;
 
+    [Space]
+    [SerializeField] bool _isColorsOnly;
+
     void Awake()
     {
-        _sirenAudio.Play();
-        _sirenAudio.Pause();
+        if (!_isColorsOnly)
+        {
+            _sirenAudio.Play();
+            _sirenAudio.Pause();
+        }
     }
 
     void Update()
     {
-        if (_guard.CurrentState != Guard.State.OnStandBy)
-            WeeWooWeeWoo();
+        if (!_isColorsOnly)
+        {
+            if (_guard.CurrentState != Guard.State.OnStandBy)
+                WeeWooWeeWoo();
+            else
+                MomSaidNoMoreWeeWoo();
+        }
         else
-            MomSaidNoMoreWeeWoo();
+        {
+            WeeWooWeeWoo();
+        }
     }
 
     Coroutine _weeWooCoroutine;
@@ -36,7 +48,8 @@ public class GuardPoliceEffect : MonoBehaviour
         
         IEnumerator WeeWoo()
         {
-            _sirenAudio.UnPause();
+            if (!_isColorsOnly)
+                _sirenAudio.UnPause();
             while (true)
             {
                 SetColors(_colorA);
@@ -57,7 +70,8 @@ public class GuardPoliceEffect : MonoBehaviour
     {
         if (_weeWooCoroutine != null)
         {
-            _sirenAudio.Pause();
+            if (!_isColorsOnly)
+                _sirenAudio.Pause();
             StopCoroutine(_weeWooCoroutine);
             _weeWooCoroutine = null;
         }

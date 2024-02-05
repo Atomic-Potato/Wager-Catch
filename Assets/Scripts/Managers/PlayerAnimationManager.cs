@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Pathfinding;
 using UnityEngine;
 
 public class PlayerAnimationManager : MonoBehaviour
@@ -24,7 +25,7 @@ public class PlayerAnimationManager : MonoBehaviour
     [SerializeField] AnimationClip clipWalk_E;
 
     [Space, Header("Other")]
-    [SerializeField] Player player;
+    [SerializeField] UnitBase player;
     [SerializeField] Transform spriteParent;
     #endregion
 
@@ -157,5 +158,8 @@ public class PlayerAnimationManager : MonoBehaviour
     bool IsFacingWest => Mathf.Approximately(player.FacingDirection.y, 0f) && player.FacingDirection.x < 0f; 
     #endregion
 
-    
+    public void PlayTouchGrassSound()
+    {
+        SoundManager.Instance.PlaySoundAtPosition(transform.position, SoundManager.Sound.Grass, true);
+    }
 }
