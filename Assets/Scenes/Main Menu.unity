@@ -3593,6 +3593,93 @@ MonoBehaviour:
   _buttonPressClip: {fileID: 7400000, guid: e4f9c47767c054e44af1ebbaa0f5fef6, type: 2}
   _isOverideButtonSound: 0
   _clickSound: 9
+--- !u!1 &804523911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 804523912}
+  - component: {fileID: 804523914}
+  - component: {fileID: 804523913}
+  - component: {fileID: 804523915}
+  m_Layer: 0
+  m_Name: Pathfinding Grid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &804523912
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804523911}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 843636352}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &804523913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804523911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51812c816201d554daf8efaa6bff1667, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 804523914}
+  pathRequestManager: {fileID: 804523915}
+  isLogTimeToGetPath: 0
+--- !u!114 &804523914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804523911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldSize: {x: 20, y: 16}
+  nodeRadius: 0.5
+  unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 0
+  safeAreaMask:
+    serializedVersion: 2
+    m_Bits: 0
+  isDisplayGrid: 1
+  gridColor: {r: 1, g: 1, b: 1, a: 0.5}
+  walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
+  unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
+  safeNodesColor: {r: 0, g: 0, b: 1, a: 0.5}
+  uneditableNodesColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!114 &804523915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804523911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29c7c75c64b400b48a2778f81ff8d2e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathfinder: {fileID: 804523913}
 --- !u!1 &827597174
 GameObject:
   m_ObjectHideFlags: 0
@@ -3755,6 +3842,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1952114370}
+  - {fileID: 804523912}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
