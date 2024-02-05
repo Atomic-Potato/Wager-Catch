@@ -79,8 +79,6 @@ public class SoundManager : Singleton<SoundManager>
     {
         GameObject audioParent = CreateSoundObject();
         AudioSource sauce = CreateDaSauce();
-        if (sound == Sound.Click_1)
-            Debug.Log(sauce.pitch);
         sauce.Play();
         DestroyManager.Instance.Destroy(audioParent, sauce.clip.length, true);
         return sauce.clip.length;
