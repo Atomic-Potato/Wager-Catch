@@ -7,6 +7,10 @@ using UnityEngine.AI;
 
 public class SoundManager : Singleton<SoundManager>
 {
+    [Space, Header("Global Sounds")]
+    [SerializeField] Sound _globalButtonClick = Sound.Click_1;
+    public Sound GlobalButtonClick => _globalButtonClick;
+
     [Space, Header("Audio Properties")]
     [SerializeField, Min(0f)] Vector2 _randomPitchRange = new Vector2(0.5f, 1f); 
 
