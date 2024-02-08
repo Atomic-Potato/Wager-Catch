@@ -1,13 +1,27 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class MainMenu : UIMenuBase
 {
+    [Tooltip("Should cover the entire menu. It diables palyer interaction with the menu when enabled")]
+    [SerializeField] RawImage _invisibleImage;
+
+    [Space, Header("Others")]
+    [SerializeField] UIMenuBase _mapSelectionMenu;
+
+    public override void ShowMenu()
+    {
+        base.ShowMenu();
+        _invisibleImage.enabled = false;
+    }
+
     #region Buttons Logic
     public void ExecuteStart()
     {
-        Debug.Log("Start pressed");
+        _mapSelectionMenu.ShowMenu();
+        _invisibleImage.enabled = true;
     }
 
     public void ExecuteChaosMode()

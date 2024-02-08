@@ -4,12 +4,12 @@ public abstract class UIMenuBase : MonoBehaviour
 {
     [SerializeField] protected GameObject _menuParent;
 
-    public void ShowMenu()
+    public virtual void ShowMenu()
     {
         _menuParent.SetActive(true);
     }
 
-    public void HideMenu()
+    public virtual void HideMenu()
     {
         _menuParent.SetActive(false);
     }
