@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace Pathfinding
 {
-    public class TestUnitsManager : MonoBehaviour
+    public class AgentsManager : MonoBehaviour
     {
-        [SerializeField, Min(0)] int unitsCount;
-        [SerializeField] GameObject[] testUnits;
-        [SerializeField] Transform testUnitParent;
+        [SerializeField, Min(0)] int _agentsCount;
+        [SerializeField] GameObject[] _agents;
+        [SerializeField] Transform _agentsParent;
         [SerializeField] Grid grid;
         [SerializeField] PathRequestManager pathRequestManager;
         [SerializeField] Transform target;
 
-        List<TestUnit> _units = new List<TestUnit>();
+        List<Agent> _units = new List<Agent>();
         int _currentUnitObjectIndex = 0;        
 
         void Start()
@@ -30,19 +30,19 @@ namespace Pathfinding
                     if (!grid.Nodes[i,j].IsWalkable)
                         continue;
                     GameObject unitObject = GetUnitObject();
-                    GameObject spawnedUnit = Instantiate(unitObject, grid.Nodes[i,j].WorldPosition, Quaternion.identity, testUnitParent);
-                    TestUnit unit = spawnedUnit.GetComponent<TestUnit>();
+                    GameObject spawnedUnit = Instantiate(unitObject, grid.Nodes[i,j].WorldPosition, Quaternion.identity, _agentsParent);
+                    Agent unit = spawnedUnit.GetComponent<Agent>();
                     unit.PathRequestManager = pathRequestManager;
-                    unit.TestUnitsManager = this;
-                    unit.target = target;
+                    unit.AgentsManager = this;
+                    unit.Target = target;
                     _units.Add(unit);
 
-                    unitsCount--;
-                    if (unitsCount <= 0)
+                    _agentsCount--;
+                    if (_agentsCount <= 0)
                         break;
                 }
 
-                if (unitsCount <= 0)
+                if (_agentsCount <= 0)
                     break;
             }
         }
@@ -65,8 +65,8 @@ namespace Pathfinding
 
         GameObject GetUnitObject()
         {
-            GameObject unit = testUnits[_currentUnitObjectIndex];
-            _currentUnitObjectIndex = (_currentUnitObjectIndex + 1) % testUnits.Count();
+            GameObject unit = _agents[_currentUnitObjectIndex];
+            _currentUnitObjectIndex = (_currentUnitObjectIndex + 1) % _agents.Count();
             return unit;
         }
     }
