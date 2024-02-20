@@ -6,11 +6,11 @@ namespace Pathfinding
     [CreateAssetMenu (fileName = "Avoidance Behavior", menuName = "Pathfinding/Behavior/Avoidance")]
     public class AvoidanceBehavior : AgentBehavior
     {
-        public override Vector2 CalculateNextPosition(Agent agent, List<Transform> neighbors, Vector2 destination)
+        public override Vector2 CalculateNextDirection(Agent agent, List<Transform> neighbors, Vector2 destination)
         {
             bool isNeighborsExist = neighbors.Count != 0;
             if (!isNeighborsExist)
-                return agent.transform.position;
+                return Vector2.zero;
                 
             return GetNeighborsAvgAvoidancePosition();
 

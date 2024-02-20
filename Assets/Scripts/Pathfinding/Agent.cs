@@ -25,6 +25,7 @@ namespace Pathfinding
 
         [HideInInspector] public AgentsManager AgentsManager;
 
+        Collider2D _collider;
         Vector2? _previousPosition;
 
         Vector2[] _pathToTarget;
@@ -67,6 +68,7 @@ namespace Pathfinding
 
         void Awake()
         {
+            _collider = GetComponent<Collider2D>();
             if (_isRandomPathColor)
                 _pathColor = new Color(Random.Range(.8f,1f), Random.Range(.4f,8f), Random.Range(0f,4f), 1f);
         }
@@ -84,6 +86,8 @@ namespace Pathfinding
             }
 
             UpdateFacingDirection();
+
+            Debug.DrawLine((Vector2)transform.position, (Vector2)transform.position + CompositeBehavior.Direction, Color.red);
         }
         #endregion
 
@@ -153,7 +157,9 @@ namespace Pathfinding
                 // - Reach the waypoint exactly
                 // - Stays in the proximity of the waypoint long enough
                 // This is to account for when adding local avoidance
-                return (Vector2)transform.position == currentWaypoint;
+
+                // return (Vector2)transform.position == currentWaypoint;
+                return Vector2.Distance(transform.position, currentWaypoint) < 0.01f;
             }
             bool IsReachedEndOfPath()
             {
@@ -169,13 +175,17 @@ namespace Pathfinding
                 RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _neighborsDetectionRadius, Vector2.zero, Mathf.Infinity, _agentsLayer);
                 List<Transform> neighbors = new List<Transform>();
                 foreach(RaycastHit2D hit in hits)
-                    neighbors.Add(hit.collider.gameObject.transform);
+                {
+                    if (hit.collider != _collider)
+                        neighbors.Add(hit.collider.gameObject.transform);
+                }
                 return neighbors;
             }
             void MoveToNextWaypoint()
             {
-                Vector3 nextDestination = (Vector3)_agentBehavior.CalculateNextPosition(this, GetNeighbors(), currentWaypoint);
-                transform.position = Vector2.MoveTowards(transform.position, nextDestination, Speed * Time.deltaTime);
+                Vector3 direction = (Vector3)_agentBehavior.CalculateNextDirection(this, GetNeighbors(), currentWaypoint);
+                transform.position += direction * Speed * Time.deltaTime;
+                // transform.position = Vector2.MoveTowards(transform.position, nextDestination, Speed * Time.deltaTime);
             }
         }
 
