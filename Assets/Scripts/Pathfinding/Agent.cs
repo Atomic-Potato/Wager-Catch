@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Pathfinding
 {
+    [RequireComponent(typeof(Collider2D))]
     public class Agent : MonoBehaviour
     {
         #region Global Variables
@@ -13,8 +14,10 @@ namespace Pathfinding
         [SerializeField] LayerMask _agentsLayer;
         [SerializeField] AgentBehavior _agentBehavior;
         [SerializeField, Min(0)] float _neighborsDetectionRadius = 1f;
+        public float NeighborsDetectionRadius => _neighborsDetectionRadius;
 
         [Space, Header("Gizmos")]
+        [SerializeField] bool _isDrawGizmos;
         [SerializeField] bool _isDrawPath;
         [SerializeField] Color _pathColor = new Color(0f, 0f, 1f, .5f);
         [SerializeField] bool _isRandomPathColor = false;
@@ -43,16 +46,22 @@ namespace Pathfinding
         #region Execution
         void OnDrawGizmos()
         {
-            if(!_isDrawPath)
+            if (!_isDrawGizmos)
                 return;
-            
-            if (_pathToTarget != null)
+
+            if (_isDrawGizmos && _pathToTarget != null)
             {
                 for(int i = _pathIndex; i < _pathToTarget.Length; i++)
                 {
                     Gizmos.color = _pathColor;
                     Gizmos.DrawCube(_pathToTarget[i], new Vector3(.25f, .25f, 0f));
                 }
+            }
+
+            if (_isDrawNeighborsDetectionRadius)
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawWireSphere(transform.position, _neighborsDetectionRadius);
             }
         }
 
