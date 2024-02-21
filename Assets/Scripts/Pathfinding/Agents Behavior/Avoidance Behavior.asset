@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90d1c688942cf284c8cc1646798b91c2, type: 3}
   m_Name: Avoidance Behavior
   m_EditorClassIdentifier: 
+  _isUseCongestionControl: 0

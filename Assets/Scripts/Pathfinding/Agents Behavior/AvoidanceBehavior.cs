@@ -6,6 +6,7 @@ namespace Pathfinding
     [CreateAssetMenu (fileName = "Avoidance Behavior", menuName = "Pathfinding/Behavior/Avoidance")]
     public class AvoidanceBehavior : AgentBehavior
     {
+        [SerializeField] bool _isUseCongestionControl;
 
         // TODO:
         // - Make avoidance get strong the closer to the center are the agents
@@ -24,7 +25,7 @@ namespace Pathfinding
                 int neighborsToAvoidCount = 0;
                 foreach (Agent neighbor in neighbors)
                 {
-                    if (neighbor.Priority < agent.Priority)
+                    if (_isUseCongestionControl && neighbor.Priority < agent.Priority)
                         continue;
                     bool isNeighborWithinAvoidanceDistance =
                         Vector3.Distance(neighbor.transform.position, agent.transform.position) < agent.NeighborsDetectionRadius;
