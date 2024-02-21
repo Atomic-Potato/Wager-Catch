@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace Pathfinding
 {
+    // TODO:
+    // - Optimize the path to have only the corners and the start & end nodes
     [RequireComponent(typeof(Collider2D))]
     public class Agent : MonoBehaviour
     {
@@ -34,6 +36,8 @@ namespace Pathfinding
         Vector2 _previousPathStartPoint = Vector2.zero;
         Node _endNodeCache = null;
         
+        int _id;
+        public int ID => _id;
         bool _isMoving;
         public bool IsMoving => _isMoving;
         Vector2 _facingDirection  = Vector2.down; 
@@ -50,7 +54,7 @@ namespace Pathfinding
             if (!_isDrawGizmos)
                 return;
 
-            if (_isDrawGizmos && _pathToTarget != null)
+            if (_isDrawPath && _pathToTarget != null)
             {
                 for(int i = _pathIndex; i < _pathToTarget.Length; i++)
                 {
@@ -75,6 +79,8 @@ namespace Pathfinding
 
         void Start()
         {
+            AgentsManager.Instance.Agents.Add(this);
+            _id = AgentsManager.Instance.GetUniqueAgentID();
             SendPathRequest();
         }
 
@@ -94,10 +100,9 @@ namespace Pathfinding
         #region Getting a Path
         void SendPathRequest()
         {
-            Vector2? targetPosition = Target == null ? AgentsManager.GetRandomWalkableNode()?.WorldPosition : Target.position;
-            if (targetPosition == null)
+            if (Target == null)
                 return;
-            PathRequestManager.RequestPath(transform.position, (Vector2)targetPosition, _endNodeCache, UpdatePath);
+            PathRequestManager.RequestPath(transform.position, Target.position, _endNodeCache, UpdatePath);
             _isPathRequestSent = true;
         }
 
@@ -183,7 +188,7 @@ namespace Pathfinding
             }
             void MoveToNextWaypoint()
             {
-                Vector3 direction = (Vector3)_agentBehavior.CalculateNextDirection(this, GetNeighbors(), currentWaypoint);
+                Vector3 direction = (Vector3)_agentBehavior.CalculateNextDirection(this, GetNeighbors(), currentWaypoint).normalized;
                 transform.position += direction * Speed * Time.deltaTime;
                 // transform.position = Vector2.MoveTowards(transform.position, nextDestination, Speed * Time.deltaTime);
             }

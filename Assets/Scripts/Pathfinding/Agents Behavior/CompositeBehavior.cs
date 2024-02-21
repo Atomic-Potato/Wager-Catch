@@ -24,20 +24,20 @@ namespace Pathfinding
             for (int i=0; i < _behaviors.Length; i++)
             {
                 Vector3 behaviorDirection = _behaviors[i].CalculateNextDirection(agent, neighbors, destination);
-                if (behaviorDirection != Vector3.zero)
-                {
+                // if (behaviorDirection != Vector3.zero)
+                // {
                     // if (behaviorLocation.sqrMagnitude > Mathf.Pow(_weights[i], 2))
                     // {
                     //     behaviorLocation.Normalize();
                     //     behaviorLocation *= _weights[i];
                     // }
                     
-                }
-                Direction = behaviorDirection * _weights[i];
-                Debug.Log(Direction);
+                // }
+                // Direction = behaviorDirection * _weights[i];
+                // Debug.Log(Direction);
                 direction += behaviorDirection * _weights[i];
             }
-            return (direction/_behaviors.Length).normalized;
+            return direction/_behaviors.Length;
         }
     }
 }
