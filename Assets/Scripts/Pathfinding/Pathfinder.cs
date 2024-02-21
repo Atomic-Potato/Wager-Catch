@@ -158,8 +158,9 @@ namespace Pathfinding
 
             path.Add(currentNode);  
             path.Reverse();
-            List<Vector2> waypoints = NodesToPositions(path);
-            return waypoints.ToArray();
+            // List<Vector2> waypoints = NodesToPositions(path);
+            // return waypoints.ToArray();
+            return SimplifyPath();
 
             // Removes uneeded nodes from the path by only keeping nodes where the direction changes 
             Vector2[] SimplifyPath()

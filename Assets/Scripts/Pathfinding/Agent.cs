@@ -123,7 +123,10 @@ namespace Pathfinding
 
         IEnumerator FollowPath()
         {
-            int startIndex = GetPathStartIndex();
+            if (_pathToTarget.Length == 0)
+                yield break;
+            // int startIndex = GetPathStartIndex();
+            int startIndex = 0;
             Vector2 currentWaypoint = _pathToTarget[startIndex];
             _isReachedDestination = false;
             _isMoving = true;
