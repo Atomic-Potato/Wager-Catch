@@ -36,8 +36,8 @@ namespace Pathfinding
         Vector2 _previousPathStartPoint = Vector2.zero;
         Node _endNodeCache = null;
         
-        int _id;
-        public int ID => _id;
+        int _priority;
+        public int Priority => _priority;
         bool _isMoving;
         public bool IsMoving => _isMoving;
         Vector2 _facingDirection  = Vector2.down; 
@@ -80,7 +80,7 @@ namespace Pathfinding
         void Start()
         {
             AgentsManager.Instance.Agents.Add(this);
-            _id = AgentsManager.Instance.GetUniqueAgentID();
+            _priority = AgentsManager.Instance.GetUniqueAgentID();
             SendPathRequest();
         }
 
@@ -147,7 +147,9 @@ namespace Pathfinding
 
             int GetPathStartIndex()
             {
-                if (_pathToTarget[0] == _previousPathStartPoint)
+                // if (_pathToTarget.Length > 1 &&  _pathToTarget[0] == _previousPathStartPoint)
+                //     return 1;
+                if (_pathToTarget.Length > 1)
                     return 1;
                 else
                 {
@@ -175,14 +177,14 @@ namespace Pathfinding
                 _isReachedDestination = true;
                 _isMoving = false;
             }
-            List<Transform> GetNeighbors()
+            List<Agent> GetNeighbors()
             {
                 RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _neighborsDetectionRadius, Vector2.zero, Mathf.Infinity, _agentsLayer);
-                List<Transform> neighbors = new List<Transform>();
+                List<Agent> neighbors = new List<Agent>();
                 foreach(RaycastHit2D hit in hits)
                 {
                     if (hit.collider != _collider)
-                        neighbors.Add(hit.collider.gameObject.transform);
+                        neighbors.Add(hit.collider.gameObject.GetComponent<Agent>());
                 }
                 return neighbors;
             }

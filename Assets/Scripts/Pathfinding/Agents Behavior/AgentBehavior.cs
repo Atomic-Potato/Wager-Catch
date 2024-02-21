@@ -5,6 +5,6 @@ namespace Pathfinding
 {
     public abstract class AgentBehavior : ScriptableObject
     {
-        public abstract Vector2 CalculateNextDirection(Agent agent, List<Transform> neighbors, Vector2 destination);
+        public abstract Vector2 CalculateNextDirection(Agent agent, List<Agent> neighbors, Vector2 destination);
     }
 }

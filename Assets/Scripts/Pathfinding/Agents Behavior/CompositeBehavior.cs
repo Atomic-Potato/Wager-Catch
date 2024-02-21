@@ -15,7 +15,7 @@ namespace Pathfinding
             Gizmos.DrawLine(Vector2.zero, Vector2.right);
         }
 
-        public override Vector2 CalculateNextDirection(Agent agent, List<Transform> neighbors, Vector2 destination)
+        public override Vector2 CalculateNextDirection(Agent agent, List<Agent> neighbors, Vector2 destination)
         {
             if (_behaviors.Length != _weights.Length)
                 throw new System.Exception("Inequal weights count to behaviors!");

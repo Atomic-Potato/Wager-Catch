@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 98706899}
   - component: {fileID: 98706898}
   - component: {fileID: 98706897}
+  - component: {fileID: 98706900}
   m_Layer: 9
   m_Name: Target (3)
   m_TagString: Untagged
@@ -219,6 +220,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &98706900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98706896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0
+  Target: {fileID: 0}
+  PathRequestManager: {fileID: 0}
+  _agentsLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _agentBehavior: {fileID: 0}
+  _neighborsDetectionRadius: 1
+  _isDrawGizmos: 0
+  _isDrawPath: 0
+  _pathColor: {r: 0, g: 0, b: 1, a: 0.5}
+  _isRandomPathColor: 0
+  _isDrawNeighborsDetectionRadius: 0
+  AgentsManager: {fileID: 0}
 --- !u!1 &150665086
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +723,7 @@ SpriteShapeRenderer:
   m_SortingOrder: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_MaskInteraction: 0
-  m_ShapeTexture: {fileID: 0}
+  m_ShapeTexture: {fileID: 2800000, guid: 50d68c8745edd5343a7ca2f98819d87a, type: 3}
   m_Sprites: []
   m_LocalAABB:
     m_Center: {x: 0, y: -0.00000023841858, z: 0}
@@ -1276,6 +1303,7 @@ GameObject:
   - component: {fileID: 465677259}
   - component: {fileID: 465677258}
   - component: {fileID: 465677257}
+  - component: {fileID: 465677260}
   m_Layer: 9
   m_Name: Target (2)
   m_TagString: Untagged
@@ -1363,6 +1391,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &465677260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465677256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0
+  Target: {fileID: 0}
+  PathRequestManager: {fileID: 0}
+  _agentsLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _agentBehavior: {fileID: 0}
+  _neighborsDetectionRadius: 1
+  _isDrawGizmos: 0
+  _isDrawPath: 0
+  _pathColor: {r: 0, g: 0, b: 1, a: 0.5}
+  _isRandomPathColor: 0
+  _isDrawNeighborsDetectionRadius: 0
+  AgentsManager: {fileID: 0}
 --- !u!1 &489501519
 GameObject:
   m_ObjectHideFlags: 0
@@ -2557,6 +2611,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1635998903}
+  - component: {fileID: 1635998904}
   m_Layer: 0
   m_Name: Agents
   m_TagString: Untagged
@@ -2590,6 +2645,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1635998904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635998902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbdeab6c4c473d4a80ecc5d8032fc20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _agentsCount: 0
+  _agentsParent: {fileID: 0}
+  grid: {fileID: 0}
+  pathRequestManager: {fileID: 0}
+  target: {fileID: 0}
 --- !u!1 &1652863313
 GameObject:
   m_ObjectHideFlags: 0
@@ -2601,6 +2673,7 @@ GameObject:
   - component: {fileID: 1652863316}
   - component: {fileID: 1652863315}
   - component: {fileID: 1652863314}
+  - component: {fileID: 1652863317}
   m_Layer: 9
   m_Name: Target (4)
   m_TagString: Untagged
@@ -2688,6 +2761,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1652863317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652863313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0
+  Target: {fileID: 0}
+  PathRequestManager: {fileID: 0}
+  _agentsLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _agentBehavior: {fileID: 0}
+  _neighborsDetectionRadius: 1
+  _isDrawGizmos: 0
+  _isDrawPath: 0
+  _pathColor: {r: 0, g: 0, b: 1, a: 0.5}
+  _isRandomPathColor: 0
+  _isDrawNeighborsDetectionRadius: 0
+  AgentsManager: {fileID: 0}
 --- !u!1 &1658615537
 GameObject:
   m_ObjectHideFlags: 0
@@ -2837,6 +2936,7 @@ GameObject:
   - component: {fileID: 1691161227}
   - component: {fileID: 1691161226}
   - component: {fileID: 1691161228}
+  - component: {fileID: 1691161229}
   m_Layer: 9
   m_Name: Target
   m_TagString: Untagged
@@ -2924,6 +3024,32 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.32
+--- !u!114 &1691161229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691161225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 10
+  Target: {fileID: 0}
+  PathRequestManager: {fileID: 0}
+  _agentsLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _agentBehavior: {fileID: 0}
+  _neighborsDetectionRadius: 1
+  _isDrawGizmos: 0
+  _isDrawPath: 0
+  _pathColor: {r: 0, g: 0, b: 1, a: 0.5}
+  _isRandomPathColor: 0
+  _isDrawNeighborsDetectionRadius: 0
+  AgentsManager: {fileID: 0}
 --- !u!1 &1700435599
 GameObject:
   m_ObjectHideFlags: 0
@@ -3157,6 +3283,7 @@ GameObject:
   - component: {fileID: 1756414435}
   - component: {fileID: 1756414434}
   - component: {fileID: 1756414433}
+  - component: {fileID: 1756414436}
   m_Layer: 9
   m_Name: Target (5)
   m_TagString: Untagged
@@ -3244,6 +3371,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1756414436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756414432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0
+  Target: {fileID: 0}
+  PathRequestManager: {fileID: 0}
+  _agentsLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _agentBehavior: {fileID: 0}
+  _neighborsDetectionRadius: 1
+  _isDrawGizmos: 0
+  _isDrawPath: 0
+  _pathColor: {r: 0, g: 0, b: 1, a: 0.5}
+  _isRandomPathColor: 0
+  _isDrawNeighborsDetectionRadius: 0
+  AgentsManager: {fileID: 0}
 --- !u!1 &1768581856
 GameObject:
   m_ObjectHideFlags: 0

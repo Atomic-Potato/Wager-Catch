@@ -17,11 +17,11 @@ namespace Pathfinding
         public List<Agent> Agents => _agents;
         int _currentUnitObjectIndex = 0;
 
-        int _currentAgentId = 1;
+        int _currentAgentPriority = 0;
 
         public int GetUniqueAgentID()
         {
-            return _currentAgentId++;
+            return _currentAgentPriority++;
         }
     }
 }
