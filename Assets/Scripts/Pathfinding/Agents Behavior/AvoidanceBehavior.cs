@@ -6,6 +6,10 @@ namespace Pathfinding
     [CreateAssetMenu (fileName = "Avoidance Behavior", menuName = "Pathfinding/Behavior/Avoidance")]
     public class AvoidanceBehavior : AgentBehavior
     {
+
+        // TODO:
+        // - Make avoidance get strong the closer to the center are the agents
+        // - Give random priorities to agents so they would not contest a destination
         public override Vector2 CalculateNextDirection(Agent agent, List<Transform> neighbors, Vector2 destination)
         {
             bool isNeighborsExist = neighbors.Count != 0;
