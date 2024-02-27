@@ -12,6 +12,9 @@
     flex-wrap="nowrap" align="center">
   <img src="https://github.com/Atomic-Potato/Wager-Catch/assets/55362397/ff2e5ac6-e4b2-456b-8104-2be8ea6ba6fb" width="350"/>
   <img src="https://github.com/Atomic-Potato/Wager-Catch/assets/55362397/b45c4bea-90b7-4dda-8b34-6c2770b9b648" width="350"/>
+     <br>
+    <img src="https://github.com/Atomic-Potato/Wager-Catch/assets/55362397/7c3c042b-d4db-4e75-b0da-19cab45730c0" width="350"/>
+     <img src="https://github.com/Atomic-Potato/Wager-Catch/assets/55362397/13253ee5-56f7-4ab9-8728-8955a80bbe65" width="350"/>
  </div>
 
  # Game Showcase
