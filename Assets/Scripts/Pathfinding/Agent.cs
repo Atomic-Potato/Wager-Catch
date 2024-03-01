@@ -190,6 +190,7 @@ namespace Pathfinding
             }
             void FinishPath()
             {
+                _currentWaypoint = Target.transform.position;
                 _isReachedDestination = true;
                 _isMoving = false;
             }
