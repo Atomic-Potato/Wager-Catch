@@ -25,7 +25,7 @@ namespace Pathfinding
         [SerializeField] bool _isRandomPathColor = false;
         [SerializeField] bool _isDrawNeighborsDetectionRadius;
 
-        [HideInInspector] public AgentsManager AgentsManager;
+        AgentsManager _agentsManager;
 
         Collider2D _collider;
         Vector2? _previousPosition;
@@ -91,11 +91,14 @@ namespace Pathfinding
 
         void Start()
         {
-            AgentsManager.Instance.Agents.Add(this);
+            _agentsManager = AgentsManager.Instance;
+            _agentsManager.Agents.Add(this);
+            if (_agentsManager.GeneralTarget != null)
+                Target = _agentsManager.GeneralTarget;
+                
             _pathRequestManager = PathRequestManager.Instance;
             _priority = AgentsManager.Instance.GetUniqueAgentID();
             _grid = GridsManager.Instance.GetGrid(SelectedType);
-            SendPathRequest();
         }
 
         void Update()

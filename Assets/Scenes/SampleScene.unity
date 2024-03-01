@@ -524,8 +524,7 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 1
-  AgentsManager: {fileID: 0}
-  SelectedType: 1
+  SelectedType: 0
 --- !u!58 &707632849
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -554,6 +553,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2a37f2770ae134ea5b98d67a9acbc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &910766403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910766404}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &910766404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910766403}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.73, y: -2.53, z: -1.6522301}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1494935760
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,8 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbdeab6c4c473d4a80ecc5d8032fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _generalTarget: {fileID: 0}
-  GeneralTarget: {fileID: 0}
+  _generalTarget: {fileID: 910766404}
 --- !u!1 &1700435599
 GameObject:
   m_ObjectHideFlags: 0

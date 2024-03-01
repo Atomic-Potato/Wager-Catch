@@ -8,7 +8,7 @@ public class AgentsGenerator : MonoBehaviour
     [SerializeField] float _radius = 5f;
     [SerializeField] Agent _agentPrefab;
 
-    void Start()
+    void Awake()
     {
         List<Vector2> _circleEdges = GenerateCircleEdgePositions();
         
