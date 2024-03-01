@@ -5,6 +5,7 @@ namespace Pathfinding
     public class Grid : MonoBehaviour
     {
         #region Inspector Variables
+        [SerializeField] bool _isActive;
         [Tooltip("The size of the gird. Its recommended if its a square area.")]
         [SerializeField, Min(0f)] Vector2 worldSize = new Vector2(1f,1f);
         [Tooltip("The area each node covers")]
@@ -51,6 +52,9 @@ namespace Pathfinding
 
         void Awake()
         {
+            if (!_isActive)
+                return;
+
             _nodeDiameter = nodeRadius * 2f;
             _nodesCountX = Mathf.RoundToInt(worldSize.x/_nodeDiameter);
             _nodesCountY = Mathf.RoundToInt(worldSize.y/_nodeDiameter);

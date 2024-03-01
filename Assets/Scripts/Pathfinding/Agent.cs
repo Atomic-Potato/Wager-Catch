@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using UnityEngine;
 
 namespace Pathfinding
@@ -12,9 +11,9 @@ namespace Pathfinding
     {
         #region Global Variables
         [Min(0)] public float Speed = 10f;
-        public Transform Target;
+        [HideInInspector] public Transform Target;
         [SerializeField] LayerMask _agentsLayer;
-        [SerializeField] AgentBehavior _agentBehavior;
+        public Type SelectedType = Type.A;
         [SerializeField, Min(0)] float _neighborsDetectionRadius = 1f;
         public float NeighborsDetectionRadius => _neighborsDetectionRadius;
 
@@ -25,14 +24,15 @@ namespace Pathfinding
         [SerializeField] bool _isRandomPathColor = false;
         [SerializeField] bool _isDrawNeighborsDetectionRadius;
 
-        AgentsManager _agentsManager;
-
         Collider2D _collider;
         Vector2? _previousPosition;
 
+        AgentsManager _agentsManager;
+        AgentBehavior _behavior;
         Grid _grid;
         public Grid Grid => _grid;
         PathRequestManager _pathRequestManager;
+
         Vector2[] _pathToTarget;
         Coroutine _followPathCoroutine;
         int _pathIndex;
@@ -49,7 +49,6 @@ namespace Pathfinding
         bool _isReachedDestination;
         public bool IsReachedDestination => _isReachedDestination;
 
-        public Type SelectedType = Type.A;
         public enum Type
         {
             A,
@@ -95,7 +94,8 @@ namespace Pathfinding
             _agentsManager.Agents.Add(this);
             if (_agentsManager.GeneralTarget != null)
                 Target = _agentsManager.GeneralTarget;
-                
+            _behavior = _agentsManager.AgentBehavior;
+
             _pathRequestManager = PathRequestManager.Instance;
             _priority = AgentsManager.Instance.GetUniqueAgentID();
             _grid = GridsManager.Instance.GetGrid(SelectedType);
@@ -187,7 +187,7 @@ namespace Pathfinding
             }
             void MoveToNextWaypoint()
             {
-                Vector3 direction = (Vector3)_agentBehavior.CalculateNextDirection(this, GetNeighbors(), currentWaypoint).normalized;
+                Vector3 direction = (Vector3)_behavior.CalculateNextDirection(this, GetNeighbors(), currentWaypoint).normalized;
                 transform.position += direction * Speed * Time.deltaTime;
             }
         }

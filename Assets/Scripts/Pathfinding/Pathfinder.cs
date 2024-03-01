@@ -9,7 +9,6 @@ namespace Pathfinding
     // G cost: distance from starting node
     // H cost: distance from end node
     // F cost: H + G
-    [RequireComponent(typeof(Grid))]
     public class Pathfinder : MonoBehaviour
     {
         [Space, Header("Performance")]

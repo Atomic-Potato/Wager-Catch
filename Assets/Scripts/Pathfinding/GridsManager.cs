@@ -19,7 +19,6 @@ namespace Pathfinding
         [SerializeField] Grid _gridE;
         public Grid GridE => _gridE;
 
-        // Each grid will add itself to this list
         List<Grid> _grids = new List<Grid>();
         public List<Grid> Grids => _grids;
 

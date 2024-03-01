@@ -7,6 +7,8 @@ namespace Pathfinding
     {
         [SerializeField] Transform _generalTarget;
         public Transform GeneralTarget => _generalTarget;
+        [SerializeField] AgentBehavior _generalBehavior;
+        public AgentBehavior AgentBehavior => _generalBehavior;
 
         List<Agent> _agents = new List<Agent>();
         public List<Agent> Agents => _agents;

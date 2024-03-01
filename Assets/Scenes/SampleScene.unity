@@ -223,12 +223,11 @@ GameObject:
   m_Component:
   - component: {fileID: 376140512}
   - component: {fileID: 376140511}
+  - component: {fileID: 376140508}
   - component: {fileID: 376140510}
   - component: {fileID: 376140509}
-  - component: {fileID: 376140508}
-  - component: {fileID: 376140513}
   m_Layer: 0
-  m_Name: Pathfinding Area
+  m_Name: Pathfinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,8 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835f80fa16efbf442bf039478909a574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridA: {fileID: 376140511}
-  _gridB: {fileID: 376140513}
+  _gridA: {fileID: 1550636322}
+  _gridB: {fileID: 0}
   _gridC: {fileID: 0}
   _gridD: {fileID: 0}
   _gridE: {fileID: 0}
@@ -286,18 +285,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 376140507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bbdeab6c4c473d4a80ecc5d8032fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldSize: {x: 11, y: 10}
-  nodeRadius: 0.15
-  unwalkableMask:
-    serializedVersion: 2
-    m_Bits: 256
-  isDisplayGrid: 0
-  gridColor: {r: 1, g: 1, b: 1, a: 0.5}
-  walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
-  unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
+  _generalTarget: {fileID: 910766404}
+  _generalBehavior: {fileID: 11400000, guid: 0074d342f66773d4d8238edae5794df2, type: 2}
 --- !u!4 &376140512
 Transform:
   m_ObjectHideFlags: 0
@@ -308,31 +300,15 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1550636321}
+  - {fileID: 651776454}
+  - {fileID: 1931455520}
+  - {fileID: 931386166}
+  - {fileID: 950638601}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &376140513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376140507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  worldSize: {x: 11, y: 10}
-  nodeRadius: 1
-  unwalkableMask:
-    serializedVersion: 2
-    m_Bits: 256
-  isDisplayGrid: 1
-  gridColor: {r: 1, g: 1, b: 1, a: 0.5}
-  walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
-  unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,6 +392,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &651776453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 651776454}
+  - component: {fileID: 651776455}
+  m_Layer: 0
+  m_Name: Grid B
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &651776454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651776453}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 376140512}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &651776455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651776453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldSize: {x: 1, y: 1}
+  nodeRadius: 1
+  unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 256
+  isDisplayGrid: 0
+  gridColor: {r: 1, g: 1, b: 1, a: 0.5}
+  walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
+  unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
 --- !u!1 &707632845
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,14 +545,13 @@ MonoBehaviour:
   _agentsLayer:
     serializedVersion: 2
     m_Bits: 512
-  _agentBehavior: {fileID: 11400000, guid: 0074d342f66773d4d8238edae5794df2, type: 2}
+  SelectedType: 0
   _neighborsDetectionRadius: 0.28
-  _isDrawGizmos: 1
+  _isDrawGizmos: 0
   _isDrawPath: 1
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 1
-  SelectedType: 0
 --- !u!58 &707632849
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -583,6 +610,110 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &931386165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 931386166}
+  - component: {fileID: 931386167}
+  m_Layer: 0
+  m_Name: Grid D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &931386166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931386165}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 376140512}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &931386167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931386165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldSize: {x: 1, y: 1}
+  nodeRadius: 1
+  unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 256
+  isDisplayGrid: 0
+  gridColor: {r: 1, g: 1, b: 1, a: 0.5}
+  walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
+  unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
+--- !u!1 &950638600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 950638601}
+  - component: {fileID: 950638602}
+  m_Layer: 0
+  m_Name: Grid E
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &950638601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950638600}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 376140512}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &950638602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950638600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldSize: {x: 1, y: 1}
+  nodeRadius: 1
+  unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 256
+  isDisplayGrid: 0
+  gridColor: {r: 1, g: 1, b: 1, a: 0.5}
+  walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
+  unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
 --- !u!1 &1494935760
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,6 +806,58 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1550636320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1550636321}
+  - component: {fileID: 1550636322}
+  m_Layer: 0
+  m_Name: Grid A
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1550636321
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550636320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 376140512}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1550636322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550636320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldSize: {x: 11, y: 10}
+  nodeRadius: 0.15
+  unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 256
+  isDisplayGrid: 0
+  gridColor: {r: 1, g: 1, b: 1, a: 0.5}
+  walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
+  unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
 --- !u!1 &1635998902
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +867,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1635998903}
-  - component: {fileID: 1635998904}
   m_Layer: 0
   m_Name: Agents
   m_TagString: Untagged
@@ -707,19 +889,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1635998904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635998902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bbdeab6c4c473d4a80ecc5d8032fc20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _generalTarget: {fileID: 910766404}
 --- !u!1 &1700435599
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,3 +1008,55 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1931455519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1931455520}
+  - component: {fileID: 1931455521}
+  m_Layer: 0
+  m_Name: Grid C
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1931455520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931455519}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 376140512}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1931455521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931455519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldSize: {x: 1, y: 1}
+  nodeRadius: 1
+  unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 256
+  isDisplayGrid: 0
+  gridColor: {r: 1, g: 1, b: 1, a: 0.5}
+  walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
+  unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
