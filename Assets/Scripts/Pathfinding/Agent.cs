@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace Pathfinding
@@ -32,7 +33,6 @@ namespace Pathfinding
         protected AgentBehavior _behavior;
         protected Grid _grid;
         public Grid Grid => _grid;
-        protected PathRequestManager _pathRequestManager;
 
         Vector2 _currentWaypoint;
         protected Vector2[] _pathToTarget;
@@ -98,7 +98,6 @@ namespace Pathfinding
                 Target = _agentsManager.GeneralTarget;
             _behavior = _agentsManager.AgentBehavior;
 
-            _pathRequestManager = PathRequestManager.Instance;
             _priority = AgentsManager.Instance.GetUniqueAgentID();
             _grid = GridsManager.Instance.GetGrid(SelectedType);
         }
@@ -110,24 +109,6 @@ namespace Pathfinding
             Move();
             UpdateFacingDirection();
         }
-
-        void Move()
-        {
-            Vector3 direction = (Vector3)_behavior.CalculateNextDirection(this, GetNeighbors(), _currentWaypoint).normalized;
-            transform.position += direction * Speed * Time.deltaTime;
-
-            List<Agent> GetNeighbors()
-            {
-                RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _neighborsDetectionRadius, Vector2.zero, Mathf.Infinity, _agentsLayer);
-                List<Agent> neighbors = new List<Agent>();
-                foreach(RaycastHit2D hit in hits)
-                {
-                    if (hit.collider != _collider)
-                        neighbors.Add(hit.collider.gameObject.GetComponent<Agent>());
-                }
-                return neighbors;
-            }
-        }
         #endregion
 
         #region Getting a Path
@@ -135,7 +116,7 @@ namespace Pathfinding
         {
             if (Target == null)
                 return;
-            _pathRequestManager.RequestPath(transform.position, Target.position, _grid, _endNodeCache, UpdatePath);
+            PathRequestManager.RequestPath(new PathRequest(transform.position, Target.position, _grid, _endNodeCache, UpdatePath));
             _isPathRequestSent = true;
         }
 
@@ -153,6 +134,25 @@ namespace Pathfinding
             _followPathCoroutine = StartCoroutine(FollowPath());
         }
         #endregion
+
+        #region Moving
+        void Move()
+        {
+            Vector3 direction = (Vector3)_behavior.CalculateNextDirection(this, GetNeighbors(), _currentWaypoint).normalized;
+            transform.position += direction * Speed * Time.deltaTime;
+
+            List<Agent> GetNeighbors()
+            {
+                RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _neighborsDetectionRadius, Vector2.zero, Mathf.Infinity, _agentsLayer);
+                List<Agent> neighbors = new List<Agent>();
+                foreach(RaycastHit2D hit in hits)
+                {
+                    if (hit.collider != _collider)
+                        neighbors.Add(hit.collider.gameObject.GetComponent<Agent>());
+                }
+                return neighbors;
+            }
+        }
 
         IEnumerator FollowPath()
         {
@@ -197,7 +197,9 @@ namespace Pathfinding
             
             
         }
+        #endregion
 
+        #region Other
         void UpdateFacingDirection()
         {
             if (_previousPosition == null)
@@ -213,5 +215,6 @@ namespace Pathfinding
             _previousPosition = transform.position;
             _facingDirection = newDirection;
         }
+        #endregion
     }
 }

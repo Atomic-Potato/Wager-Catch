@@ -1,41 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 namespace Pathfinding
 {
     public class PathRequestManager : Singleton<PathRequestManager>
     {
-        [SerializeField] Pathfinder pathfinder;
+        [SerializeField] Pathfinder _pathfinder;
+        Queue<PathRequestResult> _results = new Queue<PathRequestResult>();
 
-        Queue<PathRequest> _pathRequestsQueue = new Queue<PathRequest>();
-        PathRequest _currentPathRequest;
-        bool _isProcessingPath;
-
-        public void RequestPath(Vector2 startPosition, Vector2 endPosition, Grid grid,  Node endNodeCache, Action<Vector2[], bool, Node> callback)
+        void Update()
         {
-            PathRequest pathRequest = new PathRequest(startPosition, endPosition, grid, endNodeCache, callback);
-            _pathRequestsQueue.Enqueue(pathRequest);
-            TryToProcessNextPathRequest();
-        }
-
-        void TryToProcessNextPathRequest()
-        {
-            if (_isProcessingPath || _pathRequestsQueue.Count == 0)
+            if (_results.Count == 0)
                 return;
-            
-            _currentPathRequest = _pathRequestsQueue.Dequeue();
-            _isProcessingPath = true;
-            pathfinder.StartFindingPath(_currentPathRequest);
+
+            lock (_results)
+            {
+                while (_results.Count > 0)
+                {
+                    PathRequestResult result = _results.Dequeue();
+                    result.Callback(result.Path, result.IsSuccess, result.EndNodeCache);
+                }
+            }
         }
 
-        public void FinishProcessingPathRequest(Vector2[] path, bool isSuccess, Node endNodeCache)
+        public static void RequestPath(PathRequest request)
         {
-            _currentPathRequest.Callback(path, isSuccess, endNodeCache);
-            _isProcessingPath = false;
-            TryToProcessNextPathRequest();
+            ThreadStart threadStart = delegate
+            {
+                Instance._pathfinder.FindPathOnGrid(request, Instance.FinishProcessingPathRequest);
+            };
+            threadStart.Invoke();
         }
 
+        void FinishProcessingPathRequest(PathRequestResult result)
+        {
+            lock (_results)
+            {
+                _results.Enqueue(result);
+            }
+        }
+
+    }
+
+    public struct PathRequestResult
+    {
+        public Vector2[] Path;
+        public bool IsSuccess;
+        public Node EndNodeCache;
+        public Action<Vector2[], bool, Node> Callback;
+
+        public PathRequestResult(Vector2[] path, bool isSuccess, Node endNodeCache, Action<Vector2[], bool, Node> callback)
+        {
+            this.Path = path;
+            this.IsSuccess = isSuccess;
+            this.EndNodeCache = endNodeCache;
+            this.Callback = callback;
+        }
     }
 
     public struct PathRequest

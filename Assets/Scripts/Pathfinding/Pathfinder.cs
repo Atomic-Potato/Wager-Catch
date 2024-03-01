@@ -25,12 +25,8 @@ namespace Pathfinding
             _pathRequestManager = PathRequestManager.Instance;
         }
 
-        public void StartFindingPath(PathRequest pathRequest)
-        {
-            StartCoroutine(FindPathOnGrid(pathRequest.StartPosition, pathRequest.EndPosition, pathRequest.Grid, pathRequest.EndNodeCache));
-        }
 
-        IEnumerator FindPathOnGrid(Vector2 startPosition, Vector2 endPosition, Grid grid, Node endNodeCache = null)
+        public void FindPathOnGrid(PathRequest request, Action<PathRequestResult> callback)
         {
             // Debugging
             Stopwatch sw = null;
@@ -40,8 +36,8 @@ namespace Pathfinding
                 sw.Start();
             } 
 
-            Node startNode = grid.GetNodeFromWorldPosition(startPosition);
-            Node endNode = grid.GetNodeFromWorldPosition(endPosition);
+            Node startNode = request.Grid.GetNodeFromWorldPosition(request.StartPosition);
+            Node endNode = request.Grid.GetNodeFromWorldPosition(request.EndPosition);
 
             Vector2[] pathWaypoints = null;
             bool isFoundPath = false;
@@ -74,12 +70,10 @@ namespace Pathfinding
                 }
             }
             
-            yield return new WaitForEndOfFrame();
-            
             if (isFoundPath)
                 pathWaypoints = RetracePath(startNode, endNode);
 
-            _pathRequestManager.FinishProcessingPathRequest(pathWaypoints, isFoundPath, endNode);
+            callback(new PathRequestResult(pathWaypoints, isFoundPath, endNode, request.Callback));
             
             void UpddateNeighboors(Node currentNode)
             {
@@ -105,7 +99,7 @@ namespace Pathfinding
             }
             bool IsSameAsPreviousEndNode()
             {
-                return endNode == endNodeCache;
+                return endNode == request.EndNodeCache;
             }
         }
 
