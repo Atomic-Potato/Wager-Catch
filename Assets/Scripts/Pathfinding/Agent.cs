@@ -11,10 +11,9 @@ namespace Pathfinding
     {
         #region Global Variables
         [Min(0)] public float Speed = 10f;
-        [HideInInspector] public Transform Target;
-        [SerializeField] LayerMask _agentsLayer;
+        [SerializeField] protected LayerMask _agentsLayer;
         public Type SelectedType = Type.A;
-        [SerializeField, Min(0)] float _neighborsDetectionRadius = 1f;
+        [SerializeField, Min(0)] protected float _neighborsDetectionRadius = 1f;
         public float NeighborsDetectionRadius => _neighborsDetectionRadius;
 
         [Space, Header("Gizmos")]
@@ -24,29 +23,31 @@ namespace Pathfinding
         [SerializeField] bool _isRandomPathColor = false;
         [SerializeField] bool _isDrawNeighborsDetectionRadius;
 
-        Collider2D _collider;
-        Vector2? _previousPosition;
+        [HideInInspector] public Transform Target;
 
-        AgentsManager _agentsManager;
-        AgentBehavior _behavior;
-        Grid _grid;
+        protected Collider2D _collider;
+        protected Vector2? _previousPosition;
+
+        protected AgentsManager _agentsManager;
+        protected AgentBehavior _behavior;
+        protected Grid _grid;
         public Grid Grid => _grid;
-        PathRequestManager _pathRequestManager;
+        protected PathRequestManager _pathRequestManager;
 
-        Vector2[] _pathToTarget;
-        Coroutine _followPathCoroutine;
-        int _pathIndex;
-        Node _endNodeCache = null;
+        protected Vector2[] _pathToTarget;
+        protected Coroutine _followPathCoroutine;
+        protected int _pathIndex;
+        protected Node _endNodeCache = null;
         
-        int _priority;
+        protected int _priority;
         public int Priority => _priority;
-        bool _isMoving;
+        protected bool _isMoving;
         public bool IsMoving => _isMoving;
-        Vector2 _facingDirection  = Vector2.down; 
+        protected Vector2 _facingDirection  = Vector2.down; 
         public Vector2 FacingDirection => _facingDirection;
-        bool _isPathRequestSent;
+        protected bool _isPathRequestSent;
         public bool IsPathRequestSent => _isPathRequestSent;
-        bool _isReachedDestination;
+        protected bool _isReachedDestination;
         public bool IsReachedDestination => _isReachedDestination;
 
         public enum Type
