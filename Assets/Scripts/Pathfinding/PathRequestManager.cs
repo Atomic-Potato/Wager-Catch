@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Pathfinding
 {
-    public class PathRequestManager : MonoBehaviour
+    public class PathRequestManager : Singleton<PathRequestManager>
     {
         [SerializeField] Pathfinder pathfinder;
 
@@ -13,9 +13,9 @@ namespace Pathfinding
         PathRequest _currentPathRequest;
         bool _isProcessingPath;
 
-        public void RequestPath(Vector2 startPosition, Vector2 endPosition, Node endNodeCache, Action<Vector2[], bool, Node> callback)
+        public void RequestPath(Vector2 startPosition, Vector2 endPosition, Grid grid,  Node endNodeCache, Action<Vector2[], bool, Node> callback)
         {
-            PathRequest pathRequest = new PathRequest(startPosition, endPosition, endNodeCache, callback);
+            PathRequest pathRequest = new PathRequest(startPosition, endPosition, grid, endNodeCache, callback);
             _pathRequestsQueue.Enqueue(pathRequest);
             TryToProcessNextPathRequest();
         }
@@ -43,13 +43,15 @@ namespace Pathfinding
     {
         public Vector2 StartPosition;
         public Vector3 EndPosition;
+        public Grid Grid;
         public Node EndNodeCache;
         public Action<Vector2[], bool, Node> Callback; // this will be called once the path is returned
 
-        public PathRequest(Vector2 startPosition, Vector2 endPosition, Node endNodeCache, Action<Vector2[], bool, Node> callback)
+        public PathRequest(Vector2 startPosition, Vector2 endPosition, Grid grid, Node endNodeCache, Action<Vector2[], bool, Node> callback)
         {
             StartPosition = startPosition;
             EndPosition = endPosition;
+            Grid = grid;
             EndNodeCache = endNodeCache;
             Callback = callback;
         }

@@ -12,27 +12,26 @@ namespace Pathfinding
     [RequireComponent(typeof(Grid))]
     public class Pathfinder : MonoBehaviour
     {
-        [SerializeField] Grid grid;
-        [SerializeField] PathRequestManager pathRequestManager;
-        
         [Space, Header("Performance")]
         [SerializeField] bool isLogTimeToGetPath;
 
         Heap<Node> _openSet;
         HashSet<Node> _closedSet;
+        PathRequestManager _pathRequestManager;
 
-        void Awake()
+        void Start()
         {
-            _openSet = new Heap<Node>(grid.MaxSize);
+            _openSet = new Heap<Node>(GridsManager.GlobalMaxSize);
             _closedSet = new HashSet<Node>();
+            _pathRequestManager = PathRequestManager.Instance;
         }
 
         public void StartFindingPath(PathRequest pathRequest)
         {
-            StartCoroutine(FindPathOnGrid(pathRequest.StartPosition, pathRequest.EndPosition, pathRequest.EndNodeCache));
+            StartCoroutine(FindPathOnGrid(pathRequest.StartPosition, pathRequest.EndPosition, pathRequest.Grid, pathRequest.EndNodeCache));
         }
 
-        IEnumerator FindPathOnGrid(Vector2 startPosition, Vector2 endPosition, Node endNodeCache = null)
+        IEnumerator FindPathOnGrid(Vector2 startPosition, Vector2 endPosition, Grid grid, Node endNodeCache = null)
         {
             // Debugging
             Stopwatch sw = null;
@@ -81,7 +80,7 @@ namespace Pathfinding
             if (isFoundPath)
                 pathWaypoints = RetracePath(startNode, endNode);
 
-            pathRequestManager.FinishProcessingPathRequest(pathWaypoints, isFoundPath, endNode);
+            _pathRequestManager.FinishProcessingPathRequest(pathWaypoints, isFoundPath, endNode);
             
             void UpddateNeighboors(Node currentNode)
             {
@@ -150,16 +149,9 @@ namespace Pathfinding
                 path.Add(currentNode);
                 currentNode = currentNode.Parent;    
             }
-            // path.Add(currentNode);  
-            // Vector2[] waypoints = SimplifyPath();
-            // Array.Reverse(waypoints);
-            // maBoints = new List<Vector2>(waypoints);
-            // return waypoints;
 
             path.Add(currentNode);  
             path.Reverse();
-            // List<Vector2> waypoints = NodesToPositions(path);
-            // return waypoints.ToArray();
             return SimplifyPath();
 
             // Removes uneeded nodes from the path by only keeping nodes where the direction changes 
@@ -189,15 +181,6 @@ namespace Pathfinding
                             
                 return simplifiedPath.ToArray();
             }
-
-            List<Vector2> NodesToPositions(List<Node> nodes)
-            {
-                List<Vector2> positions = new List<Vector2>();
-                foreach(Node n in nodes)
-                    positions.Add(n.WorldPosition);
-                return positions;
-            }
         }
-
     }
 }

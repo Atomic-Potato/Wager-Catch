@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 namespace Pathfinding
@@ -12,7 +13,6 @@ namespace Pathfinding
         #region Global Variables
         [Min(0)] public float Speed = 10f;
         public Transform Target;
-        public PathRequestManager PathRequestManager;
         [SerializeField] LayerMask _agentsLayer;
         [SerializeField] AgentBehavior _agentBehavior;
         [SerializeField, Min(0)] float _neighborsDetectionRadius = 1f;
@@ -30,10 +30,12 @@ namespace Pathfinding
         Collider2D _collider;
         Vector2? _previousPosition;
 
+        Grid _grid;
+        public Grid Grid => _grid;
+        PathRequestManager _pathRequestManager;
         Vector2[] _pathToTarget;
         Coroutine _followPathCoroutine;
         int _pathIndex;
-        Vector2 _previousPathStartPoint = Vector2.zero;
         Node _endNodeCache = null;
         
         int _priority;
@@ -46,6 +48,16 @@ namespace Pathfinding
         public bool IsPathRequestSent => _isPathRequestSent;
         bool _isReachedDestination;
         public bool IsReachedDestination => _isReachedDestination;
+
+        public Type SelectedType = Type.A;
+        public enum Type
+        {
+            A,
+            B,
+            C,
+            D,
+            E,
+        }
         #endregion
 
         #region Execution
@@ -80,20 +92,18 @@ namespace Pathfinding
         void Start()
         {
             AgentsManager.Instance.Agents.Add(this);
+            _pathRequestManager = PathRequestManager.Instance;
             _priority = AgentsManager.Instance.GetUniqueAgentID();
+            _grid = GridsManager.Instance.GetGrid(SelectedType);
             SendPathRequest();
         }
 
         void Update()
         {
             if (!_isPathRequestSent)
-            {
-                    SendPathRequest();
-            }
+                SendPathRequest();
 
             UpdateFacingDirection();
-
-            Debug.DrawLine((Vector2)transform.position, (Vector2)transform.position + CompositeBehavior.Direction, Color.red);
         }
         #endregion
 
@@ -102,7 +112,7 @@ namespace Pathfinding
         {
             if (Target == null)
                 return;
-            PathRequestManager.RequestPath(transform.position, Target.position, _endNodeCache, UpdatePath);
+            _pathRequestManager.RequestPath(transform.position, Target.position, _grid, _endNodeCache, UpdatePath);
             _isPathRequestSent = true;
         }
 
@@ -125,7 +135,7 @@ namespace Pathfinding
         {
             if (_pathToTarget.Length == 0)
                 yield break;
-            // int startIndex = GetPathStartIndex();
+
             int startIndex = 0;
             Vector2 currentWaypoint = _pathToTarget[startIndex];
             _isReachedDestination = false;
@@ -148,27 +158,8 @@ namespace Pathfinding
                 yield return new WaitForEndOfFrame();
             }
 
-            int GetPathStartIndex()
-            {
-                // if (_pathToTarget.Length > 1 &&  _pathToTarget[0] == _previousPathStartPoint)
-                //     return 1;
-                if (_pathToTarget.Length > 1)
-                    return 1;
-                else
-                {
-                    _previousPathStartPoint = _pathToTarget[0];
-                    return 0;
-                }
-            }
             bool IsReachedCurrentWayPoint()
             {
-                // TODO:
-                // Change the logic so that the agent has to either
-                // - Reach the waypoint exactly
-                // - Stays in the proximity of the waypoint long enough
-                // This is to account for when adding local avoidance
-
-                // return (Vector2)transform.position == currentWaypoint;
                 return Vector2.Distance(transform.position, currentWaypoint) < 0.01f;
             }
             bool IsReachedEndOfPath()
@@ -195,7 +186,6 @@ namespace Pathfinding
             {
                 Vector3 direction = (Vector3)_agentBehavior.CalculateNextDirection(this, GetNeighbors(), currentWaypoint).normalized;
                 transform.position += direction * Speed * Time.deltaTime;
-                // transform.position = Vector2.MoveTowards(transform.position, nextDestination, Speed * Time.deltaTime);
             }
         }
 

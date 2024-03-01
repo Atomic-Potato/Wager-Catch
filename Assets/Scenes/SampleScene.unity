@@ -225,6 +225,8 @@ GameObject:
   - component: {fileID: 376140511}
   - component: {fileID: 376140510}
   - component: {fileID: 376140509}
+  - component: {fileID: 376140508}
+  - component: {fileID: 376140513}
   m_Layer: 0
   m_Name: Pathfinding Area
   m_TagString: Untagged
@@ -232,6 +234,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &376140508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376140507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835f80fa16efbf442bf039478909a574, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gridA: {fileID: 376140511}
+  _gridB: {fileID: 376140513}
+  _gridC: {fileID: 0}
+  _gridD: {fileID: 0}
+  _gridE: {fileID: 0}
 --- !u!114 &376140509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,8 +276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51812c816201d554daf8efaa6bff1667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 376140511}
-  pathRequestManager: {fileID: 376140509}
   isLogTimeToGetPath: 0
 --- !u!114 &376140511
 MonoBehaviour:
@@ -295,6 +312,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &376140513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376140507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldSize: {x: 11, y: 10}
+  nodeRadius: 1
+  unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 256
+  isDisplayGrid: 1
+  gridColor: {r: 1, g: 1, b: 1, a: 0.5}
+  walkableNodesColor: {r: 0, g: 1, b: 0, a: 0.5}
+  unwalkableNodesColor: {r: 1, g: 0, b: 0, a: 0.5}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +514,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 1
   Target: {fileID: 0}
-  PathRequestManager: {fileID: 376140509}
   _agentsLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -488,6 +525,7 @@ MonoBehaviour:
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 1
   AgentsManager: {fileID: 0}
+  SelectedType: 1
 --- !u!58 &707632849
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -652,11 +690,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbdeab6c4c473d4a80ecc5d8032fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _agentsCount: 0
-  _agentsParent: {fileID: 0}
-  grid: {fileID: 0}
-  pathRequestManager: {fileID: 0}
-  target: {fileID: 0}
+  _generalTarget: {fileID: 0}
+  GeneralTarget: {fileID: 0}
 --- !u!1 &1700435599
 GameObject:
   m_ObjectHideFlags: 0
