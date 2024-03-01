@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbdeab6c4c473d4a80ecc5d8032fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _generalTarget: {fileID: 910766404}
+  _generalTarget: {fileID: 0}
   _generalBehavior: {fileID: 11400000, guid: 0074d342f66773d4d8238edae5794df2, type: 2}
 --- !u!4 &376140512
 Transform:
@@ -435,6 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isActive: 0
   worldSize: {x: 1, y: 1}
   nodeRadius: 1
   unwalkableMask:
@@ -541,7 +542,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 1
-  Target: {fileID: 0}
   _agentsLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -552,6 +552,7 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 1
+  Target: {fileID: 0}
 --- !u!58 &707632849
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -653,6 +654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isActive: 0
   worldSize: {x: 1, y: 1}
   nodeRadius: 1
   unwalkableMask:
@@ -705,6 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isActive: 0
   worldSize: {x: 1, y: 1}
   nodeRadius: 1
   unwalkableMask:
@@ -849,6 +852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isActive: 1
   worldSize: {x: 11, y: 10}
   nodeRadius: 0.15
   unwalkableMask:
@@ -1051,6 +1055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2784ec645bd2d9448c6d51399eb424d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isActive: 0
   worldSize: {x: 1, y: 1}
   nodeRadius: 1
   unwalkableMask:

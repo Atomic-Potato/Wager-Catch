@@ -34,6 +34,7 @@ namespace Pathfinding
         public Grid Grid => _grid;
         protected PathRequestManager _pathRequestManager;
 
+        Vector2 _currentWaypoint;
         protected Vector2[] _pathToTarget;
         protected Coroutine _followPathCoroutine;
         protected int _pathIndex;
@@ -106,8 +107,26 @@ namespace Pathfinding
         {
             if (!_isPathRequestSent)
                 SendPathRequest();
-
+            Move();
             UpdateFacingDirection();
+        }
+
+        void Move()
+        {
+            Vector3 direction = (Vector3)_behavior.CalculateNextDirection(this, GetNeighbors(), _currentWaypoint).normalized;
+            transform.position += direction * Speed * Time.deltaTime;
+
+            List<Agent> GetNeighbors()
+            {
+                RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _neighborsDetectionRadius, Vector2.zero, Mathf.Infinity, _agentsLayer);
+                List<Agent> neighbors = new List<Agent>();
+                foreach(RaycastHit2D hit in hits)
+                {
+                    if (hit.collider != _collider)
+                        neighbors.Add(hit.collider.gameObject.GetComponent<Agent>());
+                }
+                return neighbors;
+            }
         }
         #endregion
 
@@ -141,7 +160,7 @@ namespace Pathfinding
                 yield break;
 
             int startIndex = 0;
-            Vector2 currentWaypoint = _pathToTarget[startIndex];
+            _currentWaypoint = _pathToTarget[startIndex];
             _isReachedDestination = false;
             _isMoving = true;
             _pathIndex = 0;
@@ -156,15 +175,14 @@ namespace Pathfinding
                         FinishPath();
                         yield break;
                     }
-                    currentWaypoint = _pathToTarget[_pathIndex];
+                    _currentWaypoint = _pathToTarget[_pathIndex];
                 }
-                MoveToNextWaypoint();
                 yield return new WaitForEndOfFrame();
             }
 
             bool IsReachedCurrentWayPoint()
             {
-                return Vector2.Distance(transform.position, currentWaypoint) < 0.01f;
+                return Vector2.Distance(transform.position, _currentWaypoint) < 0.01f;
             }
             bool IsReachedEndOfPath()
             {
@@ -175,22 +193,8 @@ namespace Pathfinding
                 _isReachedDestination = true;
                 _isMoving = false;
             }
-            List<Agent> GetNeighbors()
-            {
-                RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _neighborsDetectionRadius, Vector2.zero, Mathf.Infinity, _agentsLayer);
-                List<Agent> neighbors = new List<Agent>();
-                foreach(RaycastHit2D hit in hits)
-                {
-                    if (hit.collider != _collider)
-                        neighbors.Add(hit.collider.gameObject.GetComponent<Agent>());
-                }
-                return neighbors;
-            }
-            void MoveToNextWaypoint()
-            {
-                Vector3 direction = (Vector3)_behavior.CalculateNextDirection(this, GetNeighbors(), currentWaypoint).normalized;
-                transform.position += direction * Speed * Time.deltaTime;
-            }
+            
+            
         }
 
         void UpdateFacingDirection()
