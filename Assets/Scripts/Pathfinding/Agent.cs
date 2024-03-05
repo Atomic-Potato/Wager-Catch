@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 namespace Pathfinding
@@ -69,11 +68,16 @@ namespace Pathfinding
 
             if (_isDrawPath && _pathToTarget != null)
             {
-                for(int i = _pathIndex; i < _pathToTarget.Length; i++)
+                Gizmos.color = _pathColor;
+                for (int i = _pathIndex; i < _pathToTarget.Length; i++)
                 {
-                    Gizmos.color = _pathColor;
+                    if (i > _pathIndex)
+                        Gizmos.DrawLine(_pathToTarget[i-1], _pathToTarget[i]);
+                    Gizmos.DrawLine(transform.position, _currentWaypoint); 
                     Gizmos.DrawCube(_pathToTarget[i], new Vector3(.25f, .25f, 0f));
                 }
+                if (_pathToTarget.Length > 0)
+                    Gizmos.DrawLine(_pathToTarget[_pathToTarget.Length - 1], Target.position);
             }
 
             if (_isDrawNeighborsDetectionRadius)
@@ -87,7 +91,7 @@ namespace Pathfinding
         {
             _collider = GetComponent<Collider2D>();
             if (_isRandomPathColor)
-                _pathColor = new Color(Random.Range(.8f,1f), Random.Range(.4f,8f), Random.Range(0f,4f), 1f);
+                _pathColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
         }
 
         void Start()
