@@ -105,7 +105,7 @@ namespace Pathfinding
 
         int GetDistanceToNode(Node a, Node b)
         {
-            // It is aggreed upon that in A* pathfinding that 
+            // It is aggreed upon in A* pathfinding that
             // diagnoally adjacent nodes have a distance of 14 (touching corners)
             // and parallel adjacent nodes have a distance of 10 (touching borders)
             // So the distnace between nodes is the sum of straight and diagonal moves 
@@ -155,9 +155,14 @@ namespace Pathfinding
 
                 for (int i=1; i < path.Count; i++)
                 {
-                    Vector2 newDirection = new Vector2(path[i].GridPositionX - path[i-1].GridPositionX, path[i].GridPositionY - path[i-1].GridPositionY);
+                    Vector2 newDirection = (path[i].GridPosition - path[i-1].GridPosition).normalized;
                     if (previousDirection != newDirection)
-                        simplifiedPath.Add(path[i].WorldPosition);
+                    {
+                        if (i != 1) // Remove if you want to include first point in the path
+                                    // Generally the agent's position is the first point
+                                    // and skipping this gives nicer results
+                            simplifiedPath.Add(path[i-1].WorldPosition);
+                    }
                     previousDirection = newDirection;
 
                     // The path will sometimes skip a waypoint needed to get around corners

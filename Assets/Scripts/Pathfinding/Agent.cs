@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace Pathfinding
 {
-    // TODO:
-    // - Optimize the path to have only the corners and the start & end nodes
     [RequireComponent(typeof(Collider2D))]
     public class Agent : MonoBehaviour
     {
@@ -15,6 +13,12 @@ namespace Pathfinding
         public Type SelectedType = Type.A;
         [SerializeField, Min(0)] protected float _neighborsDetectionRadius = 1f;
         public float NeighborsDetectionRadius => _neighborsDetectionRadius;
+        
+        [Space, Header("Path")]
+        [SerializeField] protected bool _isUseSmoothPath;
+        [SerializeField, Min(0)] protected float _smoothPathTurningDistance;
+        [SerializeField, Min (0)] protected float _smoothPathTurningSpeed; 
+
 
         [Space, Header("Gizmos")]
         [SerializeField] bool _isDrawGizmos;
@@ -35,8 +39,9 @@ namespace Pathfinding
 
         Vector2 _currentWaypoint;
         protected Vector2[] _pathToTarget;
-        protected Coroutine _followPathCoroutine;
         protected int _pathIndex;
+        protected Path _smoothPath;
+        protected Coroutine _followPathCoroutine;
         protected Node _endNodeCache = null;
         
         protected int _priority;
@@ -66,18 +71,25 @@ namespace Pathfinding
             if (!_isDrawGizmos)
                 return;
 
-            if (_isDrawPath && _pathToTarget != null)
+            if (_isDrawPath)
             {
-                Gizmos.color = _pathColor;
-                for (int i = _pathIndex; i < _pathToTarget.Length; i++)
+                if (_isUseSmoothPath && _smoothPath != null)
                 {
-                    if (i > _pathIndex)
-                        Gizmos.DrawLine(_pathToTarget[i-1], _pathToTarget[i]);
-                    Gizmos.DrawLine(transform.position, _currentWaypoint); 
-                    Gizmos.DrawCube(_pathToTarget[i], new Vector3(.25f, .25f, 0f));
+                    _smoothPath.DrawPathWithGizmos();
                 }
-                if (_pathToTarget.Length > 0)
-                    Gizmos.DrawLine(_pathToTarget[_pathToTarget.Length - 1], Target.position);
+                else if (_pathToTarget != null)
+                {
+                    Gizmos.color = _pathColor;
+                    for (int i = _pathIndex; i < _pathToTarget.Length; i++)
+                    {
+                        if (i > _pathIndex)
+                            Gizmos.DrawLine(_pathToTarget[i-1], _pathToTarget[i]);
+                        Gizmos.DrawLine(transform.position, _currentWaypoint); 
+                        Gizmos.DrawCube(_pathToTarget[i], new Vector3(.25f, .25f, 0f));
+                    }
+                    if (_pathToTarget.Length > 0)
+                        Gizmos.DrawLine(_pathToTarget[_pathToTarget.Length - 1], Target.position);
+                }
             }
 
             if (_isDrawNeighborsDetectionRadius)
@@ -131,11 +143,15 @@ namespace Pathfinding
 
             if (!isFoundPath)
                 return;
-            _pathToTarget = newPath;
+
+            if (_isUseSmoothPath)
+                _smoothPath = new Path(newPath, transform.position, _smoothPathTurningDistance);
+            else
+                _pathToTarget = newPath;
 
             if (_followPathCoroutine != null)
                 StopCoroutine(_followPathCoroutine);
-            _followPathCoroutine = StartCoroutine(FollowPath());
+            _followPathCoroutine = _isUseSmoothPath ?  StartCoroutine(FollowSmoothPath()) : StartCoroutine(FollowStraightPath());
         }
         #endregion
 
@@ -158,7 +174,7 @@ namespace Pathfinding
             }
         }
 
-        IEnumerator FollowPath()
+        IEnumerator FollowStraightPath()
         {
             if (_pathToTarget.Length == 0)
                 yield break;
@@ -198,9 +214,15 @@ namespace Pathfinding
                 _isReachedDestination = true;
                 _isMoving = false;
             }
-            
-            
         }
+
+        IEnumerator FollowSmoothPath()
+        {
+            while (true){
+                yield return null;
+            }
+        }
+
         #endregion
 
         #region Other

@@ -43,7 +43,7 @@ namespace Pathfinding
             float deltaX = pointOnLine.x - pointPerpendicularToLine.x;
             float deltaY = pointOnLine.y - pointPerpendicularToLine.y;
 
-            _gradient = deltaX != 0 ? deltaY / deltaX : _VERTICAL_LINE_GRADIENT;
+            _gradient = deltaY != 0 ? -deltaX / deltaY : _VERTICAL_LINE_GRADIENT;
             _yIntercept = pointOnLine.y - _gradient * pointOnLine.x;
 
             // We will need any 2 points on the line to be used in GetSide()

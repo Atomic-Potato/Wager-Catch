@@ -53,10 +53,10 @@ namespace Pathfinding
         {
             Gizmos.color = Color.green;
             foreach (Vector2 point in WayPoints)
-                Gizmos.DrawSphere(point, .25f);
-            Gizmos.color = Color.red;
+                Gizmos.DrawCube(point, Vector3.one * .25f);
+            Gizmos.color = Color.white;
             foreach (Line line in TurningBoundaries)
-                line.DrawLineWithGizmos(3.5f);
+                line.DrawLineWithGizmos(.5f);
         }
     }
 }

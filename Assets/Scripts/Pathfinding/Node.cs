@@ -9,6 +9,7 @@ namespace Pathfinding
 
         public int GridPositionX;
         public int GridPositionY;
+        public Vector2 GridPosition;
         
         public int G_Cost; // distance from starting node
         public int H_Cost; // distance from end node
@@ -37,6 +38,7 @@ namespace Pathfinding
             WorldPosition = worldPosition;
             GridPositionX = gridPositionX;
             GridPositionY = gridPositionY;
+            GridPosition = new Vector2(gridPositionX, gridPositionY);
             Neighboors = new List<Node>();
         }
 
