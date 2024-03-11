@@ -89,7 +89,10 @@ namespace Pathfinding
         public void DrawLineWithGizmos(float length)
         {
             Vector2 direction = new Vector2(1, _gradient).normalized;
-            Gizmos.DrawLine(_pointOnLine1 - direction * length / 2f, _pointOnLine1 + direction * length / 2f);
+            Gizmos.color = _approachingSide == Side.Above ? Color.blue : Color.white;
+            Gizmos.DrawLine(_pointOnLine1, _pointOnLine1 + direction * length / 2f);
+            Gizmos.color = _approachingSide == Side.Above ? Color.white : Color.blue;
+            Gizmos.DrawLine(_pointOnLine1 - direction * length / 2f, _pointOnLine1);
         }
     }
 }
