@@ -36,7 +36,6 @@ namespace Pathfinding
         [HideInInspector] public Transform Target;
 
         protected Collider2D _collider;
-        protected Vector2? _previousPosition;
 
         protected AgentsManager _agentsManager;
         protected AgentBehavior _behavior;
@@ -54,8 +53,6 @@ namespace Pathfinding
         public int Priority => _priority;
         protected bool _isMoving;
         public bool IsMoving => _isMoving;
-        protected Vector2 _facingDirection  = Vector2.down; 
-        public Vector2 FacingDirection => _facingDirection;
         protected bool _isPathRequestSent;
         public bool IsPathRequestSent => _isPathRequestSent;
         protected bool _isReachedDestination;
@@ -131,17 +128,31 @@ namespace Pathfinding
             if (!_isPathRequestSent)
                 SendPathRequest();
             Move();
-            UpdateFacingDirection();
         }
         #endregion
 
         #region Getting a Path
+        Coroutine _pathRequestCoroutine;
         void SendPathRequest()
         {
-            if (Target == null)
-                return;
-            PathRequestManager.RequestPath(new PathRequest(transform.position, Target.position, _grid, _endNodeCache, UpdatePath));
-            _isPathRequestSent = true;
+            if (_pathRequestCoroutine == null)
+                _pathRequestCoroutine = StartCoroutine(SendRequest());
+
+            IEnumerator SendRequest()
+            {
+                if (Target == null)
+                    yield break;
+
+                // Delaying the path request at the start of the game
+                // since delta time is quite high at the start
+                if (Time.timeSinceLevelLoad < .3f)
+                    yield return new WaitForSecondsRealtime(.3f);
+
+                PathRequestManager.RequestPath(new PathRequest(transform.position, Target.position, _grid, _endNodeCache, UpdatePath));
+                _isPathRequestSent = true;
+
+                _pathRequestCoroutine = null;
+            }
         }
 
         void UpdatePath(Vector2[] newPath, bool isFoundPath, Node endNode)
@@ -269,24 +280,6 @@ namespace Pathfinding
             }
         }
 
-        #endregion
-
-        #region Other
-        void UpdateFacingDirection()
-        {
-            if (_previousPosition == null)
-            {
-                _previousPosition = transform.position;
-                return;
-            }
-
-            if (_previousPosition == transform.position)
-                return;
-
-            Vector2 newDirection = ((Vector2)transform.position - (Vector2)_previousPosition).normalized;
-            _previousPosition = transform.position;
-            _facingDirection = newDirection;
-        }
         #endregion
     }
 }
