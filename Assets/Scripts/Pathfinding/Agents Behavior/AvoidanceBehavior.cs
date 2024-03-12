@@ -8,16 +8,13 @@ namespace Pathfinding
     {
         [SerializeField] bool _isUseCongestionControl;
 
-        // TODO:
-        // - Make avoidance get strong the closer to the center are the agents
-        // - Give random priorities to agents so they would not contest a destination
-        public override Vector2 CalculateNextDirection(Agent agent, List<Agent> neighbors, Vector2 destination)
+        public override Vector2 CalculateBehaviorVelocity(Agent agent, List<Agent> neighbors, Vector2 destination)
         {
             bool isNeighborsExist = neighbors.Count != 0;
             if (!isNeighborsExist)
                 return Vector2.zero;
                 
-            return GetNeighborsAvgAvoidancePosition();
+            return GetNeighborsAvgAvoidancePosition() * agent.Speed;
 
             Vector3 GetNeighborsAvgAvoidancePosition()
             {

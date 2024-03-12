@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Pathfinding
@@ -9,6 +10,8 @@ namespace Pathfinding
     {
         #region Global Variables
         [Min(0)] public float Speed = 10f;
+        [SerializeField] protected float _stoppingDistance;
+        public float StoppingDisntace => _stoppingDistance;
         [SerializeField] protected LayerMask _agentsLayer;
         public Type SelectedType = Type.A;
         [SerializeField, Min(0)] protected float _neighborsDetectionRadius = 1f;
@@ -43,7 +46,7 @@ namespace Pathfinding
         public Grid Grid => _grid;
 
         Vector2 _currentWaypoint;
-        public Vector2[] PathToTarget {get; protected set;}
+        public StraightPath StraightPath {get; protected set;}
         public int PathIndex {get; protected set;}
         public Path SmoothPath {get; protected set;}
         protected Coroutine _followPathCoroutine;
@@ -81,18 +84,18 @@ namespace Pathfinding
                     SmoothPath.DrawPathWithGizmos(PathIndex);
                     Gizmos.DrawLine(_currentWaypoint, transform.position);
                 }
-                else if (PathToTarget != null)
+                else if (StraightPath.Path != null)
                 {
                     Gizmos.color = _pathColor;
-                    for (int i = PathIndex; i < PathToTarget.Length; i++)
+                    for (int i = PathIndex; i < StraightPath.Path.Length; i++)
                     {
                         if (i > PathIndex)
-                            Gizmos.DrawLine(PathToTarget[i-1], PathToTarget[i]);
+                            Gizmos.DrawLine(StraightPath.Path[i-1], StraightPath.Path[i]);
                         Gizmos.DrawLine(transform.position, _currentWaypoint); 
-                        Gizmos.DrawCube(PathToTarget[i], new Vector3(.25f, .25f, 0f));
+                        Gizmos.DrawCube(StraightPath.Path[i], new Vector3(.25f, .25f, 0f));
                     }
-                    if (PathToTarget.Length > 0)
-                        Gizmos.DrawLine(PathToTarget[PathToTarget.Length - 1], Target.position);
+                    if (StraightPath.Path.Length > 0)
+                        Gizmos.DrawLine(StraightPath.Path[StraightPath.Path.Length - 1], Target.position);
                 }
             }
 
@@ -125,8 +128,7 @@ namespace Pathfinding
 
         void Update()
         {
-            if (!_isPathRequestSent)
-                SendPathRequest();
+            SendPathRequest();
             Move();
         }
         #endregion
@@ -135,6 +137,9 @@ namespace Pathfinding
         Coroutine _pathRequestCoroutine;
         void SendPathRequest()
         {
+            if (_isPathRequestSent)
+                return;
+                
             if (_pathRequestCoroutine == null)
                 _pathRequestCoroutine = StartCoroutine(SendRequest());
 
@@ -169,21 +174,28 @@ namespace Pathfinding
             void CreatePath()
             {
                 if (IsUseSmoothPath)
-                    SmoothPath = new Path(newPath, transform.position, _smoothPathTurningDistance);
+                    SmoothPath = new Path(newPath, transform.position, _smoothPathTurningDistance, _stoppingDistance);
                 else
-                    PathToTarget = newPath;
+                {
+                    Debug.Log("Created straight path");
+                    StraightPath = new StraightPath(newPath, _stoppingDistance);
+                }
             }
         }
         #endregion
 
         #region Moving
+        /// <summary>
+        /// Calculates the average heading direction from each behavior (such as Follow Path or Avoidance behaviors)
+        /// and moves the agent in that direction.
+        /// </summary>
         void Move()
         {
-            Vector3 direction = (Vector3)_behavior.CalculateNextDirection(this, GetNeighbors(), _currentWaypoint).normalized;
-            transform.position += direction * Speed * Time.deltaTime;
+            Vector3 velocity = (Vector3)_behavior.CalculateBehaviorVelocity(this, GetNeighbors(), _currentWaypoint);
+            transform.position += velocity * Time.deltaTime;
             if (_isRotateWithMovement)
             {
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                float angle = Mathf.Atan2(velocity.normalized.y, velocity.normalized.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(0f, 0f, angle);
             }
             
@@ -215,9 +227,9 @@ namespace Pathfinding
             
             IEnumerator UpdateStraightPathWaypoint()
             {
-                if (PathToTarget.Length == 0)
+                if (StraightPath.Path.Length == 0)
                     yield break;
-                _currentWaypoint = PathToTarget[0];
+                _currentWaypoint = StraightPath.Path[0];
                 while(true)
                 {
                     if (IsReachedCurrentWayPoint())
@@ -228,7 +240,7 @@ namespace Pathfinding
                             FinishPath();
                             yield break;
                         }
-                        _currentWaypoint = PathToTarget[PathIndex];
+                        _currentWaypoint = StraightPath.Path[PathIndex];
                     }
                     yield return new WaitForEndOfFrame();
                 }
@@ -240,7 +252,7 @@ namespace Pathfinding
                 }
                 bool IsReachedEndOfPath()
                 {
-                    return PathIndex >= PathToTarget.Length;
+                    return PathIndex >= StraightPath.Path.Length;
                 }
                 
             }
@@ -256,7 +268,6 @@ namespace Pathfinding
                     {
                         if (PathIndex == SmoothPath.LastBoundaryIndex)
                         {
-                            Debug.Log("reached final point");
                             isFollowingPath = false;
                             FinishPath();
                             break;
@@ -281,5 +292,33 @@ namespace Pathfinding
         }
 
         #endregion
+    }
+
+    public struct StraightPath
+    {
+        public Vector2[] Path;
+        public int Length {get; private set;}
+        public int LastPointIndex {get; private set;}
+        public int StoppingIndex {get; private set;}
+
+        public StraightPath(Vector2[] path, float stoppingDistance)
+        {
+            Path = path;
+            Length = path.Length;
+            LastPointIndex = path.Length - 1;
+            StoppingIndex = GetStoppingIndex();
+
+            int GetStoppingIndex()
+            {
+                float distanceFromEndPoint = 0;
+                for (int i=path.Length - 1; i > 0; i--)
+                {
+                    distanceFromEndPoint += Vector2.Distance(path[i], path[i-1]);
+                    if (distanceFromEndPoint > stoppingDistance)
+                        return i;
+                }
+                return path.Length - 1;
+            }
+        }
     }
 }

@@ -21,6 +21,11 @@ namespace Pathfinding
         float _gradient;
         float _gradientPerpendicular;
 
+        /// <summary>
+        /// the c in y = mx + c. 
+        /// </summary>
+        float _yIntercept;
+
         Vector2 _pointOnLine1;
         Vector2 _pointOnLine2;
 
@@ -32,7 +37,7 @@ namespace Pathfinding
         /// <summary>
         /// From which side does the path go through the boundary
         /// </summary>
-        bool _approachingSide;
+        Side _approachingSide;
 
         public enum Side
         {
@@ -47,6 +52,7 @@ namespace Pathfinding
 
             _gradientPerpendicular = deltaX != 0 ? deltaY / deltaX : _VERTICAL_LINE_GRADIENT;
             _gradient = _gradientPerpendicular != 0 ? -1 / _gradientPerpendicular : _VERTICAL_LINE_GRADIENT;
+            _yIntercept = pointOnLine.y - _gradient * pointOnLine.x;
 
             // We will need any 2 points on the line to be used in GetSide()
             // The second point explained visually:
@@ -54,7 +60,7 @@ namespace Pathfinding
             _pointOnLine1 = pointOnLine;
             _pointOnLine2 = pointOnLine + new Vector2(1, _gradient);
             
-            _approachingSide = false;
+            _approachingSide = Side.Above;
             _approachingSide = GetSide(pointPerpendicularToLine); 
         }
 
@@ -62,22 +68,19 @@ namespace Pathfinding
         /// Returns if this point is above or below the line.
         /// </summary>
         /// <returns>Above or Below</returns>
-        public bool GetSide(Vector2 point)
+        public Side GetSide(Vector2 point)
         {
             // Note:
             //      I have not checked but in this case i assume:
             //      True: above the line
             //      False: below the line
 
-            // Explained here (more details in yournotes):
+            // Explained here (more details in your notes):
             // https://www.youtube.com/watch?v=KHuI9bXZS74
-            // if ((point.x - _pointOnLine1.x) * (_pointOnLine2.y - _pointOnLine2.y)
-            //     > (point.y - _pointOnLine1.y) * (_pointOnLine2.x - _pointOnLine2.y))
-            //     return Side.Above;
-            // return Side.Below;
-
-            return (point.x - _pointOnLine1.x) * (_pointOnLine2.y - _pointOnLine1.y)
-                > (point.y - _pointOnLine1.y) * (_pointOnLine2.x - _pointOnLine1.y);
+            if ((point.x - _pointOnLine1.x) * (_pointOnLine2.y - _pointOnLine1.y)
+                > (point.y - _pointOnLine1.y) * (_pointOnLine2.x - _pointOnLine1.y))
+                return Side.Above;
+            return Side.Below;
         }
 
         /// <summary>
@@ -87,6 +90,16 @@ namespace Pathfinding
         {
             return GetSide(point) != _approachingSide;
         }
+        
+        public float GetSquaredDistanceFromPoint(Vector2 point)
+        {
+            // Honestly i cannot bother explaining this, im too tired
+            // but here it is (timestamped) https://youtu.be/bfevcsANSr4?si=uPc_XbeaMkIVt2p2&t=588
+            float yInterceptPerpendicular = point.y - _gradientPerpendicular * point.x;
+            float intersectX = (yInterceptPerpendicular - _yIntercept) / (_gradient - _gradientPerpendicular);
+            float intersectY = _gradient * intersectX + _yIntercept;
+            return (point - new Vector2(intersectX, intersectY)).sqrMagnitude;
+        }
 
         /// <summary>
         /// Displays the line in gizmos
@@ -94,9 +107,9 @@ namespace Pathfinding
         public void DrawLineWithGizmos(float length)
         {
             Vector2 direction = new Vector2(1, _gradient).normalized;
-            Gizmos.color = _approachingSide == true ? Color.blue : Color.white;
+            Gizmos.color = _approachingSide == Side.Above ? Color.blue : Color.white;
             Gizmos.DrawLine(_pointOnLine1, _pointOnLine1 + direction * length / 2f);
-            Gizmos.color = _approachingSide == true ? Color.white : Color.blue;
+            Gizmos.color = _approachingSide == Side.Above ? Color.white : Color.blue;
             Gizmos.DrawLine(_pointOnLine1 - direction * length / 2f, _pointOnLine1);
         }
     }

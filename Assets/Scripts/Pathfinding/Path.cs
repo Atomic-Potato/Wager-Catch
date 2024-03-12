@@ -20,14 +20,19 @@ namespace Pathfinding
         /// Helps find the last boundary which will be on the same position of the last waypoint
         /// </summary>
         public readonly int LastBoundaryIndex;
+        /// <summary>
+        /// The path index where the agent should start slowing down
+        /// </summary>
+        public readonly int StoppingIndex;
 
-        public Path(Vector2[] wayPoints, Vector2 startingPosition, float turningDistance)
+        public Path(Vector2[] wayPoints, Vector2 startingPosition, float turningDistance, float stoppingDistance)
         {
             WayPoints = wayPoints;
             TurningBoundaries = new Line[wayPoints.Length];
             LastBoundaryIndex = wayPoints.Length-1;
             ConstructBoundaryPoints();
-
+            StoppingIndex = GetStoppingIndex();
+            
             void ConstructBoundaryPoints()
             {
                 Vector2 previousPoint = startingPosition;
@@ -43,6 +48,18 @@ namespace Pathfinding
 
                     previousPoint = wayPoints[i];
                 }
+            }
+
+            int GetStoppingIndex()
+            {
+                float distanceFromEndPoint = 0;
+                for (int i=wayPoints.Length - 1; i > 0; i--)
+                {
+                    distanceFromEndPoint += Vector2.Distance(wayPoints[i], wayPoints[i-1]);
+                    if (distanceFromEndPoint > stoppingDistance)
+                        return i;
+                }
+                return wayPoints.Length - 1;
             }
         }
 
