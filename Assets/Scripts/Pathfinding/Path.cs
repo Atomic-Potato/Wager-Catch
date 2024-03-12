@@ -49,14 +49,14 @@ namespace Pathfinding
         /// <summary>
         /// Draws the path along with the boundary lines
         /// </summary>
-        public void DrawPathWithGizmos()
+        public void DrawPathWithGizmos(int startingIndex)
         {
-            Gizmos.color = Color.green;
-            foreach (Vector2 point in WayPoints)
-                Gizmos.DrawCube(point, Vector3.one * .25f);
-            Gizmos.color = Color.white;
-            foreach (Line line in TurningBoundaries)
-                line.DrawLineWithGizmos(.5f);
+            for (int i = startingIndex; i <= LastBoundaryIndex; i++)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawCube(WayPoints[i], Vector3.one * .25f);
+                TurningBoundaries[i].DrawLineWithGizmos(.5f);
+            }
         }
     }
 }
