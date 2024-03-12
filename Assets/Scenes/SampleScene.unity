@@ -547,9 +547,9 @@ MonoBehaviour:
     m_Bits: 512
   SelectedType: 0
   _neighborsDetectionRadius: 0.28
-  _isUseSmoothPath: 0
+  _isUseSmoothPath: 1
   _smoothPathTurningDistance: 0
-  _smoothPathTurningSpeed: 1
+  _smoothPathTurningSpeed: 24
   _isRotateWithMovement: 1
   _isDrawGizmos: 1
   _isDrawPath: 1
@@ -609,7 +609,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 910766403}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.19, y: -2.72, z: -1.6522301}
+  m_LocalPosition: {x: 0.97, y: -1.16, z: -1.6522301}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -21,8 +21,13 @@ namespace Pathfinding
         float _gradient;
         float _gradientPerpendicular;
 
-        public Vector2 _pointOnLine1;
+        Vector2 _pointOnLine1;
         Vector2 _pointOnLine2;
+
+        /// <summary>
+        /// Used for gizmos drawing
+        /// </summary>
+        public Vector2 LineCenterPoint => _pointOnLine1;
 
         /// <summary>
         /// From which side does the path go through the boundary

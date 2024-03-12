@@ -71,7 +71,14 @@ namespace Pathfinding
             }
             
             if (isFoundPath)
+            {
                 pathWaypoints = RetracePath(startNode, endNode);
+                // In cases where the agent is above its target, 
+                // then the target has already reached its destination
+                // so there is no actual path.
+                // If we dont do this, it may result in an index out of bounds when following the path.
+                isFoundPath = pathWaypoints.Length > 0;
+            }
 
             callback(new PathRequestResult(pathWaypoints, isFoundPath, endNode, request.Callback));
             
