@@ -11,6 +11,11 @@ namespace Pathfinding
         [Tooltip("ON: Grid will be generated at the start of the game. " +
             "OFF: Grid will not be generated at the start of the game.")]
         [SerializeField] bool _isActive;
+        /// <summary>
+        /// FALSE: Grid has no nodes /
+        /// TRUE: Gid has nodes | Use ActivateGrid() and DeactivateGrid() 
+        /// </summary>
+        public bool IsActive => _isActive;
         [Tooltip("The size of the gird. Its recommended if its a square area.")]
         [SerializeField, Min(0f)] Vector2 _worldSize = new Vector2(1f,1f);
         [Tooltip("The area size that each node of the grid")]
@@ -69,7 +74,15 @@ namespace Pathfinding
         {
             if (!_isActive)
                 return;
+            ActivateGrid();
+        }
 
+        /// <summary>
+        /// Fills the grid with nodes. (NOTE: Use UpdateGrid() or UpdateGridSection() to update the grid)
+        /// </summary>
+        public void ActivateGrid()
+        {
+            _isActive = true;
             _nodeDiameter = _nodeRadius * 2f;
             NodesCountX = Mathf.RoundToInt(_worldSize.x/_nodeDiameter);
             NodesCountY = Mathf.RoundToInt(_worldSize.y/_nodeDiameter);
@@ -77,6 +90,15 @@ namespace Pathfinding
             _worldSize.x = _nodeDiameter * NodesCountX;
             _worldSize.y = _nodeDiameter * NodesCountY;
             CreateGrid();
+        }
+
+        /// <summary>
+        /// Removes all nodes from the grid.
+        /// </summary>
+        public void DeactivateGrid()
+        {
+            _isActive = false;
+            Nodes = null;
         }
 
         void CreateGrid()
