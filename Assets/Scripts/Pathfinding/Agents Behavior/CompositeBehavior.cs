@@ -3,10 +3,17 @@ using UnityEngine;
 
 namespace Pathfinding
 {
+    /// <summary>
+    /// As the name suggests, this class contains multiple behaviors, and it returns their average velocity
+    /// </summary>
     [CreateAssetMenu (fileName = "Composite Behavior", menuName = "Pathfinding/Behavior/Composite")]
     public class CompositeBehavior : AgentBehavior
     {
+        [Tooltip("The behaviors to be used on the agent")]
         [SerializeField] AgentBehavior[] _behaviors;
+        [Tooltip(
+            "The weight / strength of each behavior. Number of weights must match the number of behaviors. " +
+            "The index of the weight corresponds to the behavior with the same index")]
         [SerializeField, Min(0)] float[] _weights;
         public override Vector2 CalculateBehaviorVelocity(Agent agent, List<Agent> neighbors, Vector2 destination)
         {
@@ -17,15 +24,19 @@ namespace Pathfinding
             Vector2 averageDirection = Vector2.zero;
             int totalNonZeroDirections = 0;
             int totalNonZeroSpeeds = 0;
+
             for (int i=0; i < _behaviors.Length; i++)
             {
                 Vector2 behaviorVelocity = _behaviors[i].CalculateBehaviorVelocity(agent, neighbors, destination);
-                if (behaviorVelocity.normalized != Vector2.zero)
+                bool behaviorDirectionNotZero = behaviorVelocity.normalized != Vector2.zero;
+                bool behaviorSpeedNotZero = behaviorVelocity.magnitude != 0f;
+
+                if (behaviorDirectionNotZero)
                 {
                     averageDirection += behaviorVelocity.normalized * _weights[i];
                     totalNonZeroDirections++;
                 }
-                if (behaviorVelocity.magnitude != 0f)
+                if (behaviorSpeedNotZero)
                 {
                     averageSpeed += behaviorVelocity.magnitude;
                     totalNonZeroSpeeds++;
