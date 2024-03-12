@@ -3,10 +3,15 @@ using UnityEngine;
 
 namespace Pathfinding
 {
+    /// <summary>
+    /// Contains the grids that can be used for agents pathfinding
+    /// </summary>
     public class GridsManager : Singleton<GridsManager>
     {
-        static int _globalMaxSize;
-        public static int GlobalMaxSize => _globalMaxSize;
+        /// <summary>
+        /// The count of nodes of the largest grid in the grids list.
+        /// </summary>
+        public static int GlobalMaxSize {get; protected set;}
         
         [SerializeField] Grid _gridA;
         public Grid GridA => _gridA;
@@ -18,9 +23,12 @@ namespace Pathfinding
         public Grid GridD => _gridD;
         [SerializeField] Grid _gridE;
         public Grid GridE => _gridE;
+        // Feel free to add extra grids if needed, sorry for my dumb non dynamic implementation
 
-        List<Grid> _grids = new List<Grid>();
-        public List<Grid> Grids => _grids;
+        /// <summary>
+        /// All available grids
+        /// </summary>
+        public List<Grid> Grids {get; protected set;}
 
         new void Awake()
         {
@@ -30,11 +38,14 @@ namespace Pathfinding
             //      but then i would need to set the global max size in Start
             //      and Pathfinders requires it in awake
             //      and messing with execution orders doesnt always work in builds 
-            _grids = new List<Grid> {_gridA, _gridB, _gridC, _gridD, _gridE};
-            _globalMaxSize = GetMaxGridSize();
+            Grids = new List<Grid> {_gridA, _gridB, _gridC, _gridD, _gridE};
+            GlobalMaxSize = GetMaxGridSize();
 
         }
 
+        /// <summary>
+        /// Returns the grid that corresponds to the agent type. (Type A gets GridA and so on...)
+        /// </summary>
         public Grid GetGrid(Agent.Type type)
         {
             switch (type)
@@ -64,10 +75,13 @@ namespace Pathfinding
             }
         }
         
+        /// <summary>
+        /// Finds the maximum size of the largest grid
+        /// </summary>
         int GetMaxGridSize()
         {
             int maxSize = 0;
-                foreach(Grid grid in _grids)
+                foreach(Grid grid in Grids)
                 {
                     if (grid == null)
                         continue;
