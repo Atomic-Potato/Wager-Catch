@@ -1,36 +1,44 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
-using System.Collections;
 using System;
 
 namespace Pathfinding
 {
-    // G cost: distance from starting node
-    // H cost: distance from end node
-    // F cost: H + G
+    /// <summary>
+    /// Handles the calculation of the A* algorithim which finds the shortest path between 2 nodes on a grid 
+    /// (Further info: https://youtu.be/-L-WgKMFuhE?si=3rsrBzKm9MGdusFL)
+    /// </summary>
     public class Pathfinder : MonoBehaviour
     {
         [Space, Header("Performance")]
-        [SerializeField] bool isLogTimeToGetPath;
+        [SerializeField] bool _isLogTimeToGetPath;
 
+        /// <summary>
+        /// The set of nodes discovered and to be evaluated
+        /// </summary>
         Heap<Node> _openSet;
+        /// <summary>
+        /// The set of nodes explored and are already evaluated
+        /// </summary>
         HashSet<Node> _closedSet;
-        PathRequestManager _pathRequestManager;
 
         void Start()
         {
             _openSet = new Heap<Node>(GridsManager.GlobalMaxSize);
             _closedSet = new HashSet<Node>();
-            _pathRequestManager = PathRequestManager.Instance;
         }
 
-
+        /// <summary>
+        /// Gets the shortest path on the grid between 2 nodes
+        /// </summary>
+        /// <param name="request">A request containing all the necessary data, such as the start and end node</param>
+        /// <param name="callback">The function to be called at the end to return the path result</param>
         public void FindPathOnGrid(PathRequest request, Action<PathRequestResult> callback)
         {
-            // Debugging
+            // Debugging performance
             Stopwatch sw = null;
-            if (isLogTimeToGetPath)
+            if (_isLogTimeToGetPath)
             {
                 sw = new Stopwatch();
                 sw.Start();
@@ -42,7 +50,7 @@ namespace Pathfinding
             Vector2[] pathWaypoints = null;
             bool isFoundPath = false;
 
-            if (!IsSameAsPreviousEndNode())
+            if (!IsEndNodeSameAsCached())
             {
                 // This is the equivalent of creating a new list, but without generating garbage
                 _openSet.Clear();
@@ -54,10 +62,11 @@ namespace Pathfinding
                     // The first node in the heap is the one with the lowest F cost
                     Node currentNode = _openSet.RemoveFirst();
                     _closedSet.Add(currentNode);
+                    bool isReachedEndNode = currentNode == endNode;
 
-                    if (currentNode == endNode)
+                    if (isReachedEndNode)
                     {
-                        if (isLogTimeToGetPath)
+                        if (_isLogTimeToGetPath)
                         {
                             sw?.Stop();
                             UnityEngine.Debug.Log("Time: " + sw.ElapsedMilliseconds + "ms");
@@ -82,6 +91,8 @@ namespace Pathfinding
 
             callback(new PathRequestResult(pathWaypoints, isFoundPath, endNode, request.Callback));
             
+            // Updates the G,F,H costs and parents of the neighboring nods
+            // More info: https://youtu.be/-L-WgKMFuhE?si=xKQMF33U1CehauBs
             void UpddateNeighboors(Node currentNode)
             {
                 foreach (Node neighbor in currentNode.Neighboors)
@@ -104,12 +115,17 @@ namespace Pathfinding
                     }
                 }
             }
-            bool IsSameAsPreviousEndNode()
+
+            bool IsEndNodeSameAsCached()
             {
                 return endNode == request.EndNodeCache;
             }
         }
 
+        /// <summary>
+        /// Returns the distance between 2 nodes in terms of cost
+        /// </summary>
+        /// <returns>The cost distance between the 2 nodes</returns>
         int GetDistanceToNode(Node a, Node b)
         {
             // It is aggreed upon in A* pathfinding that
@@ -136,6 +152,9 @@ namespace Pathfinding
             return 14 * smallerDistance + 10 * (greaterDistance - smallerDistance);
         }
 
+        /// <summary>
+        /// Creats a nodes array by traversing the parents of the endNode until reaching the startNode
+        /// </summary>
         Vector2[] RetracePath(Node startNode, Node endNode)
         {
             if (startNode == null || endNode == null)

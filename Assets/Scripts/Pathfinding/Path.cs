@@ -50,6 +50,7 @@ namespace Pathfinding
                 }
             }
 
+            // Gets the index of which node in the path where the agent should start slowing down
             int GetStoppingIndex()
             {
                 float distanceFromEndPoint = 0;
