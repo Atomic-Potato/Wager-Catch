@@ -1,37 +1,40 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Converts any inherting class into a singleton
-/// </summary>
-/// <typeparam name="T"></typeparam>
-[DefaultExecutionOrder(-1)]
-public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour 
+namespace Pathfinding
 {
-    protected static T _instance;
     /// <summary>
-    /// The static singleton instance of the class
+    /// Converts any inherting class into a singleton
     /// </summary>
-    public static T Instance
+    /// <typeparam name="T"></typeparam>
+    [DefaultExecutionOrder(-1)]
+    public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour 
     {
-        get
+        protected static T _instance;
+        /// <summary>
+        /// The static singleton instance of the class
+        /// </summary>
+        public static T Instance
         {
-#if UNITY_EDITOR
-            if(_instance)
+            get
+            {
+    #if UNITY_EDITOR
+                if(_instance)
+                    return _instance;
+                _instance = FindObjectOfType<T>();
                 return _instance;
-            _instance = FindObjectOfType<T>();
-            return _instance;
-#else
-            return _instance;
-#endif
+    #else
+                return _instance;
+    #endif
+            }
         }
-    }
 
-    protected void Awake()
-    {
-        if (_instance != null && _instance != this)
+        protected void Awake()
         {
-            Destroy(this);
+            if (_instance != null && _instance != this)
+            {
+                Destroy(this);
+            }
+            _instance = GetComponent<T>();
         }
-        _instance = GetComponent<T>();
     }
 }
