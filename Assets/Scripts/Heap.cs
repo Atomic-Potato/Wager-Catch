@@ -2,6 +2,9 @@
 
 public interface IHeapItem<T> : IComparable<T>
 {
+    /// <summary>
+    /// Helps keep track of the items index in the heap tree
+    /// </summary>
     int HeapIndex
     {
         get;
@@ -13,10 +16,21 @@ public interface IHeapItem<T> : IComparable<T>
 //       higher priority = 1
 //       equal priority = 0   
 //       lower priority = -1
+
+/// <summary>
+/// A list tree optimized for searching (More info: https://youtu.be/3Dw5d7PlcTM?si=4AJpaMgkWFhsVYnT)
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class Heap<T> where T : IHeapItem<T>
 {
+    /// <summary>
+    /// The elements of the heap tree
+    /// </summary>
     T[] _items;
     int _itemsCount;
+    /// <summary>
+    /// The total number of elements in the heap tree
+    /// </summary>
     public int Count => _itemsCount;
 
     public Heap(int maxSize)
@@ -24,6 +38,10 @@ public class Heap<T> where T : IHeapItem<T>
         _items = new T[maxSize];
     }
 
+    /// <summary>
+    /// Checks if the heap tree contains the item
+    /// </summary>
+    /// <param name="item">The item to be found</param>
     public bool Contains(T item)
     {
         if (item.HeapIndex < _itemsCount)
@@ -32,11 +50,17 @@ public class Heap<T> where T : IHeapItem<T>
             return false;
     }
 
+    /// <summary>
+    /// Empties the heap tree
+    /// </summary>
     public void Clear()
     {
         _itemsCount = 0;
     }
 
+    /// <summary>
+    /// Adds an item to the heap tree
+    /// </summary>
     public void Add(T item)
     {
         // Add the item to the end of the list
@@ -47,6 +71,9 @@ public class Heap<T> where T : IHeapItem<T>
         _itemsCount++;
     }
 
+    /// <summary>
+    /// Returns the top element of the heap tree / the root telement
+    /// </summary>
     public T RemoveFirst()
     {
         T firstItem = _items[0];
@@ -57,6 +84,9 @@ public class Heap<T> where T : IHeapItem<T>
         return firstItem;
     }
 
+    /// <summary>
+    /// Updates the item's position in the tree
+    /// </summary>
     public void UpdateItem(T item)
     {
         SortUp(item);
@@ -118,6 +148,9 @@ public class Heap<T> where T : IHeapItem<T>
         }
     }
 
+    /// <summary>
+    /// Replaces the 2 items positions in the tree
+    /// </summary>
     void Swap(T itemA, T itemB)
     {
         _items[itemA.HeapIndex] = itemB;
