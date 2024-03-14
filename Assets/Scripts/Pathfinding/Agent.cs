@@ -63,9 +63,7 @@ namespace Pathfinding
                 return;
 
             if (_isDrawPath && Path != null)
-            {
                 Path.DrawPathWithGizmos(Path.CurrentPathIndex, _pathColor, transform.position, Target.position);
-            }
 
             if (_isDrawNeighborsDetectionRadius)
             {
@@ -77,21 +75,24 @@ namespace Pathfinding
         void Awake()
         {
             _collider = GetComponent<Collider2D>();
-            
             if (_isRandomPathColor)
                 _pathColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1);
         }
 
         void Start()
         {
-            _agentsManager = AgentsManager.Instance;
-            _agentsManager.Agents.Add(this);
-            if (_agentsManager.GeneralTarget != null)
-                Target = _agentsManager.GeneralTarget;
-            _behavior = _agentsManager.AgentBehavior;
-
-            Priority = AgentsManager.Instance.GetUniqueAgentID();
+            GetDataFromAgentsManager();
             _grid = GridsManager.Instance.GetGrid(SelectedType);
+
+            void GetDataFromAgentsManager()
+            {
+                _agentsManager = AgentsManager.Instance;
+                _agentsManager.Agents.Add(this);
+                if (_agentsManager.GeneralTarget != null)
+                    Target = _agentsManager.GeneralTarget;
+                _behavior = _agentsManager.AgentBehavior;
+                Priority = AgentsManager.Instance.GetUniqueAgentID();
+            }
         }
 
         void Update()
@@ -210,8 +211,11 @@ namespace Pathfinding
 
             if (_isRotateWithMovement)
             {
-                float angle = Mathf.Atan2(velocity.normalized.y, velocity.normalized.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                if (velocity != Vector3.zero)
+                {
+                    float angle = Mathf.Atan2(velocity.normalized.y, velocity.normalized.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                }
             }
             
             List<Agent> GetNeighbors()
