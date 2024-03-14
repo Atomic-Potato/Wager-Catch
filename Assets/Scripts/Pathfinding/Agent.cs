@@ -261,17 +261,18 @@ namespace Pathfinding
                 }
             }
             
-            List<Agent> GetNeighbors()
+        }
+        
+        public List<Agent> GetNeighbors()
+        {
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _neighborsDetectionRadius, Vector2.zero, Mathf.Infinity, _agentsLayer);
+            List<Agent> neighbors = new List<Agent>();
+            foreach(RaycastHit2D hit in hits)
             {
-                RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _neighborsDetectionRadius, Vector2.zero, Mathf.Infinity, _agentsLayer);
-                List<Agent> neighbors = new List<Agent>();
-                foreach(RaycastHit2D hit in hits)
-                {
-                    if (hit.collider != Collider)
-                        neighbors.Add(hit.collider.gameObject.GetComponent<Agent>());
-                }
-                return neighbors;
+                if (hit.collider != Collider)
+                    neighbors.Add(hit.collider.gameObject.GetComponent<Agent>());
             }
+            return neighbors;
         }
 
         Coroutine _updatePathIndexCoroutine;
