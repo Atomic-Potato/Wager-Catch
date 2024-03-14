@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace Pathfinding
 {
@@ -10,8 +12,11 @@ namespace Pathfinding
         public readonly Line[] TurningBoundaries;
         public readonly int LastTruningBoundaryIndex;
 
-        public SmoothPath(Vector2[] wayPoints, Vector2 startingPosition, float turningDistance, float stoppingDistance)
+        public SmoothPath(Vector2[] wayPoints, Vector2 startingPosition, float turningDistance, float stoppingDistance, Vector2? exactTargetPosition = null)
         {
+            if (exactTargetPosition != null)
+                AddExactTargetPositionToWaypoints();
+            
             WayPoints = wayPoints;
             TurningBoundaries = new Line[wayPoints.Length];
             LastTruningBoundaryIndex = wayPoints.Length-1;
@@ -33,6 +38,14 @@ namespace Pathfinding
 
                     previousPoint = wayPoints[i];
                 }
+            }
+
+            void AddExactTargetPositionToWaypoints()
+            {
+                List<Vector2> wayPointsWithExactTarget = wayPoints.ToList();
+                wayPointsWithExactTarget.RemoveAt(wayPoints.Length - 1);
+                wayPointsWithExactTarget.Add((Vector2)exactTargetPosition);
+                wayPoints = wayPointsWithExactTarget.ToArray();
             }
         }
 

@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &43824972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &134552111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbdeab6c4c473d4a80ecc5d8032fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _generalTarget: {fileID: 0}
+  _generalTarget: {fileID: 910766404}
   _generalBehavior: {fileID: 11400000, guid: 0074d342f66773d4d8238edae5794df2, type: 2}
 --- !u!4 &376140512
 Transform:
@@ -439,6 +439,7 @@ MonoBehaviour:
   _smoothPathTurningDistance: 0
   SmoothPathTurningSpeed: 4.5
   IsRotateWithMovement: 1
+  IsReachExactTargetPosition: 1
   SelectedType: 0
   _agentsLayer:
     serializedVersion: 2
@@ -605,7 +606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &707632846
 Transform:
   m_ObjectHideFlags: 0
@@ -685,10 +686,11 @@ MonoBehaviour:
   SpeedMultiplier: 1
   StoppingDistance: 1
   _neighborsDetectionRadius: 0.28
-  _isUseSmoothPath: 1
+  _isUseSmoothPath: 0
   _smoothPathTurningDistance: 0
   SmoothPathTurningSpeed: 4.5
   IsRotateWithMovement: 0
+  IsReachExactTargetPosition: 1
   SelectedType: 0
   _agentsLayer:
     serializedVersion: 2
@@ -1103,6 +1105,7 @@ MonoBehaviour:
   _smoothPathTurningDistance: 0
   SmoothPathTurningSpeed: 4.5
   IsRotateWithMovement: 1
+  IsReachExactTargetPosition: 1
   SelectedType: 0
   _agentsLayer:
     serializedVersion: 2
@@ -1130,7 +1133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1494935761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1176,7 +1179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1517796906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1358,7 +1361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1765775454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1549,6 +1552,7 @@ MonoBehaviour:
   _smoothPathTurningDistance: 0
   SmoothPathTurningSpeed: 4.5
   IsRotateWithMovement: 1
+  IsReachExactTargetPosition: 1
   SelectedType: 0
   _agentsLayer:
     serializedVersion: 2
@@ -1852,6 +1856,7 @@ MonoBehaviour:
   _smoothPathTurningDistance: 0
   SmoothPathTurningSpeed: 4.5
   IsRotateWithMovement: 1
+  IsReachExactTargetPosition: 1
   SelectedType: 0
   _agentsLayer:
     serializedVersion: 2

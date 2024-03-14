@@ -8,6 +8,10 @@ namespace Pathfinding
     public class Agent : MonoBehaviour
     {
         #region Global Variables
+        [Tooltip ("The target to follow")]
+        public Transform Target;
+
+        [Space]
         [Tooltip ("The speed of the agent")]
         [Min (0)] public float SpeedMultiplier = 1f;
         [Tooltip ("The distance to the destination before the agent starts slowing down to a complete halt")]
@@ -29,7 +33,9 @@ namespace Pathfinding
 
         [Space, Header("Other")]
         [Tooltip ("Rotates the agent forward (to be more specific transfrom.right) along with its movement direction")]
-        [SerializeField] public bool IsRotateWithMovement;
+        public bool IsRotateWithMovement;
+        [Tooltip ("Goes to the exact position of the target instead of sticking to the grid")]
+        public bool IsReachExactTargetPosition;
         [Tooltip ("Currently only affects which grid the agent will be assigned to. Type A gets Grid A and so on. "
             + "Useful in case if you have agents with different sizes")]
         public Type SelectedType = Type.A;
@@ -45,11 +51,6 @@ namespace Pathfinding
         [SerializeField] bool _isDrawNeighborsDetectionRadius;
 
         /// <summary>
-        /// The target to follow
-        /// </summary>
-        [HideInInspector] public Transform Target;
-
-        /// <summary>
         /// Used for other agents to detect this agent as a neighbor. 
         /// (Note: Make sure that agents on the same layer do not collide in the projects collision matrix)
         /// </summary>
@@ -60,7 +61,8 @@ namespace Pathfinding
         /// </summary>
         protected AgentsManager _agentsManager;
         /// <summary>
-        /// The movement behavior of the agent. By default it is a composite behavior containing the follow path and avoidance behaviors
+        /// The movement behavior of the agent. By default it is a composite behavior 
+        /// containing the follow path and avoidance behaviors
         /// </summary>
         protected AgentBehavior _behavior;
         /// <summary>
@@ -225,15 +227,20 @@ namespace Pathfinding
             if (!isFoundPath)
                 return;
 
-            Path = CreatePath();
+            Path = CreatePath(newPath);
             UpdatePathIndex();
 
-            Path CreatePath()
-            {
-                return IsUseSmoothPath ? 
-                    (Path) new SmoothPath(newPath, transform.position, _smoothPathTurningDistance, StoppingDistance) :
-                    (Path) new StraightPath(newPath, StoppingDistance);
-            }
+        }
+
+        /// <summary>
+        /// Creates and returns a path based on the agent properties and the provided waypoints
+        /// </summary>
+        protected Path CreatePath(Vector2[] waypoints)
+        {
+            Vector2? exactTargetPosition = IsReachExactTargetPosition ? (Vector2?)Target.position : null;
+            return IsUseSmoothPath ? 
+                (Path) new SmoothPath(waypoints, transform.position, _smoothPathTurningDistance, StoppingDistance, exactTargetPosition) :
+                (Path) new StraightPath(waypoints, StoppingDistance, exactTargetPosition);
         }
         #endregion
 
