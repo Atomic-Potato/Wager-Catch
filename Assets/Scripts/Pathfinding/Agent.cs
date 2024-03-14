@@ -72,6 +72,10 @@ namespace Pathfinding
         /// </summary>
         public Path Path {get; protected set;}
 
+        /// <summary>
+        /// Agents priority are currently only used in the avoidance agent behavior 
+        /// to make agents with higher priority not get affect by lower priority neighbors
+        /// </summary>
         public int Priority {get; protected set;}
         /// <summary>
         /// True if the agent movement is caused from the behavior assigned to it
