@@ -540,17 +540,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
-  _stoppingDistance: 0
+  SpeedMultiplier: 10
+  StoppingDistance: 1
+  _neighborsDetectionRadius: 0.28
+  _isUseSmoothPath: 1
+  _smoothPathTurningDistance: 0
+  SmoothPathTurningSpeed: 4.5
+  IsRotateWithMovement: 0
+  SelectedType: 0
   _agentsLayer:
     serializedVersion: 2
     m_Bits: 512
-  SelectedType: 0
-  _neighborsDetectionRadius: 0.28
-  _isUseSmoothPath: 0
-  _smoothPathTurningDistance: 0
-  _smoothPathTurningSpeed: 4.5
-  _isRotateWithMovement: 1
   _isDrawGizmos: 1
   _isDrawPath: 1
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
@@ -847,17 +847,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 1
-  _stoppingDistance: 0
+  SpeedMultiplier: 10
+  StoppingDistance: 0
+  _neighborsDetectionRadius: 0.28
+  _isUseSmoothPath: 0
+  _smoothPathTurningDistance: 0
+  SmoothPathTurningSpeed: 0
+  IsRotateWithMovement: 0
+  SelectedType: 0
   _agentsLayer:
     serializedVersion: 2
     m_Bits: 512
-  SelectedType: 0
-  _neighborsDetectionRadius: 0.28
-  _isUseSmoothPath: 1
-  _smoothPathTurningDistance: 0
-  _smoothPathTurningSpeed: 4.5
-  _isRotateWithMovement: 1
   _isDrawGizmos: 1
   _isDrawPath: 1
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}

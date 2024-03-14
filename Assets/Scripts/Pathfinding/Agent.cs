@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,25 +8,34 @@ namespace Pathfinding
     public class Agent : MonoBehaviour
     {
         #region Global Variables
-        [Min(0)] public float Speed = 10f;
-        [SerializeField] protected float _stoppingDistance;
-        public float StoppingDisntace => _stoppingDistance;
-        [SerializeField] protected LayerMask _agentsLayer;
-        public Type SelectedType = Type.A;
+        [Tooltip ("The speed of the agent")]
+        [Min (0)] public float SpeedMultiplier = 1f;
+        [Tooltip ("The distance to the destination before the agent starts slowing down to a complete halt")]
+        public float StoppingDistance = 1f;
+        [Tooltip ("The detection radius of other agents. By default it is only used to avoid other agents in this radius. "
+            + "(Is Draw Neighbors Detection Radius to visualize)")]
         [SerializeField, Min(0)] protected float _neighborsDetectionRadius = 1f;
         public float NeighborsDetectionRadius => _neighborsDetectionRadius;
         
         [Space, Header("Smooth Path")]
+        [Tooltip ("Smoothes the agent movement and rotation (if Is Rotate With Movement is enabled)")]
         [SerializeField] bool _isUseSmoothPath;
-        public bool IsUseSmoothPath {get {return _isUseSmoothPath;} protected set {_isUseSmoothPath = value;}}
-        [SerializeField, Min(0)] float _smoothPathTurningDistance;
-        public float SmoothPathTurningDistance {get {return _smoothPathTurningDistance;} protected set {_smoothPathTurningDistance = value;}}
-        [SerializeField, Min (0)] float _smoothPathTurningSpeed; 
-        public float SmoothPathTurningSpeed {get {return _smoothPathTurningSpeed;} protected set {_smoothPathTurningSpeed = value;}} 
+        public bool IsUseSmoothPath => _isUseSmoothPath;
+        [Tooltip ("The distance offset from the actual path waypoint. At this offset the agent will start turning. "
+            + "(Is Draw Path to visualize)")]
+        [SerializeField, Min(0)] float _smoothPathTurningDistance = 0f;
+        public float SmoothPathTurningDistance => _smoothPathTurningDistance;
+        [Min (0)] public float SmoothPathTurningSpeed = 4.5f; 
 
         [Space, Header("Other")]
-        [SerializeField] protected bool _isRotateWithMovement;
-
+        [Tooltip ("Rotates the agent forward (to be more specific transfrom.right) along with its movement direction")]
+        [SerializeField] public bool IsRotateWithMovement;
+        [Tooltip ("Currently only affects which grid the agent will be assigned to. Type A gets Grid A and so on. "
+            + "Useful in case if you have agents with different sizes")]
+        public Type SelectedType = Type.A;
+        [Tooltip ("Agents layer to help detect other agents "
+            + "(Note: Make sure that agents on the same layer do not collide in the projects collision matrix)")]
+        [SerializeField] protected LayerMask _agentsLayer;
 
         [Space, Header("Gizmos")]
         [SerializeField] bool _isDrawGizmos;
@@ -36,23 +44,54 @@ namespace Pathfinding
         [SerializeField] bool _isRandomPathColor = false;
         [SerializeField] bool _isDrawNeighborsDetectionRadius;
 
+        /// <summary>
+        /// The target to follow
+        /// </summary>
         [HideInInspector] public Transform Target;
 
-        protected Collider2D _collider;
+        /// <summary>
+        /// Used for other agents to detect this agent as a neighbor. 
+        /// (Note: Make sure that agents on the same layer do not collide in the projects collision matrix)
+        /// </summary>
+        public Collider2D Collider {get; protected set;}
 
+        /// <summary>
+        /// Contains common data shared between agents that is assigned at the start of the game
+        /// </summary>
         protected AgentsManager _agentsManager;
+        /// <summary>
+        /// The movement behavior of the agent. By default it is a composite behavior containing the follow path and avoidance behaviors
+        /// </summary>
         protected AgentBehavior _behavior;
-        protected Grid _grid;
-        public Grid Grid => _grid;
-
+        /// <summary>
+        /// The grid that the agent is using to create a path with
+        /// </summary>
+        public Grid Grid {get; protected set;}
+        /// <summary>
+        /// The current path to the target
+        /// </summary>
         public Path Path {get; protected set;}
-        protected Node _endNodeCache = null;
 
         public int Priority {get; protected set;}
+        /// <summary>
+        /// True if the agent movement is caused from the behavior assigned to it
+        /// </summary>
         public bool IsMoving {get; protected set;}
-        protected bool _isPathRequestSent;
-        public bool IsPathRequestSent => _isPathRequestSent;
+        /// <summary>
+        /// True if the agent is already looking for a path to the target. 
+        /// Except in the case of ForceSendPathRequest()
+        /// </summary>
+        public bool IsPathRequestSent {get; protected set;}
 
+        /// <summary>
+        /// Stores the previous path request target position node. 
+        /// Used to elminate non necessary path requests by comparing the target node with the previous path request
+        /// </summary>
+        protected Node _endNodeCache = null;
+
+        /// <summary>
+        /// Currently only corresponds to the different grid types contained in the grid manager
+        /// </summary>
         public enum Type {A, B, C, D, E,}
         #endregion
 
@@ -74,7 +113,7 @@ namespace Pathfinding
 
         void Awake()
         {
-            _collider = GetComponent<Collider2D>();
+            Collider = GetComponent<Collider2D>();
             if (_isRandomPathColor)
                 _pathColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1);
         }
@@ -82,7 +121,7 @@ namespace Pathfinding
         void Start()
         {
             GetDataFromAgentsManager();
-            _grid = GridsManager.Instance.GetGrid(SelectedType);
+            Grid = GridsManager.Instance.GetGrid(SelectedType);
 
             void GetDataFromAgentsManager()
             {
@@ -109,7 +148,7 @@ namespace Pathfinding
         /// </summary>
         public void SendPathRequest()
         {
-            if (_isPathRequestSent)
+            if (IsPathRequestSent)
                 return;
                 
             if (_pathRequestCoroutine == null)
@@ -125,8 +164,8 @@ namespace Pathfinding
                 if (Time.timeSinceLevelLoad < .3f)
                     yield return new WaitForSecondsRealtime(.3f);
 
-                PathRequestManager.RequestPath(new PathRequest(transform.position, Target.position, _grid, _endNodeCache, UpdatePath));
-                _isPathRequestSent = true;
+                PathRequestManager.RequestPath(new PathRequest(transform.position, Target.position, Grid, _endNodeCache, UpdatePath));
+                IsPathRequestSent = true;
                 _pathRequestCoroutine = null;
             }
         }
@@ -143,8 +182,8 @@ namespace Pathfinding
                 StopCoroutine(_pathRequestCoroutine);
                 _pathRequestCoroutine = null;
             }
-            if (_isPathRequestSent == true)
-                _isPathRequestSent = false;
+            if (IsPathRequestSent == true)
+                IsPathRequestSent = false;
 
             if (_forcePathRequestCoroutine == null)
                 _forcePathRequestCoroutine = StartCoroutine(SendRequest());
@@ -159,7 +198,7 @@ namespace Pathfinding
                 if (Time.timeSinceLevelLoad < .3f)
                     yield return new WaitForSecondsRealtime(.3f);
                 
-                PathRequestManager.RequestPath(new PathRequest(transform.position, Target.position, _grid, null, UpdatePath));
+                PathRequestManager.RequestPath(new PathRequest(transform.position, Target.position, Grid, null, UpdatePath));
                 _forcePathRequestCoroutine = null;
             }
         }
@@ -172,7 +211,7 @@ namespace Pathfinding
         /// <param name="endNode">Used to elminate non necessary path requests by comparing the target node with the previous path request</param>
         void UpdatePath(Vector2[] newPath, bool isFoundPath, Node endNode)
         {
-            _isPathRequestSent = false;   
+            IsPathRequestSent = false;   
             _endNodeCache = endNode;
 
             if (!isFoundPath)
@@ -184,8 +223,8 @@ namespace Pathfinding
             Path CreatePath()
             {
                 return IsUseSmoothPath ? 
-                    (Path) new SmoothPath(newPath, transform.position, _smoothPathTurningDistance, _stoppingDistance) :
-                    (Path) new StraightPath(newPath, _stoppingDistance);
+                    (Path) new SmoothPath(newPath, transform.position, _smoothPathTurningDistance, StoppingDistance) :
+                    (Path) new StraightPath(newPath, StoppingDistance);
             }
         }
         #endregion
@@ -209,7 +248,7 @@ namespace Pathfinding
                 IsMoving = false;
             }
 
-            if (_isRotateWithMovement)
+            if (IsRotateWithMovement)
             {
                 if (velocity != Vector3.zero)
                 {
@@ -224,7 +263,7 @@ namespace Pathfinding
                 List<Agent> neighbors = new List<Agent>();
                 foreach(RaycastHit2D hit in hits)
                 {
-                    if (hit.collider != _collider)
+                    if (hit.collider != Collider)
                         neighbors.Add(hit.collider.gameObject.GetComponent<Agent>());
                 }
                 return neighbors;

@@ -20,17 +20,17 @@ namespace Pathfinding
             float speedPercent = GetSlowDownSpeedPercent();     // Used to slow down the agent as it gets closer to the target
             Vector2 velocity = GetVelocity();
             speedPercent = speedPercent > .01f ? speedPercent : speedPercent;
-            return velocity * agent.Speed * speedPercent;
+            return velocity * agent.SpeedMultiplier * speedPercent;
 
             float GetSlowDownSpeedPercent()
             {
-                    if (agent.Path.CurrentPathIndex >= agent.Path.StoppingIndex && agent.StoppingDisntace > 0)
+                    if (agent.Path.CurrentPathIndex >= agent.Path.StoppingIndex && agent.StoppingDistance > 0)
                     {
                         Path path = agent.Path;
                         float remainingDistance = agent.IsUseSmoothPath ? 
                             ((SmoothPath)path).TurningBoundaries[((SmoothPath)path).LastTruningBoundaryIndex].GetDistanceFromPoint(agent.transform.position):
                             Vector2.Distance(agent.transform.position, path.WayPoints[path.WayPoints.Length - 1]);
-                        return Mathf.Clamp01(remainingDistance / agent.StoppingDisntace);
+                        return Mathf.Clamp01(remainingDistance / agent.StoppingDistance);
                     }
                 return 1;
             }

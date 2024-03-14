@@ -21,7 +21,7 @@ namespace Pathfinding
             if (!isNeighborsExist)
                 return Vector2.zero;
                 
-            return GetNeighborsAvgAvoidancePosition() * agent.Speed;
+            return GetNeighborsAvgAvoidancePosition() * agent.SpeedMultiplier;
 
             // In BOIDs, this function is the avoidance rule. Taking the sum of the opposite direction from
             // each neighbor, and returning the average.

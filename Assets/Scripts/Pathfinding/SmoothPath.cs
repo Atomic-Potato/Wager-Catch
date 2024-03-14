@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
-using System.Linq.Expressions;
 
 namespace Pathfinding
 {
@@ -43,12 +40,13 @@ namespace Pathfinding
         {
             if (WayPoints == null)
                 return;
-            
+
             Gizmos.color = pathColor;
             if (agentPosition != null)
                 Gizmos.DrawLine(CurrentWaypointPosition, (Vector3)agentPosition);
             for (int i = startingIndex; i <= LastTruningBoundaryIndex; i++)
             {
+                Gizmos.color = pathColor;
                 Gizmos.DrawCube(WayPoints[i], Vector3.one * .25f);
                 TurningBoundaries[i].DrawLineWithGizmos(.5f);
             }
@@ -59,9 +57,10 @@ namespace Pathfinding
             if (IsReachedEndOfPath)
                 return false;
             CurrentPathIndex++;
-            if (CurrentPathIndex == LastTruningBoundaryIndex)
+            if (CurrentPathIndex > LastTruningBoundaryIndex)
             {
                 IsReachedEndOfPath = true;
+                CurrentPathIndex--;
                 return false;
             }
             return true;
