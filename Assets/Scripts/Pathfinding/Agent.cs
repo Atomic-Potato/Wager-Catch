@@ -260,9 +260,11 @@ namespace Pathfinding
                     transform.rotation = Quaternion.Euler(0f, 0f, angle);
                 }
             }
-            
         }
         
+        /// <summary>
+        /// Populates and returns a list of surrounding agents that are in the agent neighbors detection radius
+        /// </summary>
         public List<Agent> GetNeighbors()
         {
             RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _neighborsDetectionRadius, Vector2.zero, Mathf.Infinity, _agentsLayer);
