@@ -103,7 +103,10 @@ namespace Pathfinding
 
         #region Getting a Path
         Coroutine _pathRequestCoroutine;
-        void SendPathRequest()
+        /// <summary>
+        /// Sends a request to update the path 
+        /// </summary>
+        public void SendPathRequest()
         {
             if (_isPathRequestSent)
                 return;
@@ -123,11 +126,49 @@ namespace Pathfinding
 
                 PathRequestManager.RequestPath(new PathRequest(transform.position, Target.position, _grid, _endNodeCache, UpdatePath));
                 _isPathRequestSent = true;
-
                 _pathRequestCoroutine = null;
             }
         }
 
+        Coroutine _forcePathRequestCoroutine;
+        /// <summary>
+        /// Sends a request to update the path regardless of any restrictions
+        /// (Currently the only restriction is the target end node must be different than the last path request)
+        /// </summary>
+        public void ForceSendPathRequest()
+        {
+            if (_pathRequestCoroutine != null)
+            {
+                StopCoroutine(_pathRequestCoroutine);
+                _pathRequestCoroutine = null;
+            }
+            if (_isPathRequestSent == true)
+                _isPathRequestSent = false;
+
+            if (_forcePathRequestCoroutine == null)
+                _forcePathRequestCoroutine = StartCoroutine(SendRequest());
+
+            IEnumerator SendRequest()
+            {
+                if (Target == null)
+                    yield break;
+
+                // Delaying the path request at the start of the game
+                // since delta time is quite high at the start
+                if (Time.timeSinceLevelLoad < .3f)
+                    yield return new WaitForSecondsRealtime(.3f);
+                
+                PathRequestManager.RequestPath(new PathRequest(transform.position, Target.position, _grid, null, UpdatePath));
+                _forcePathRequestCoroutine = null;
+            }
+        }
+
+        /// <summary>
+        /// Updates the current path, when a result is returned from the PathRequestManager
+        /// </summary>
+        /// <param name="newPath">The new requested path</param>
+        /// <param name="isFoundPath">If a path exists to the target. If false, the path will not update</param>
+        /// <param name="endNode">Used to elminate non necessary path requests by comparing the target node with the previous path request</param>
         void UpdatePath(Vector2[] newPath, bool isFoundPath, Node endNode)
         {
             _isPathRequestSent = false;   
@@ -150,8 +191,8 @@ namespace Pathfinding
 
         #region Moving
         /// <summary>
-        /// Calculates the average heading direction from each behavior (such as Follow Path or Avoidance behaviors)
-        /// and moves the agent in that direction.
+        /// Calculates the average velocity from each behavior (such as Follow Path or Avoidance behaviors)
+        /// and moves the agent transform with that velocity.
         /// </summary>
         void Move()
         {
@@ -188,7 +229,7 @@ namespace Pathfinding
 
         Coroutine _updatePathIndexCoroutine;
         /// <summary>
-        /// Updates the current waypoint and path index based on the agent position.
+        /// Updates the current path index based on the agent position.
         /// </summary>
         void UpdatePathIndex()
         {
