@@ -80,6 +80,10 @@ namespace Pathfinding
         /// </summary>
         public int Priority {get; protected set;}
         /// <summary>
+        /// Stores the priority set at the start of the game when the agent is not moving
+        /// </summary>
+        protected int _priorityCache;
+        /// <summary>
         /// A cache to be used for smooth vector rotation in smooth paths follow behavior
         /// </summary>
         public Vector2 MoveDirectionCache;
@@ -148,6 +152,7 @@ namespace Pathfinding
         {
             SendPathRequest();
             Move();
+            UpdatePriority();
         }
         #endregion
 
@@ -356,5 +361,29 @@ namespace Pathfinding
             }
         }
         #endregion
+
+        /// <summary>
+        /// Sets the priority to 0 when not moving to allow other agents to pass 
+        /// if the agent is blocking the path of other agents
+        /// </summary>
+        void UpdatePriority()
+        {
+            if (!IsMoving)
+            {
+                if (Priority != 0)
+                {
+                    _priorityCache = Priority;
+                    Priority = 0;
+                }
+            }
+            else
+            {
+                if (_priorityCache != 0)
+                {
+                    Priority = _priorityCache;
+                    _priorityCache = 0;
+                }
+            }
+        }
     }
 }

@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &43824972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &134552111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbdeab6c4c473d4a80ecc5d8032fc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _generalTarget: {fileID: 910766404}
+  _generalTarget: {fileID: 0}
   _generalBehavior: {fileID: 11400000, guid: 0074d342f66773d4d8238edae5794df2, type: 2}
 --- !u!4 &376140512
 Transform:
@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Target: {fileID: 0}
   SpeedMultiplier: 1
   StoppingDistance: 1
   _neighborsDetectionRadius: 0.28
@@ -449,7 +450,6 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 0
-  Target: {fileID: 0}
   MoveDirectionCache: {x: 0, y: 0}
 --- !u!1 &519420028
 GameObject:
@@ -606,7 +606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &707632846
 Transform:
   m_ObjectHideFlags: 0
@@ -683,6 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Target: {fileID: 0}
   SpeedMultiplier: 1
   StoppingDistance: 1
   _neighborsDetectionRadius: 0.28
@@ -700,7 +701,6 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 0
-  Target: {fileID: 0}
   MoveDirectionCache: {x: 0, y: 0}
 --- !u!58 &707632849
 CircleCollider2D:
@@ -1098,10 +1098,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Target: {fileID: 0}
   SpeedMultiplier: 1
   StoppingDistance: 1
   _neighborsDetectionRadius: 0.28
-  _isUseSmoothPath: 1
+  _isUseSmoothPath: 0
   _smoothPathTurningDistance: 0
   SmoothPathTurningSpeed: 4.5
   IsRotateWithMovement: 1
@@ -1115,7 +1116,6 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 0
-  Target: {fileID: 0}
   MoveDirectionCache: {x: 0, y: 0}
 --- !u!1 &1494935760
 GameObject:
@@ -1133,7 +1133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1494935761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1179,7 +1179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1517796906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1361,7 +1361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1765775454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1545,10 +1545,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Target: {fileID: 0}
   SpeedMultiplier: 1
   StoppingDistance: 1
   _neighborsDetectionRadius: 0.28
-  _isUseSmoothPath: 1
+  _isUseSmoothPath: 0
   _smoothPathTurningDistance: 0
   SmoothPathTurningSpeed: 4.5
   IsRotateWithMovement: 1
@@ -1562,7 +1563,6 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 0
-  Target: {fileID: 0}
   MoveDirectionCache: {x: 0, y: 0}
 --- !u!1 &1931455519
 GameObject:
@@ -1849,10 +1849,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Target: {fileID: 0}
   SpeedMultiplier: 1
   StoppingDistance: 1
   _neighborsDetectionRadius: 0.28
-  _isUseSmoothPath: 1
+  _isUseSmoothPath: 0
   _smoothPathTurningDistance: 0
   SmoothPathTurningSpeed: 4.5
   IsRotateWithMovement: 1
@@ -1866,5 +1867,4 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 0
-  Target: {fileID: 0}
   MoveDirectionCache: {x: 0, y: 0}

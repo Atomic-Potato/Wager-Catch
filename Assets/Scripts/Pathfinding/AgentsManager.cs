@@ -32,7 +32,7 @@ namespace Pathfinding
         /// <summary>
         /// A cache holding a unique priority number. Agents priority are currently only used in the avoidance agent behavior
         /// </summary>
-        int _currentAgentPriority = 0;
+        int _currentAgentPriority = 1; // Note: we start at 1 because agents will switch to 0 when not moving
 
         new void Awake()
         {
