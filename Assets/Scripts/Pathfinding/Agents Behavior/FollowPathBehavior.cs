@@ -10,7 +10,7 @@ namespace Pathfinding
     {
         public override Vector2 CalculateBehaviorVelocity(Agent agent, List<Agent> neighbors, Vector2 destination)
         {
-            if (agent.Path == null || agent.Path.IsReachedEndOfPath)
+            if (agent.Path == null || (agent.Path.IsReachedEndOfPath && !agent.IsKeepFollowingLastWaypoint))
                 return Vector2.zero;
 
             float speedPercent = GetSlowDownSpeedPercent();     // Used to slow down the agent as it gets closer to the target

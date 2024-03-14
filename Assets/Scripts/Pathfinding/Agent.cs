@@ -36,6 +36,8 @@ namespace Pathfinding
         public bool IsRotateWithMovement;
         [Tooltip ("Goes to the exact position of the target instead of sticking to the grid")]
         public bool IsReachExactTargetPosition;
+        [Tooltip ("If disabled, the agent will not try to move towards the final waypoint if its position is changed by other factors")]
+        public bool IsKeepFollowingLastWaypoint = true;
         [Tooltip ("Currently only affects which grid the agent will be assigned to. Type A gets Grid A and so on. "
             + "Useful in case if you have agents with different sizes")]
         public Type SelectedType = Type.A;
