@@ -14,9 +14,9 @@ namespace Pathfinding
                 return Vector2.zero;
 
             float speedPercent = GetSlowDownSpeedPercent();     // Used to slow down the agent as it gets closer to the target
-            Vector2 velocity = GetVelocity();
-            speedPercent = speedPercent > .01f ? speedPercent : speedPercent;
-            return velocity * agent.SpeedMultiplier * speedPercent;
+            Vector2 direction = GetDirection();
+            speedPercent = speedPercent > .01f ? speedPercent : 0;
+            return direction * agent.SpeedMultiplier * speedPercent;
 
             float GetSlowDownSpeedPercent()
             {
@@ -30,7 +30,8 @@ namespace Pathfinding
                     }
                 return 1;
             }
-            Vector2 GetVelocity()
+
+            Vector2 GetDirection()
             {
                 if (!agent.IsUseSmoothPath)
                 {
