@@ -78,6 +78,10 @@ namespace Pathfinding
         /// </summary>
         public int Priority {get; protected set;}
         /// <summary>
+        /// A cache to be used for smooth vector rotation in smooth paths follow behavior
+        /// </summary>
+        public Vector2 MoveDirectionCache;
+        /// <summary>
         /// True if the agent movement is caused from the behavior assigned to it
         /// </summary>
         public bool IsMoving {get; protected set;}

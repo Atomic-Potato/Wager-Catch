@@ -34,6 +34,7 @@ namespace Pathfinding
 
                 if (behaviorDirectionNotZero)
                 {
+                    // Debug.Log(agent.gameObject.name + "[" + i + "]" +  "behavior direciton: " + behaviorVelocity.normalized);
                     averageDirection += behaviorVelocity.normalized * _weights[i];
                     totalNonZeroDirections++;
                 }

@@ -16,7 +16,8 @@ public class AgentsGenerator : MonoBehaviour
         for (int i=0; i < _circleEdges.Count; i++)
         {
             Agent agent = Instantiate(_agentPrefab, _circleEdges[i], Quaternion.identity, transform);
-            Transform target = new GameObject("Targer " + i).transform;
+            agent.name = "Agent " + i;
+            Transform target = new GameObject("Target " + i).transform;
             target.position = _circleEdges[i];
             
             target.transform.position = _circleEdges[j];
