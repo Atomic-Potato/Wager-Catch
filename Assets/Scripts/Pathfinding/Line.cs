@@ -91,7 +91,7 @@ namespace Pathfinding
             return GetSide(point) != _approachingSide;
         }
         
-        public float GetSquaredDistanceFromPoint(Vector2 point)
+        public float GetDistanceFromPoint(Vector2 point)
         {
             // Honestly i cannot bother explaining this, im too tired
             // but here it is (timestamped) https://youtu.be/bfevcsANSr4?si=uPc_XbeaMkIVt2p2&t=588

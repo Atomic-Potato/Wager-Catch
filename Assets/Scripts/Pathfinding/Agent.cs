@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,30 +45,15 @@ namespace Pathfinding
         protected Grid _grid;
         public Grid Grid => _grid;
 
-        Vector2 _currentWaypoint;
-        public StraightPath StraightPath {get; protected set;}
-        public int PathIndex {get; protected set;}
-        public Path SmoothPath {get; protected set;}
-        protected Coroutine _followPathCoroutine;
+        public Path Path {get; protected set;}
         protected Node _endNodeCache = null;
-        
-        protected int _priority;
-        public int Priority => _priority;
-        protected bool _isMoving;
-        public bool IsMoving => _isMoving;
+
+        public int Priority {get; protected set;}
+        public bool IsMoving {get; protected set;}
         protected bool _isPathRequestSent;
         public bool IsPathRequestSent => _isPathRequestSent;
-        protected bool _isReachedDestination;
-        public bool IsReachedDestination => _isReachedDestination;
 
-        public enum Type
-        {
-            A,
-            B,
-            C,
-            D,
-            E,
-        }
+        public enum Type {A, B, C, D, E,}
         #endregion
 
         #region Execution
@@ -76,26 +62,9 @@ namespace Pathfinding
             if (!_isDrawGizmos)
                 return;
 
-            if (_isDrawPath)
+            if (_isDrawPath && Path != null)
             {
-                if (IsUseSmoothPath && SmoothPath != null)
-                {
-                    SmoothPath.DrawPathWithGizmos(PathIndex);
-                    Gizmos.DrawLine(_currentWaypoint, transform.position);
-                }
-                else if (StraightPath.Path != null)
-                {
-                    Gizmos.color = _pathColor;
-                    for (int i = PathIndex; i < StraightPath.Path.Length; i++)
-                    {
-                        if (i > PathIndex)
-                            Gizmos.DrawLine(StraightPath.Path[i-1], StraightPath.Path[i]);
-                        Gizmos.DrawLine(transform.position, _currentWaypoint); 
-                        Gizmos.DrawCube(StraightPath.Path[i], new Vector3(.25f, .25f, 0f));
-                    }
-                    if (StraightPath.Path.Length > 0)
-                        Gizmos.DrawLine(StraightPath.Path[StraightPath.Path.Length - 1], Target.position);
-                }
+                Path.DrawPathWithGizmos(Path.CurrentPathIndex, _pathColor, transform.position, Target.position);
             }
 
             if (_isDrawNeighborsDetectionRadius)
@@ -110,7 +79,7 @@ namespace Pathfinding
             _collider = GetComponent<Collider2D>();
             
             if (_isRandomPathColor)
-                _pathColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f), 1);
+                _pathColor = new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f), 1);
         }
 
         void Start()
@@ -121,7 +90,7 @@ namespace Pathfinding
                 Target = _agentsManager.GeneralTarget;
             _behavior = _agentsManager.AgentBehavior;
 
-            _priority = AgentsManager.Instance.GetUniqueAgentID();
+            Priority = AgentsManager.Instance.GetUniqueAgentID();
             _grid = GridsManager.Instance.GetGrid(SelectedType);
         }
 
@@ -167,18 +136,14 @@ namespace Pathfinding
             if (!isFoundPath)
                 return;
 
-            CreatePath();
-            UpdateCurrentPathWaypoint();
+            Path = CreatePath();
+            UpdatePathIndex();
 
-            void CreatePath()
+            Path CreatePath()
             {
-                if (IsUseSmoothPath)
-                    SmoothPath = new Path(newPath, transform.position, _smoothPathTurningDistance, _stoppingDistance);
-                else
-                {
-                    Debug.Log("Created straight path");
-                    StraightPath = new StraightPath(newPath, _stoppingDistance);
-                }
+                return IsUseSmoothPath ? 
+                    (Path) new SmoothPath(newPath, transform.position, _smoothPathTurningDistance, _stoppingDistance) :
+                    (Path) new StraightPath(newPath, _stoppingDistance);
             }
         }
         #endregion
@@ -190,8 +155,18 @@ namespace Pathfinding
         /// </summary>
         void Move()
         {
-            Vector3 velocity = (Vector3)_behavior.CalculateBehaviorVelocity(this, GetNeighbors(), _currentWaypoint);
-            transform.position += velocity * Time.deltaTime;
+            Vector2 currentWaypoint = Path == null ? Vector2.zero : Path.CurrentWaypointPosition;
+            Vector3 velocity = (Vector3)_behavior.CalculateBehaviorVelocity(this, GetNeighbors(), currentWaypoint);
+            if (velocity != Vector3.zero)
+            {
+                IsMoving = true;
+                transform.position += velocity * Time.deltaTime;
+            }
+            else
+            {
+                IsMoving = false;
+            }
+
             if (_isRotateWithMovement)
             {
                 float angle = Mathf.Atan2(velocity.normalized.y, velocity.normalized.x) * Mathf.Rad2Deg;
@@ -210,114 +185,74 @@ namespace Pathfinding
                 return neighbors;
             }
         }
-        
+
+        Coroutine _updatePathIndexCoroutine;
         /// <summary>
-        /// Updates the current path waypoint of the agent as the agent moves along the path
+        /// Updates the current waypoint and path index based on the agent position.
         /// </summary>
-        void UpdateCurrentPathWaypoint()
+        void UpdatePathIndex()
         {
-            _isReachedDestination = false;
-            _isMoving = true;
-            PathIndex = 0;
-            
-            if (_followPathCoroutine != null)
-                StopCoroutine(_followPathCoroutine);
-            _followPathCoroutine = IsUseSmoothPath ?  StartCoroutine(UpdateSmoothPathWaypoint()) : StartCoroutine(UpdateStraightPathWaypoint());
+            // NOTE:    I have tried to place the methods inside of the paths classes
+            //          but you cant create a new instance of class that uses MonoBehavior
+            //          (because you need IEnumerator). 
+            //          The other solution was to add a new component instead of using the
+            //          new keyword, but that felt messy in my opinion.
+
+            if (_updatePathIndexCoroutine != null)
+                StopCoroutine(_updatePathIndexCoroutine);
+            _updatePathIndexCoroutine = IsUseSmoothPath ?  
+                StartCoroutine(UpdateSmoothPathWaypoint()) : 
+                StartCoroutine(UpdateStraightPathWaypoint());
             
             IEnumerator UpdateStraightPathWaypoint()
             {
-                if (StraightPath.Path.Length == 0)
+                StraightPath straightPath = (StraightPath)Path;
+                if (straightPath.WayPoints.Length == 0)
                     yield break;
-                _currentWaypoint = StraightPath.Path[0];
+
                 while(true)
                 {
-                    if (IsReachedCurrentWayPoint())
+                    bool isReachedCurrentWayPoint = Vector2.Distance(transform.position, straightPath.CurrentWaypointPosition) < 0.01f;
+                    if (isReachedCurrentWayPoint)
                     {
-                        PathIndex++;
-                        if (IsReachedEndOfPath())
+                        straightPath.IncrementPathIndex();
+                        if (straightPath.IsReachedEndOfPath)
                         {
                             FinishPath();
                             yield break;
                         }
-                        _currentWaypoint = StraightPath.Path[PathIndex];
                     }
                     yield return new WaitForEndOfFrame();
                 }
-
-
-                bool IsReachedCurrentWayPoint()
-                {
-                    return Vector2.Distance(transform.position, _currentWaypoint) < 0.01f;
-                }
-                bool IsReachedEndOfPath()
-                {
-                    return PathIndex >= StraightPath.Path.Length;
-                }
-                
             }
 
             IEnumerator UpdateSmoothPathWaypoint()
             {
-                bool isFollowingPath = true;
-                _currentWaypoint = SmoothPath.WayPoints[0];
-                
-                while (isFollowingPath)
+                SmoothPath smoothPath = (SmoothPath)Path;
+
+                while (true)
                 {
-                    while (SmoothPath.TurningBoundaries[PathIndex].IsCorssedLine(transform.position))
+                    while (smoothPath.TurningBoundaries[smoothPath.CurrentPathIndex].IsCorssedLine(transform.position))
                     {
-                        if (PathIndex == SmoothPath.LastBoundaryIndex)
+                        if (smoothPath.IsReachedEndOfPath)
                         {
-                            isFollowingPath = false;
                             FinishPath();
-                            break;
+                            yield break;
                         }
                         else
                         {
-                            PathIndex++;
+                            smoothPath.IncrementPathIndex();
                         }
                     }
-
-                    _currentWaypoint = SmoothPath.WayPoints[PathIndex];
                     yield return null;
                 }
             }
 
             void FinishPath()
             {
-                _followPathCoroutine = null;
-                _isReachedDestination = true;
-                _isMoving = false;
+                _updatePathIndexCoroutine = null;
             }
         }
-
         #endregion
-    }
-
-    public struct StraightPath
-    {
-        public Vector2[] Path;
-        public int Length {get; private set;}
-        public int LastPointIndex {get; private set;}
-        public int StoppingIndex {get; private set;}
-
-        public StraightPath(Vector2[] path, float stoppingDistance)
-        {
-            Path = path;
-            Length = path.Length;
-            LastPointIndex = path.Length - 1;
-            StoppingIndex = GetStoppingIndex();
-
-            int GetStoppingIndex()
-            {
-                float distanceFromEndPoint = 0;
-                for (int i=path.Length - 1; i > 0; i--)
-                {
-                    distanceFromEndPoint += Vector2.Distance(path[i], path[i-1]);
-                    if (distanceFromEndPoint > stoppingDistance)
-                        return i;
-                }
-                return path.Length - 1;
-            }
-        }
     }
 }

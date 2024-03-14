@@ -14,9 +14,7 @@ namespace Pathfinding
         Vector2 moveDirection = Vector2.zero;
         public override Vector2 CalculateBehaviorVelocity(Agent agent, List<Agent> neighbors, Vector2 destination)
         {
-            if (agent.IsReachedDestination)
-                return Vector2.zero;
-            if ((!agent.IsUseSmoothPath && agent.StraightPath.Path == null) || (agent.IsUseSmoothPath && agent.SmoothPath == null))
+            if (agent.Path == null || agent.Path.IsReachedEndOfPath)
                 return Vector2.zero;
 
             float speedPercent = GetSlowDownSpeedPercent();     // Used to slow down the agent as it gets closer to the target
@@ -26,16 +24,14 @@ namespace Pathfinding
 
             float GetSlowDownSpeedPercent()
             {
-                if (!agent.IsUseSmoothPath)
-                {
-                    if (agent.PathIndex >= agent.StraightPath.StoppingIndex && agent.StoppingDisntace > 0)
-                    return Mathf.Clamp01(Vector2.Distance(agent.StraightPath.Path[agent.StraightPath.LastPointIndex], agent.transform.position) / agent.StoppingDisntace);
-                }
-                else
-                {
-                    if (agent.PathIndex >= agent.SmoothPath.StoppingIndex && agent.StoppingDisntace > 0) 
-                        return Mathf.Clamp01(Vector2.Distance(agent.SmoothPath.WayPoints[agent.SmoothPath.LastBoundaryIndex], agent.transform.position) / agent.StoppingDisntace);
-                }
+                    if (agent.Path.CurrentPathIndex >= agent.Path.StoppingIndex && agent.StoppingDisntace > 0)
+                    {
+                        Path path = agent.Path;
+                        float remainingDistance = agent.IsUseSmoothPath ? 
+                            ((SmoothPath)path).TurningBoundaries[((SmoothPath)path).LastTruningBoundaryIndex].GetDistanceFromPoint(agent.transform.position):
+                            Vector2.Distance(agent.transform.position, path.WayPoints[path.WayPoints.Length - 1]);
+                        return Mathf.Clamp01(remainingDistance / agent.StoppingDisntace);
+                    }
                 return 1;
             }
             Vector2 GetVelocity()
