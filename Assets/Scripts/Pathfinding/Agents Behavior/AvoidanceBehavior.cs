@@ -29,7 +29,6 @@ namespace Pathfinding
             Vector3 GetNeighborsAvgAvoidanceDirection()
             {
                 Vector3 sum = Vector3.zero;
-                int neighborsToAvoidCount = 0;
                 foreach (Agent neighbor in neighbors)
                 {
                     if (neighbor.Priority == 0 && agent.Priority != 0)
@@ -45,22 +44,15 @@ namespace Pathfinding
                     if (isGreaterPriorityThanNeighbor)
                         continue;
 
-                    bool isNeighborWithinAvoidanceDistance =
-                        Vector3.Distance(neighbor.transform.position, agent.transform.position) < agent.NeighborsDetectionRadius;
-                    if (isNeighborWithinAvoidanceDistance)
-                    {
-                        Vector3 direction = agent.transform.position - neighbor.transform.position; 
-                        sum += direction != Vector3.zero ? 
-                            direction :
-                            // in case the agent is in the exact position of its neighbor, we take a random direction
-                            new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f).normalized;
-
-                        neighborsToAvoidCount++;
-                    }
+                    Vector3 direction = agent.transform.position - neighbor.transform.position; 
+                    sum += direction != Vector3.zero ? 
+                        direction :
+                        // in case the agent is in the exact position of its neighbor, we take a random direction
+                        new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f).normalized;
                 }
 
                 // Debug.Log(agent.gameObject.name + " heading : " + (sum / neighborsToAvoidCount).normalized);
-                return (neighborsToAvoidCount > 0 ? sum / neighborsToAvoidCount : sum).normalized;
+                return (neighbors.Count > 0 ? sum / neighbors.Count : sum).normalized;
 
                 void SwitchPriorityWithAgent(Agent other)
                 {

@@ -13,8 +13,7 @@ namespace Pathfinding
         [SerializeField] AgentBehavior[] _behaviors;
         [Tooltip(
             "The weight / strength of each behavior. Number of weights must match the number of behaviors. " +
-            "The index of the weight corresponds to the behavior with the same index " +
-            "(Note: currently the scale of the weight doesnt exactly do anything other than activate the behavior)")]
+            "The index of the weight corresponds to the behavior with the same index " )]
         [SerializeField, Min(0)] float[] _weights;
         public override Vector2 CalculateBehaviorVelocity(Agent agent, List<Agent> neighbors, Vector2 destination)
         {
