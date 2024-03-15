@@ -32,6 +32,15 @@ namespace Pathfinding
                 int neighborsToAvoidCount = 0;
                 foreach (Agent neighbor in neighbors)
                 {
+                    if (neighbor.Priority == 0 && agent.Priority != 0)
+                    {
+                        if (neighbor.PriorityCache > agent.Priority)
+                        {
+                            SwitchPriorityWithAgent(neighbor);
+                            continue;
+                        }
+                    }
+
                     bool isGreaterPriorityThanNeighbor = _isUseCongestionControl && neighbor.Priority < agent.Priority; 
                     if (isGreaterPriorityThanNeighbor)
                         continue;
@@ -52,6 +61,13 @@ namespace Pathfinding
 
                 // Debug.Log(agent.gameObject.name + " heading : " + (sum / neighborsToAvoidCount).normalized);
                 return (neighborsToAvoidCount > 0 ? sum / neighborsToAvoidCount : sum).normalized;
+
+                void SwitchPriorityWithAgent(Agent other)
+                {
+                    int aux = other.PriorityCache;
+                    other.PriorityCache = agent.Priority;
+                    agent.Priority = aux;
+                }
             }
         }
     }

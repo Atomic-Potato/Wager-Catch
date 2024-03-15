@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &43824972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a521ada9469ba07458ba383235f3998c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numberOfPoints: 20
+  _numberOfPoints: 35
   _radius: 2
   _agentPrefab: {fileID: 707632848}
 --- !u!4 &43824973
@@ -183,7 +183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &134552111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a521ada9469ba07458ba383235f3998c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numberOfPoints: 25
+  _numberOfPoints: 50
   _radius: 3
   _agentPrefab: {fileID: 707632848}
 --- !u!4 &134552112
@@ -451,6 +451,7 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 0
+  _priorityCache: 0
   MoveDirectionCache: {x: 0, y: 0}
 --- !u!1 &519420028
 GameObject:
@@ -607,7 +608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &707632846
 Transform:
   m_ObjectHideFlags: 0
@@ -684,7 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcab8fce2d32590439235297f0e44295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 910766404}
+  Target: {fileID: 0}
   SpeedMultiplier: 1
   StoppingDistance: 1
   _neighborsDetectionRadius: 0.28
@@ -703,6 +704,7 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 0
+  _priorityCache: 0
   MoveDirectionCache: {x: 0, y: 0}
 --- !u!58 &707632849
 CircleCollider2D:
@@ -1119,6 +1121,7 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 0
+  _priorityCache: 0
   MoveDirectionCache: {x: 0, y: 0}
 --- !u!1 &1494935760
 GameObject:
@@ -1136,7 +1139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1494935761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1149,7 +1152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a521ada9469ba07458ba383235f3998c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numberOfPoints: 10
+  _numberOfPoints: 20
   _radius: 1
   _agentPrefab: {fileID: 707632848}
 --- !u!4 &1494935762
@@ -1182,7 +1185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1517796906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1195,7 +1198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a521ada9469ba07458ba383235f3998c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numberOfPoints: 25
+  _numberOfPoints: 65
   _radius: 4
   _agentPrefab: {fileID: 707632848}
 --- !u!4 &1517796907
@@ -1364,7 +1367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1765775454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1377,7 +1380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a521ada9469ba07458ba383235f3998c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numberOfPoints: 25
+  _numberOfPoints: 80
   _radius: 5
   _agentPrefab: {fileID: 707632848}
 --- !u!4 &1765775455
@@ -1567,6 +1570,7 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 0
+  _priorityCache: 0
   MoveDirectionCache: {x: 0, y: 0}
 --- !u!1 &1931455519
 GameObject:
@@ -1872,4 +1876,5 @@ MonoBehaviour:
   _pathColor: {r: 0, g: 0, b: 1, a: 0.0627451}
   _isRandomPathColor: 1
   _isDrawNeighborsDetectionRadius: 0
+  _priorityCache: 0
   MoveDirectionCache: {x: 0, y: 0}

@@ -78,13 +78,14 @@ namespace Pathfinding
 
         /// <summary>
         /// Agents priority are currently only used in the avoidance agent behavior 
-        /// to make agents with higher priority not get affect by lower priority neighbors
+        /// to make agents with higher priority not get affect by lower priority neighbors.
+        /// Priority is stored in PriorityCache when agent is not moving and this is set to 0.
         /// </summary>
-        public int Priority {get; protected set;}
+        public int Priority;
         /// <summary>
-        /// Stores the priority set at the start of the game when the agent is not moving
+        /// Stores the priority when the agent is not moving
         /// </summary>
-        protected int _priorityCache;
+        public int PriorityCache;
         /// <summary>
         /// A cache to be used for smooth vector rotation in smooth paths follow behavior
         /// </summary>
@@ -374,16 +375,16 @@ namespace Pathfinding
             {
                 if (Priority != 0)
                 {
-                    _priorityCache = Priority;
+                    PriorityCache = Priority;
                     Priority = 0;
                 }
             }
             else
             {
-                if (_priorityCache != 0)
+                if (PriorityCache != 0)
                 {
-                    Priority = _priorityCache;
-                    _priorityCache = 0;
+                    Priority = PriorityCache;
+                    PriorityCache = 0;
                 }
             }
         }
