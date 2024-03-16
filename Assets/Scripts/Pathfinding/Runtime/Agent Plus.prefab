@@ -56,6 +56,7 @@ MonoBehaviour:
   IsReachExactTargetPosition: 1
   IsKeepFollowingLastWaypoint: 1
   SelectedType: 0
+  Behavior: {fileID: 11400000, guid: 0074d342f66773d4d8238edae5794df2, type: 2}
   _agentsLayer:
     serializedVersion: 2
     m_Bits: 0

@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Pathfinding
 {
+    /// <summary>
+    /// The agent class to be attached to a game object for it to be able to follow a target on grid path 
+    /// </summary>
     [RequireComponent(typeof(Collider2D))]
     public class Agent : MonoBehaviour
     {
@@ -41,6 +44,9 @@ namespace Pathfinding
         [Tooltip ("Currently only affects which grid the agent will be assigned to. Type A gets Grid A and so on. "
             + "Useful in case if you have agents with different sizes")]
         public Type SelectedType = Type.A;
+        [Tooltip ("The movement behavior of the agent. By default it is a composite behavior" +
+            " containing the follow path and avoidance behaviors")]
+        public AgentBehavior Behavior;
         [Tooltip ("Agents layer to help detect other agents "
             + "(Note: Make sure that agents on the same layer do not collide in the projects collision matrix)")]
         [SerializeField] protected LayerMask _agentsLayer;
@@ -62,11 +68,6 @@ namespace Pathfinding
         /// Contains common data shared between agents that is assigned at the start of the game
         /// </summary>
         protected AgentsManager _agentsManager;
-        /// <summary>
-        /// The movement behavior of the agent. By default it is a composite behavior 
-        /// containing the follow path and avoidance behaviors
-        /// </summary>
-        protected AgentBehavior _behavior;
         /// <summary>
         /// The grid that the agent is using to create a path with
         /// </summary>
@@ -146,7 +147,7 @@ namespace Pathfinding
                 _agentsManager.Agents.Add(this);
                 if (_agentsManager.GeneralTarget != null)
                     Target = _agentsManager.GeneralTarget;
-                _behavior = _agentsManager.AgentBehavior;
+                Behavior = _agentsManager.AgentBehavior;
                 Priority = AgentsManager.Instance.GetUniqueAgentID();
             }
         }
@@ -260,7 +261,7 @@ namespace Pathfinding
         void Move()
         {
             Vector2 currentWaypoint = Path == null ? Vector2.zero : Path.CurrentWaypointPosition;
-            Vector3 velocity = (Vector3)_behavior.CalculateBehaviorVelocity(this, GetNeighbors(), currentWaypoint);
+            Vector3 velocity = (Vector3)Behavior.CalculateBehaviorVelocity(this, GetNeighbors(), currentWaypoint);
             if (velocity != Vector3.zero)
             {
                 IsMoving = true;

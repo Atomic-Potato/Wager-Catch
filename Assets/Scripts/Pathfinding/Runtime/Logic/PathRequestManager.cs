@@ -5,6 +5,9 @@ using System.Threading;
 
 namespace Pathfinding
 {
+    /// <summary>
+    /// Handles path requests on the pathfinder
+    /// </summary>
     [RequireComponent(typeof(Pathfinder))]
     public class PathRequestManager : Singleton<PathRequestManager>
     {

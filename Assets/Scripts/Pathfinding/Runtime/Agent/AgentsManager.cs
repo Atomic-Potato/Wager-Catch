@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Pathfinding
 {
     /// <summary>
-    /// Contains a list of all the agents, and acts a container for common values between all agents
+    /// Contains a list of all the agents, and acts as a container for common values between all agents
     /// </summary>
     public class AgentsManager : Singleton<AgentsManager>
     {

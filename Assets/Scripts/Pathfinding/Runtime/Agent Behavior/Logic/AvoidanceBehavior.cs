@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Pathfinding
 {
     /// <summary>
-    /// A basic behavior to avoid other agent in the path preventing any overlap with other agents.
+    /// A basic behavior to avoid other agents in the path preventing any overlap with other agents.
     /// It is based on BOIDs (flock simulation)
     /// </summary>
     [CreateAssetMenu (fileName = "Avoidance Behavior", menuName = "Pathfinding/Behavior/Avoidance")]

@@ -6,7 +6,7 @@ using System;
 namespace Pathfinding
 {
     /// <summary>
-    /// Handles the calculation of the A* algorithim which finds the shortest path between 2 nodes on a grid 
+    /// Handles the calculation of the A* algorithm which finds the shortest path between 2 nodes on a grid 
     /// (Further info: https://youtu.be/-L-WgKMFuhE?si=3rsrBzKm9MGdusFL)
     /// </summary>
     public class Pathfinder : MonoBehaviour

@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Pathfinding
 {
     /// <summary>
-    /// Calculates the velocity to follow a path, either smooth or straigth
+    /// Calculates the velocity to follow a path, either smooth or straight 
     /// </summary>
     [CreateAssetMenu (fileName = "Follow Path Behavior", menuName = "Pathfinding/Behavior/Follow Path")]
     public class FollowPathBehavior : AgentBehavior
